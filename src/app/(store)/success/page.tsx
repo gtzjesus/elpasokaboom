@@ -10,7 +10,7 @@ function SuccessPage() {
   const searchParams = useSearchParams();
   const orderNumber = searchParams.get('orderNumber');
   const clearBasket = useBasketStore((state) => state.clearBasket);
-  const sessionId = searchParams.get('session_id');
+  // const sessionId = searchParams.get('session_id');
 
   useEffect(() => {
     if (orderNumber) {
@@ -43,7 +43,7 @@ function SuccessPage() {
         </h1>
 
         <div className="border-t border-b border-gray-200 py-6 mb-6">
-          <p className="text-lg text-gray-700 mb-4">
+          <p className="text-lg text-gray-700 mb-4 text-center">
             your order has been confirmed.
           </p>
           <div className="space-y-2">
@@ -55,17 +55,17 @@ function SuccessPage() {
                 </span>
               </p>
             )}
-            {sessionId && (
+            {/* {sessionId && (
               <p className="text-gray-600 flex justify-between">
                 <span>transaction id:</span>
                 <span className="font-mono text-sm">{sessionId}</span>
               </p>
-            )}
+            )} */}
           </div>
         </div>
         <div className="space-y-4">
-          <p className="text-gray-600">
-            a confirmation email has been sent to your email address.
+          <p className="text-gray-600 text-center">
+            we sent an email confirmation to your email address.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild className="bg-green-600 hover:bg-green-700">
