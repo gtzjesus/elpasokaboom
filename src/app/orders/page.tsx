@@ -55,16 +55,18 @@ async function Orders() {
 
                 <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
                   <div className="flex items-center">
-                    <span className="text-sm mr-2">status:</span>
+                    <span className="text-sm mr-2 p-4">status:</span>
                     <span
                       className={`px-3 py-1 rounded-full text-sm ${order.status === 'paid' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}
                     >
                       {order.status}
                     </span>
                   </div>
-                  <div className="sm:text-right">
-                    <p className="text-sm text-gray-600 mb-1">total amount</p>
-                    <p className="font-bold text-lg">
+                  <div className="sm:text-right ">
+                    <p className="p-4 text-sm text-gray-600 mb-1">
+                      total amount
+                    </p>
+                    <p className=" p-4 font-bold text-lg">
                       {formatCurrency(order.totalPrice ?? 0, order.currency)}
                     </p>
                   </div>
