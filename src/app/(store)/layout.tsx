@@ -4,19 +4,28 @@ import '../globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
 import Header from '../../components/header';
 import { SanityLive } from '@/sanity/lib/live';
+import { draftMode } from 'next/headers';
+import { DisableDraftMode } from '@/components/DisableDraftMode';
+import { VisualEditing } from 'next-sanity';
 
 export const metadata: Metadata = {
   title: 'basket',
   description: 'basket page layout',
 };
 
-export default function StoreLayout({
+export default async function StoreLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <ClerkProvider dynamic>
+      {(await draftMode()).isEnabled && (
+        <>
+          <DisableDraftMode />
+          <VisualEditing />
+        </>
+      )}
       <main>
         <Header />
         {children} {/* Render the page content here */}
