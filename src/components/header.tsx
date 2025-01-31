@@ -55,7 +55,7 @@ export default function Header() {
       <div className="flex w-full flex-wrap justify-between items-center">
         <Link
           href="/"
-          className="font-bold hover:opacity-50 cursor-pointer sm:mx-0"
+          className="font-bold font-anton hover:opacity-50 cursor-pointer sm:mx-0"
         >
           Nextcommerce
         </Link>
