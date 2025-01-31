@@ -14,6 +14,7 @@ export default function Header() {
   );
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false); // Track if component is mounted
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -28,6 +29,11 @@ export default function Header() {
     }
   };
 
+  // Set isMounted to true when the component is mounted
+  useEffect(() => {
+    setIsMounted(true); // Set to true when component is mounted
+  }, []);
+
   // Disable scrolling when the menu is open
   useEffect(() => {
     if (isMenuOpen) {
@@ -41,6 +47,8 @@ export default function Header() {
       document.body.style.overflow = 'auto';
     };
   }, [isMenuOpen]);
+
+  if (!isMounted) return null; // Prevent SSR issues by rendering nothing until client-side
 
   return (
     <header className="flex flex-wrap justify-between items-center px-8 py-4 relative">
@@ -122,17 +130,17 @@ export default function Header() {
         {/* Close Button (X) */}
         <button
           onClick={toggleMenu}
-          className="absolute top-4 right-4 text-2xl text-gray-600"
+          className="absolute top-3 right-7 text-3xl text-gray-600"
         >
           &times;
         </button>
 
-        <div className="flex flex-col space-y-6 p-6">
+        <div className="flex flex-col space-y-6 p-12">
           <Form action="/search" className="w-full">
             <input
               type="text"
               name="query"
-              placeholder="search for products"
+              placeholder="Search"
               className="bg-gray-100 text-gray-800 px-4 py-4 rounded focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 border w-full"
             />
           </Form>
