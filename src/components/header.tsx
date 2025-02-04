@@ -169,7 +169,7 @@ const Header = () => {
                 type="search"
                 name="query"
                 placeholder="Search"
-                className="w-full caret-blue-500 focus:outline-none bg-transparent placeholder:text-gray-500 placeholder:text-lg" // Increase placeholder text size
+                className="w-full caret-blue-500 focus:outline-none bg-transparent placeholder:text-gray-500 placeholder:text-lg appearance-none"
               />
             </div>
           </form>
