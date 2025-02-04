@@ -1,8 +1,13 @@
 'use client'; // This is necessary to mark the component as client-side
 
-import { ClerkLoaded, SignInButton, UserButton, useUser } from '@clerk/nextjs';
+import {
+  ClerkLoaded,
+  SignInButton,
+  UserButton,
+  useUser,
+  ClerkUser,
+} from '@clerk/nextjs';
 import Link from 'next/link';
-import Form from 'next/form';
 import { PackageIcon, TrolleyIcon } from '@sanity/icons';
 import useBasketStore from '../../store/store';
 import { useState, useEffect } from 'react';
@@ -24,7 +29,7 @@ const AuthButtons = ({
   user,
   createClerkPasskey,
 }: {
-  user: any;
+  user: ClerkUser | null; // Explicit type for user
   createClerkPasskey: () => void;
 }) => (
   <>
@@ -60,7 +65,7 @@ const AuthButtons = ({
 );
 
 const Header = () => {
-  const { user } = useUser();
+  const { user } = useUser(); // Type is inferred from the useUser hook
   const itemCount = useBasketStore((state) =>
     state.items.reduce((total, item) => total + item.quantity, 0)
   );
