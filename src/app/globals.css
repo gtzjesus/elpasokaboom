@@ -71,3 +71,53 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.search-container {
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+}
+
+.search-bar {
+  width: 0;
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #f0f0f5;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  transition:
+    width 0.3s ease,
+    opacity 0.3s ease;
+  z-index: 1;
+  color: transparent;
+  padding-left: 32px;
+}
+
+.search-bar:focus {
+  width: 100%;
+  opacity: 1;
+  color: black;
+}
+
+.search-icon {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #007aff;
+  cursor: pointer;
+}
+
+.search-bar:focus + .search-icon {
+  display: none;
+}
+
+.search-bar::placeholder {
+  color: #aaa;
+}
