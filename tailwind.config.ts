@@ -13,6 +13,10 @@ export default {
         anton: ['Anton', 'sans-serif'],
       },
       colors: {
+        // Custom Colors
+        'custom-gray': '#A2AAAD', // Add your custom gray color here
+
+        // Existing custom colors
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
