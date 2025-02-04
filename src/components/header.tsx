@@ -160,18 +160,9 @@ const Header = () => {
               type="search"
               name="query"
               placeholder="Search"
-              className="bg-gray-100 text-gray-800 px-4 py-4 rounded focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 border w-full"
+              className="px-4 py-4 w-full caret-blue-500 focus:outline-none"
             />
           </form>
-          <div className="search-container">
-            <input
-              type="text"
-              name="query"
-              placeholder="Search"
-              className="search-bar"
-            />
-            <button className="search-icon">🔍</button>
-          </div>
 
           <CartButton itemCount={itemCount} />
           <AuthButtons user={user} createClerkPasskey={createClerkPasskey} />
