@@ -16,13 +16,13 @@ const CartButton = ({ itemCount }: { itemCount: number }) => (
     <Image
       src="/icons/bag.webp" // Path to your image
       alt="Bag"
-      width={25} // Image width (adjust as needed)
-      height={25} // Image height (adjust as needed)
-      className="w-5 h-5" // Image size
+      width={30} // Image width (adjust as needed)
+      height={30} // Image height (adjust as needed)
+      className="w-6 h-6" // Image size
     />
 
     {itemCount > 0 && (
-      <span className="absolute -top-0 -right-0 bg-custom-gray text-black rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold transition-all duration-200 ease-in-out">
+      <span className="absolute -top--0 -right-0.5 bg-custom-gray text-black rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold transition-all duration-200 ease-in-out">
         {itemCount}
       </span>
     )}
