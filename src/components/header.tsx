@@ -6,6 +6,7 @@ import { PackageIcon, TrolleyIcon } from '@sanity/icons';
 import useBasketStore from '../../store/store';
 import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation'; // Use from next/navigation
+import Image from 'next/image';
 
 const CartButton = ({ itemCount }: { itemCount: number }) => (
   <Link
@@ -157,16 +158,18 @@ const Header = () => {
         <div className="flex flex-col space-y-6 p-12">
           <form onSubmit={handleSearchSubmit} className="w-full">
             <div className="flex items-center px-4 py-4 rounded">
-              <img
-                src="/icons/search.webp"
+              <Image
+                src="/icons/search.webp" // Path to your image
                 alt="Search"
-                className="w-5 h-5 mr-2" // Adjust size and margin as needed
+                width={25} // Image width (adjust as needed)
+                height={25} // Image height (adjust as needed)
+                className="mr-2" // Add margin to the right of the image
               />
               <input
                 type="search"
                 name="query"
                 placeholder="Search"
-                className="w-full caret-blue-500 focus:outline-none bg-transparent"
+                className="w-full caret-blue-500 focus:outline-none bg-transparent placeholder:text-gray-500 placeholder:text-lg" // Increase placeholder text size
               />
             </div>
           </form>
