@@ -14,7 +14,7 @@ export default {
       },
       colors: {
         // Custom Colors
-        'custom-gray': '#D3D3D3', // Add your custom gray color here
+        'custom-gray': '#D5D5D5', // Add your custom gray color here
 
         // Existing custom colors
         background: 'hsl(var(--background))',

@@ -132,10 +132,16 @@ const Header = () => {
           href="/"
           className="font-bold hover:opacity-50 cursor-pointer sm:mx-0"
         >
-          Nextcommerce
+          <Image
+            src="/icons/logo.webp" // Path to your image
+            alt="Nextcommerce"
+            width={30} // Image width (adjust as needed)
+            height={30} // Image height (adjust as needed)
+            className="w-8 h-8" // Image size
+          />
         </Link>
 
-        <div className="flex items-center space-x-4 mt-4 sm:mt-0">
+        <div className="flex items-center space-x-4  sm:mt-0">
           {/* Menu Button for Mobile */}
           {/* Cart Button next to Menu */}
           <CartButton itemCount={itemCount} />
@@ -143,7 +149,13 @@ const Header = () => {
             onClick={toggleMenu}
             className="sm:hidden flex items-center space-x-2 text-black font-bold"
           >
-            Menu
+            <Image
+              src="/icons/menu.webp" // Path to your image
+              alt="Menu"
+              width={30} // Image width (adjust as needed)
+              height={30} // Image height (adjust as needed)
+              className="w-6 h-6" // Image size
+            />
           </button>
         </div>
       </div>
