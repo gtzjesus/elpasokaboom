@@ -156,12 +156,19 @@ const Header = () => {
         </button>
         <div className="flex flex-col space-y-6 p-12">
           <form onSubmit={handleSearchSubmit} className="w-full">
-            <input
-              type="search"
-              name="query"
-              placeholder="Search"
-              className="px-4 py-4 w-full caret-blue-500 focus:outline-none"
-            />
+            <div className="flex items-center px-4 py-4 rounded">
+              <img
+                src="/icons/search.webp"
+                alt="Search"
+                className="w-5 h-5 mr-2" // Adjust size and margin as needed
+              />
+              <input
+                type="search"
+                name="query"
+                placeholder="Search"
+                className="w-full caret-blue-500 focus:outline-none bg-transparent"
+              />
+            </div>
           </form>
 
           <CartButton itemCount={itemCount} />
