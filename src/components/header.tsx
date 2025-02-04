@@ -157,10 +157,12 @@ const Header = () => {
         <div className="flex flex-col space-y-6 p-12">
           <form onSubmit={handleSearchSubmit} className="w-full">
             <input
-              type="search" // Set input type to search to encourage "Go" on mobile keyboard
+              type="search" // Already set to search
               name="query"
               placeholder="Search"
               className="bg-gray-100 text-gray-800 px-4 py-4 rounded focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 border w-full"
+              autoCapitalize="off" // Prevent auto-capitalization
+              spellCheck="false" // Disable spellcheck to make it look more like a search field
             />
           </form>
 
