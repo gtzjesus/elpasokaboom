@@ -105,6 +105,12 @@ const Header = () => {
     ) as string; // Get the search query from form input
     setIsMenuOpen(false); // Close the menu on submit
     router.push(`/search?query=${query}`); // Navigate to the search page with the query parameter
+
+    // Manually blur the input to close the keyboard (mobile)
+    const inputElement = document.querySelector('input[name="query"]');
+    if (inputElement instanceof HTMLElement) {
+      inputElement.blur(); // Close the mobile keyboard
+    }
   };
 
   if (!isMounted) return null;
@@ -151,7 +157,7 @@ const Header = () => {
         <div className="flex flex-col space-y-6 p-12">
           <form onSubmit={handleSearchSubmit} className="w-full">
             <input
-              type="text"
+              type="search" // Set input type to search to encourage "Go" on mobile keyboard
               name="query"
               placeholder="Search"
               className="bg-gray-100 text-gray-800 px-4 py-4 rounded focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 border w-full"
