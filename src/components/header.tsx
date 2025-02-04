@@ -1,12 +1,6 @@
 'use client'; // This is necessary to mark the component as client-side
 
-import {
-  ClerkLoaded,
-  SignInButton,
-  UserButton,
-  useUser,
-  ClerkUser,
-} from '@clerk/nextjs';
+import { ClerkLoaded, SignInButton, UserButton, useUser } from '@clerk/nextjs'; // Import from nextjs
 import Link from 'next/link';
 import { PackageIcon, TrolleyIcon } from '@sanity/icons';
 import useBasketStore from '../../store/store';
@@ -29,7 +23,8 @@ const AuthButtons = ({
   user,
   createClerkPasskey,
 }: {
-  user: ClerkUser | null; // Explicit type for user
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  user: any; // Type should be `any` since `useUser()` returns a user object which can be null
   createClerkPasskey: () => void;
 }) => (
   <>
@@ -65,7 +60,7 @@ const AuthButtons = ({
 );
 
 const Header = () => {
-  const { user } = useUser(); // Type is inferred from the useUser hook
+  const { user } = useUser(); // Hook from Clerk for getting the user info
   const itemCount = useBasketStore((state) =>
     state.items.reduce((total, item) => total + item.quantity, 0)
   );
@@ -73,8 +68,8 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
-  const router = useRouter(); // Hook from next/navigation to handle routing
-  const pathname = usePathname(); // To track path changes
+  const router = useRouter(); // Hook for route handling
+  const pathname = usePathname(); // Hook for pathname
 
   useEffect(() => {
     setIsMounted(true);
