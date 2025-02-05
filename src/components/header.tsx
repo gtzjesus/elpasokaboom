@@ -70,7 +70,7 @@ const AuthButtons = ({
 );
 
 const Header = () => {
-  const { user } = useUser(); // Hook from Clerk for getting the user info
+  const { user } = useUser();
   const itemCount = useBasketStore((state) =>
     state.items.reduce((total, item) => total + item.quantity, 0)
   );
@@ -78,8 +78,8 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
-  const router = useRouter(); // Hook for route handling
-  const pathname = usePathname(); // Hook for pathname
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     setIsMounted(true);
@@ -96,10 +96,9 @@ const Header = () => {
     }
   };
 
-  // Close the menu when the pathname (route) changes
   useEffect(() => {
-    setIsMenuOpen(false); // Close the menu whenever the route changes
-  }, [pathname]); // Listen to changes in pathname (route change)
+    setIsMenuOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
@@ -112,15 +111,9 @@ const Header = () => {
     e.preventDefault();
     const query = new FormData(e.target as HTMLFormElement).get(
       'query'
-    ) as string; // Get the search query from form input
-    setIsMenuOpen(false); // Close the menu on submit
-    router.push(`/search?query=${query}`); // Navigate to the search page with the query parameter
-
-    // Manually blur the input to close the keyboard (mobile)
-    const inputElement = document.querySelector('input[name="query"]');
-    if (inputElement instanceof HTMLElement) {
-      inputElement.blur(); // Close the mobile keyboard
-    }
+    ) as string;
+    setIsMenuOpen(false);
+    router.push(`/search?query=${query}`);
   };
 
   if (!isMounted) return null;
@@ -133,29 +126,30 @@ const Header = () => {
           className="font-bold hover:opacity-50 cursor-pointer sm:mx-0"
         >
           <Image
-            src="/icons/logo.webp" // Path to your image
+            src="/icons/logo.webp"
             alt="Nextcommerce"
-            width={30} // Image width (adjust as needed)
-            height={30} // Image height (adjust as needed)
-            className="w-8 h-8" // Image size
+            width={30}
+            height={30}
+            className="w-8 h-8"
           />
         </Link>
 
-        <div className="flex items-center space-x-4  sm:mt-0">
-          {/* Menu Button for Mobile */}
-          {/* Cart Button next to Menu */}
+        <div className="flex items-center space-x-4 sm:mt-0">
+          {/* Cart Button */}
           <CartButton itemCount={itemCount} />
+
+          {/* Hamburger Button */}
           <button
             onClick={toggleMenu}
-            className="sm:hidden flex items-center space-x-2 text-black font-bold"
+            className="sm:hidden flex flex-col justify-center items-center space-y-1 z-30 relative group"
           >
-            <Image
-              src="/icons/menu.webp" // Path to your image
-              alt="Menu"
-              width={30} // Image width (adjust as needed)
-              height={30} // Image height (adjust as needed)
-              className="w-6 h-6" // Image size
-            />
+            <div
+              className={`w-7 h-0.5 bg-custom-gray transition-all duration-300 ease-in-out transform ${isMenuOpen ? 'rotate-45 translate-y-0.5' : ''}`}
+            ></div>
+
+            <div
+              className={`w-7 h-0.5 bg-custom-gray transition-all duration-300 ease-in-out transform ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
+            ></div>
           </button>
         </div>
       </div>
@@ -168,34 +162,33 @@ const Header = () => {
 
       {/* Sliding Menu (Mobile) */}
       <div
-        className={`fixed right-0 top-0 h-full w-full bg-white shadow-xl z-20 transform transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed right-0 top-0 h-full w-full bg-white shadow-xl z-20 transform transition-opacity duration-300 ease-in-out ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       >
         <button
           onClick={toggleMenu}
           className="absolute top-3 right-7 text-3xl text-gray-600"
         >
-          &times;
+          {/* &times; */}
         </button>
         <div className="flex flex-col space-y-6 p-12">
           <form onSubmit={handleSearchSubmit} className="w-full">
-            <div className="flex items-center px-4 py-4 rounded">
+            <div className="flex items-center px-4 py-4 rounded-lg bg-gray-100">
               <Image
-                src="/icons/search.webp" // Path to your image
+                src="/icons/search.webp"
                 alt="Search"
-                width={25} // Image width (adjust as needed)
-                height={25} // Image height (adjust as needed)
-                className="mr-2" // Add margin to the right of the image
+                width={25}
+                height={25}
+                className="mr-2 "
               />
               <input
                 type="search"
                 name="query"
                 placeholder="Search"
-                className="w-full caret-blue-500 focus:outline-none bg-transparent placeholder:text-gray-500 placeholder:text-lg appearance-none"
+                className="w-full caret-blue-500 focus:outline-none bg-transparent  placeholder:text-lg appearance-none"
               />
             </div>
           </form>
 
-          <CartButton itemCount={itemCount} />
           <AuthButtons user={user} createClerkPasskey={createClerkPasskey} />
         </div>
       </div>
