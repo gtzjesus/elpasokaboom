@@ -71,3 +71,13 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: black;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+}

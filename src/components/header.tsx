@@ -1,28 +1,27 @@
-'use client'; // This is necessary to mark the component as client-side
+'use client';
 
-import { ClerkLoaded, SignInButton, UserButton, useUser } from '@clerk/nextjs'; // Import from nextjs
+import { ClerkLoaded, SignInButton, UserButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
 import { PackageIcon } from '@sanity/icons';
 import useBasketStore from '../../store/store';
 import { useState, useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation'; // Use from next/navigation
+import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
 
 const CartButton = ({ itemCount }: { itemCount: number }) => (
   <Link
     href="/basket"
-    className="relative flex justify-center items-center space-x-2 font-bold py-2 px-4 rounded "
+    className="relative flex justify-center items-center space-x-2 font-bold py-2 px-4 rounded"
   >
     <Image
-      src="/icons/bag.webp" // Path to your image
+      src="/icons/bag.webp"
       alt="Bag"
-      width={50} // Image width (adjust as needed)
-      height={50} // Image height (adjust as needed)
-      className="w-6 h-6 opacity-70" // Image size
+      width={50}
+      height={50}
+      className="w-6 h-6 opacity-70"
     />
-
     {itemCount > 0 && (
-      <span className="absolute opacity-85 -top-0.5 bg-custom-gray text-black rounded-full w-3 h-3 flex items-center justify-center text-[8px] font-bold transition-all duration-200 ease-in-out">
+      <span className="absolute opacity-55 -top-0.5 bg-custom-gray text-black rounded-full w-3 h-3 flex items-center justify-center text-[8px] font-bold transition-all duration-500 ease-in-out">
         {itemCount}
       </span>
     )}
@@ -34,7 +33,7 @@ const AuthButtons = ({
   createClerkPasskey,
 }: {
   /* eslint-disable @typescript-eslint/no-explicit-any */
-  user: any; // Type should be `any` since `useUser()` returns a user object which can be null
+  user: any;
   createClerkPasskey: () => void;
 }) => (
   <>
@@ -77,12 +76,29 @@ const Header = () => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
     setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
@@ -110,29 +126,28 @@ const Header = () => {
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Cast event target to HTMLFormElement
     const form = e.target as HTMLFormElement;
     const query = new FormData(form).get('query') as string;
 
-    // Close the menu
     setIsMenuOpen(false);
-
-    // Push the search query to the router
     router.push(`/search?query=${query}`);
 
-    // Blur the input to close the keyboard
     const inputElement = form.querySelector(
       'input[name="query"]'
     ) as HTMLInputElement;
     if (inputElement) {
-      inputElement.blur(); // This will remove focus from the input and close the keyboard
+      inputElement.blur();
     }
   };
 
   if (!isMounted) return null;
 
   return (
-    <header className="flex flex-wrap justify-between items-center px-8 py-4 relative">
+    <header
+      className={`${
+        scrolled ? 'bg-white shadow-lg' : 'bg-transparent'
+      } sticky top-0 z-10 transition-all duration-500 ease-in-out flex flex-wrap justify-between items-center px-3 py-3 relative`}
+    >
       <div className="flex w-full flex-wrap justify-between items-center">
         <Link
           href="/"
@@ -147,11 +162,9 @@ const Header = () => {
           />
         </Link>
 
-        <div className="flex items-center space-x-4 sm:mt-0">
-          {/* Cart Button */}
+        <div className="flex items-center space-x-2 sm:mt-0">
           <CartButton itemCount={itemCount} />
 
-          {/* Hamburger Button */}
           <button
             onClick={toggleMenu}
             className="sm:hidden flex flex-col justify-center items-center space-y-1 z-30 relative group"
@@ -159,7 +172,6 @@ const Header = () => {
             <div
               className={`w-7 h-0.5 bg-black opacity-50 transition-all duration-300 ease-in-out transform ${isMenuOpen ? 'rotate-45 translate-y-0.5' : ''}`}
             ></div>
-
             <div
               className={`w-7 h-0.5 bg-black opacity-50 transition-all duration-300 ease-in-out transform ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
             ></div>
