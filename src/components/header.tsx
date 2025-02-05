@@ -11,18 +11,18 @@ import Image from 'next/image';
 const CartButton = ({ itemCount }: { itemCount: number }) => (
   <Link
     href="/basket"
-    className="relative flex justify-center items-center space-x-2 font-bold py-2 px-4 rounded"
+    className="relative flex justify-center items-center space-x-2 font-bold py-2 px-4 rounded "
   >
     <Image
       src="/icons/bag.webp" // Path to your image
       alt="Bag"
       width={30} // Image width (adjust as needed)
       height={30} // Image height (adjust as needed)
-      className="w-6 h-6" // Image size
+      className="w-6 h-6 opacity-70" // Image size
     />
 
     {itemCount > 0 && (
-      <span className="absolute -top--0 -right-0.5 bg-custom-gray text-black rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold transition-all duration-200 ease-in-out">
+      <span className="absolute opacity-85 -top-0.5 bg-custom-gray text-black rounded-full w-3 h-3 flex items-center justify-center text-[8px] font-bold transition-all duration-200 ease-in-out">
         {itemCount}
       </span>
     )}
@@ -130,7 +130,7 @@ const Header = () => {
             alt="Nextcommerce"
             width={30}
             height={30}
-            className="w-8 h-8"
+            className="w-8 h-8 opacity-70"
           />
         </Link>
 
@@ -144,11 +144,11 @@ const Header = () => {
             className="sm:hidden flex flex-col justify-center items-center space-y-1 z-30 relative group"
           >
             <div
-              className={`w-7 h-0.5 bg-custom-gray transition-all duration-300 ease-in-out transform ${isMenuOpen ? 'rotate-45 translate-y-0.5' : ''}`}
+              className={`w-7 h-0.5 bg-black opacity-70 transition-all duration-300 ease-in-out transform ${isMenuOpen ? 'rotate-45 translate-y-0.5' : ''}`}
             ></div>
 
             <div
-              className={`w-7 h-0.5 bg-custom-gray transition-all duration-300 ease-in-out transform ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
+              className={`w-7 h-0.5 bg-black opacity-70 transition-all duration-300 ease-in-out transform ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
             ></div>
           </button>
         </div>
@@ -178,13 +178,13 @@ const Header = () => {
                 alt="Search"
                 width={25}
                 height={25}
-                className="mr-2 "
+                className="mr-2"
               />
               <input
                 type="search"
                 name="query"
                 placeholder="Search"
-                className="w-full caret-blue-500 focus:outline-none bg-transparent  placeholder:text-lg appearance-none"
+                className="w-full  caret-blue-500 focus:outline-none bg-transparent  placeholder:text-lg appearance-none"
               />
             </div>
           </form>
