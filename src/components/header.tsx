@@ -16,8 +16,8 @@ const CartButton = ({ itemCount }: { itemCount: number }) => (
     <Image
       src="/icons/bag.webp" // Path to your image
       alt="Bag"
-      width={30} // Image width (adjust as needed)
-      height={30} // Image height (adjust as needed)
+      width={50} // Image width (adjust as needed)
+      height={50} // Image height (adjust as needed)
       className="w-6 h-6 opacity-70" // Image size
     />
 
@@ -109,11 +109,24 @@ const Header = () => {
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const query = new FormData(e.target as HTMLFormElement).get(
-      'query'
-    ) as string;
+
+    // Cast event target to HTMLFormElement
+    const form = e.target as HTMLFormElement;
+    const query = new FormData(form).get('query') as string;
+
+    // Close the menu
     setIsMenuOpen(false);
+
+    // Push the search query to the router
     router.push(`/search?query=${query}`);
+
+    // Blur the input to close the keyboard
+    const inputElement = form.querySelector(
+      'input[name="query"]'
+    ) as HTMLInputElement;
+    if (inputElement) {
+      inputElement.blur(); // This will remove focus from the input and close the keyboard
+    }
   };
 
   if (!isMounted) return null;
@@ -144,11 +157,11 @@ const Header = () => {
             className="sm:hidden flex flex-col justify-center items-center space-y-1 z-30 relative group"
           >
             <div
-              className={`w-7 h-0.5 bg-black opacity-70 transition-all duration-300 ease-in-out transform ${isMenuOpen ? 'rotate-45 translate-y-0.5' : ''}`}
+              className={`w-7 h-0.5 bg-black opacity-50 transition-all duration-300 ease-in-out transform ${isMenuOpen ? 'rotate-45 translate-y-0.5' : ''}`}
             ></div>
 
             <div
-              className={`w-7 h-0.5 bg-black opacity-70 transition-all duration-300 ease-in-out transform ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
+              className={`w-7 h-0.5 bg-black opacity-50 transition-all duration-300 ease-in-out transform ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
             ></div>
           </button>
         </div>
@@ -184,7 +197,7 @@ const Header = () => {
                 type="search"
                 name="query"
                 placeholder="Search"
-                className="w-full  caret-blue-500 focus:outline-none bg-transparent  placeholder:text-lg appearance-none"
+                className="w-full caret-blue-500 focus:outline-none bg-transparent placeholder:text-lg appearance-none"
               />
             </div>
           </form>
