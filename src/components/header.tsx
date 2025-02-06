@@ -160,7 +160,7 @@ const Header = () => {
           >
             <Image
               src="/icons/logo.webp"
-              alt="Nextcommerce"
+              alt="nextcommerce"
               width={30}
               height={30}
               className="w-8 h-8 opacity-70"
@@ -171,12 +171,12 @@ const Header = () => {
           <div className="hidden sm:flex items-center space-x-2">
             <Image
               src="/icons/logo.webp"
-              alt="Nextcommerce"
+              alt="nextcommerce"
               width={30}
               height={30}
-              className="w-8 h-8 opacity-70"
+              className=" opacity-70 "
             />
-            <span className="font-bold text-lg">NextCommerce</span>
+            <span className=" font-bold text-md opacity-70">nextcommerce</span>
           </div>
 
           {/* Search Bar for Desktop */}
