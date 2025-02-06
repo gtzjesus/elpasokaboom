@@ -32,7 +32,6 @@ const AuthButtons = ({
   user,
   createClerkPasskey,
 }: {
-  /* eslint-disable @typescript-eslint/no-explicit-any */
   user: any;
   createClerkPasskey: () => void;
 }) => (
@@ -161,6 +160,28 @@ const Header = () => {
             className="w-8 h-8 opacity-70"
           />
         </Link>
+
+        {/* Search Bar for Desktop */}
+        <form
+          onSubmit={handleSearchSubmit}
+          className="hidden sm:flex items-center w-1/2"
+        >
+          <div className="flex items-center px-4 py-2 rounded-lg bg-gray-50  w-full">
+            <Image
+              src="/icons/search.webp"
+              alt="Search"
+              width={25}
+              height={25}
+              className="w-6 h-6 opacity-70 mr-2"
+            />
+            <input
+              type="search"
+              name="query"
+              placeholder="Search"
+              className="w-full caret-blue-500 focus:outline-none bg-transparent placeholder:text-lg appearance-none"
+            />
+          </div>
+        </form>
 
         <div className="flex items-center space-x-2 sm:mt-0">
           <CartButton itemCount={itemCount} />
