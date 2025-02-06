@@ -32,7 +32,6 @@ const AuthButtons = ({
   user,
   createClerkPasskey,
 }: {
-  /* eslint-disable @typescript-eslint/no-explicit-any */
   user: any;
   createClerkPasskey: () => void;
 }) => (
@@ -40,14 +39,21 @@ const AuthButtons = ({
     <ClerkLoaded>
       {user ? (
         <>
+          {/* Orders Button */}
           <Link
             href="/orders"
             className="flex items-center space-x-2 bg-black hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded"
           >
             <PackageIcon className="w-5 h-5" />
+            <span>Orders</span>
           </Link>
+
+          {/* User Profile */}
           <div className="flex items-center space-x-2">
-            <UserButton />
+            <div className="relative">
+              <UserButton />
+              <div className="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-blue-500 border-2 border-white"></div>
+            </div>
             <div className="hidden sm:block text-xs">
               <p className="text-gray-400 font-bold">{user.fullName}</p>
             </div>
@@ -58,12 +64,14 @@ const AuthButtons = ({
           <SignInButton mode="modal" />
         </div>
       )}
+
+      {/* Passkey Creation Button */}
       {user?.passkeys.length === 0 && (
         <button
           onClick={createClerkPasskey}
-          className="bg-white hover:bg-opacity-90 hover:text-black animate-pulse text-black font-bold py-2 px-4 rounded border-black-300 border"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded border border-blue-600 transition duration-200 ease-in-out transform hover:scale-105"
         >
-          create passkey
+          Create Passkey
         </button>
       )}
     </ClerkLoaded>
@@ -79,7 +87,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [windowWidth, setWindowWidth] = useState<number>(0); // Initial state set to 0
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -98,22 +106,19 @@ const Header = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', () => setWindowWidth(window.innerWidth));
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', () =>
+        setWindowWidth(window.innerWidth)
+      );
     };
   }, []);
 
-  // Now only set window width after the component has mounted (client-side)
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setWindowWidth(window.innerWidth);
-    }
-  }, []); // Empty dependency array to run this effect only once after mount
-
   useEffect(() => {
     // Close menu when resizing to desktop view
-    if (windowWidth >= 768) {
+    if (windowWidth >= 648) {
       setIsMenuOpen(false);
     }
   }, [windowWidth]);
@@ -254,21 +259,21 @@ const Header = () => {
         >
           {/* &times; */}
         </button>
-        <div className="flex flex-col space-y-6 p-12">
+        <div className="flex flex-col space-y-6 p-16">
           <form onSubmit={handleSearchSubmit} className="w-full">
-            <div className="flex items-center px-4 py-4 rounded-lg bg-gray-100">
+            <div className="flex items-center px-4 py-4 rounded-lg bg-gray-50">
               <Image
                 src="/icons/search.webp"
                 alt="Search"
                 width={25}
                 height={25}
-                className="mr-2"
+                className="w-5 h-5 opacity-60 mr-2"
               />
               <input
                 type="search"
                 name="query"
                 placeholder="Search"
-                className="w-full caret-blue-500 focus:outline-none bg-transparent placeholder:text-lg appearance-none"
+                className="w-full caret-blue-500 focus:outline-none bg-transparent placeholder:text-md appearance-none"
               />
             </div>
           </form>
