@@ -42,10 +42,9 @@ const AuthButtons = ({
           {/* Orders Button */}
           <Link
             href="/orders"
-            className="flex items-center space-x-2 bg-black hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded"
+            className="flex items-center space-x-2 opacity-60 text-black font-bold py-2 px-4 rounded"
           >
-            <PackageIcon className="w-5 h-5" />
-            <span>Orders</span>
+            <span>orders</span>
           </Link>
 
           {/* User Profile */}
@@ -174,10 +173,7 @@ const Header = () => {
         {/* Left side: Logo and Company Name */}
         <div className="flex items-center space-x-4 flex-1">
           {/* Logo for Mobile */}
-          <Link
-            href="/"
-            className="font-bold hover:opacity-50 cursor-pointer sm:mx-0 sm:hidden"
-          >
+          <Link href="/" className="font-bold cursor-pointer sm:mx-0 sm:hidden">
             <Image
               src="/icons/logo.webp"
               alt="nextcommerce"
@@ -207,7 +203,7 @@ const Header = () => {
             <div className="flex items-center px-4 py-2 rounded-lg bg-gray-50 w-full">
               <Image
                 src="/icons/search.webp"
-                alt="Search"
+                alt="search"
                 width={25}
                 height={25}
                 className="w-5 h-5 opacity-60 mr-2"
@@ -215,7 +211,7 @@ const Header = () => {
               <input
                 type="search"
                 name="query"
-                placeholder="Search"
+                placeholder="search"
                 className="w-full caret-blue-500 focus:outline-none bg-transparent placeholder:text-md appearance-none"
               />
             </div>
@@ -264,7 +260,7 @@ const Header = () => {
             <div className="flex items-center px-4 py-4 rounded-lg bg-gray-50">
               <Image
                 src="/icons/search.webp"
-                alt="Search"
+                alt="search"
                 width={25}
                 height={25}
                 className="w-5 h-5 opacity-60 mr-2"
@@ -272,7 +268,7 @@ const Header = () => {
               <input
                 type="search"
                 name="query"
-                placeholder="Search"
+                placeholder="search"
                 className="w-full caret-blue-500 focus:outline-none bg-transparent placeholder:text-md appearance-none"
               />
             </div>
