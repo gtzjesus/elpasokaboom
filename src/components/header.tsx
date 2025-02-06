@@ -1,4 +1,5 @@
 'use client';
+
 import { ClerkLoaded, SignInButton, UserButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
 import useBasketStore from '../../store/store';
@@ -25,52 +26,34 @@ const CartButton = ({ itemCount }: { itemCount: number }) => (
     )}
   </Link>
 );
-
-const AuthButtons = ({
-  user,
-  createClerkPasskey,
-}: {
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  user: any;
-  createClerkPasskey: () => void;
-}) => (
-  <>
-    <ClerkLoaded>
-      {user ? (
-        <>
-          <Link
-            href="/orders"
-            className="flex items-center space-x-2 opacity-60 text-black font-bold py-2 px-4 rounded"
-          >
-            <span>orders</span>
-          </Link>
-
-          <div className="flex items-center space-x-2">
-            <div className="relative">
-              <UserButton />
-              <div className="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-blue-500 border-2 border-white"></div>
-            </div>
-            <div className="hidden sm:block text-xs">
-              <p className="text-gray-400 font-bold">{user.fullName}</p>
-            </div>
-          </div>
-        </>
-      ) : (
-        <div className="opacity-60">
-          <SignInButton mode="modal" />
-        </div>
-      )}
-
-      {user?.passkeys.length === 0 && (
-        <button
-          onClick={createClerkPasskey}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded border border-blue-600 transition duration-200 ease-in-out transform hover:scale-105"
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const AuthButtons = ({ user }: { user: any }) => (
+  <ClerkLoaded>
+    {user ? (
+      <>
+        <Link
+          href="/orders"
+          className="flex items-center space-x-2 opacity-60 text-black font-bold py-2 px-4 rounded"
         >
-          passkey
-        </button>
-      )}
-    </ClerkLoaded>
-  </>
+          <span>orders</span>
+        </Link>
+
+        <div className="flex items-center space-x-2">
+          <div className="relative">
+            <UserButton />
+            <div className="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-blue-500 border-2 border-white"></div>
+          </div>
+          <div className="hidden sm:block text-xs">
+            <p className="text-gray-400 font-bold">{user.fullName}</p>
+          </div>
+        </div>
+      </>
+    ) : (
+      <div className="opacity-60">
+        <SignInButton mode="modal" />
+      </div>
+    )}
+  </ClerkLoaded>
 );
 
 const Header = () => {
@@ -96,11 +79,7 @@ const Header = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const handleScroll = () => {
-        if (window.scrollY > 50) {
-          setScrolled(true);
-        } else {
-          setScrolled(false);
-        }
+        setScrolled(window.scrollY > 50);
       };
 
       const handleResize = () => setWindowWidth(window.innerWidth);
@@ -108,7 +87,6 @@ const Header = () => {
       window.addEventListener('scroll', handleScroll);
       window.addEventListener('resize', handleResize);
 
-      // Clean up the event listeners on component unmount
       return () => {
         window.removeEventListener('scroll', handleScroll);
         window.removeEventListener('resize', handleResize);
@@ -124,15 +102,6 @@ const Header = () => {
   }, [windowWidth]);
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
-
-  const createClerkPasskey = async () => {
-    try {
-      const response = await user?.createPasskey();
-      console.log(response);
-    } catch (err) {
-      console.error('Error', JSON.stringify(err, null, 2));
-    }
-  };
 
   useEffect(() => {
     setIsMenuOpen(false);
@@ -168,7 +137,7 @@ const Header = () => {
     <header
       className={`${
         scrolled ? 'bg-white shadow-lg' : 'bg-transparent'
-      } sticky top-0 z-10 transition-all duration-500 ease-in-out flex items-center px-3 py-3 relative`}
+      } sticky top-0 z-10 transition-all duration-500 ease-in-out flex items-center px-3 py-3`}
     >
       <div className="flex w-full items-center justify-between">
         {/* Left side: Logo and Company Name */}
@@ -219,7 +188,7 @@ const Header = () => {
         <div className="flex items-center ">
           <CartButton itemCount={itemCount} />
           <div className="hidden sm:flex items-center space-x-4">
-            <AuthButtons user={user} createClerkPasskey={createClerkPasskey} />
+            <AuthButtons user={user} />
           </div>
         </div>
 
@@ -267,7 +236,7 @@ const Header = () => {
             </div>
           </form>
 
-          <AuthButtons user={user} createClerkPasskey={createClerkPasskey} />
+          <AuthButtons user={user} />
         </div>
       </div>
     </header>
