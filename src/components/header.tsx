@@ -2,7 +2,6 @@
 
 import { ClerkLoaded, SignInButton, UserButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
-import { PackageIcon } from '@sanity/icons';
 import useBasketStore from '../../store/store';
 import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
@@ -32,6 +31,7 @@ const AuthButtons = ({
   user,
   createClerkPasskey,
 }: {
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   user: any;
   createClerkPasskey: () => void;
 }) => (
@@ -70,7 +70,7 @@ const AuthButtons = ({
           onClick={createClerkPasskey}
           className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded border border-blue-600 transition duration-200 ease-in-out transform hover:scale-105"
         >
-          Create Passkey
+          passkey
         </button>
       )}
     </ClerkLoaded>
