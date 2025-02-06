@@ -21,7 +21,7 @@ const CartButton = ({ itemCount }: { itemCount: number }) => (
       className="w-6 h-6 opacity-70"
     />
     {itemCount > 0 && (
-      <span className="absolute opacity-55 -top-0.5 bg-custom-gray text-black rounded-full w-3 h-3 flex items-center justify-center text-[8px] font-bold transition-all duration-500 ease-in-out">
+      <span className="absolute opacity-55 -top-0.5 bg-custom-gray text-black rounded-full w-3 h-3 flex items-center justify-center text-[8px] font-bold transition-all duration-200 ease-in-out">
         {itemCount}
       </span>
     )}
@@ -54,7 +54,9 @@ const AuthButtons = ({
           </div>
         </>
       ) : (
-        <SignInButton mode="modal" />
+        <div className="opacity-60">
+          <SignInButton mode="modal" />
+        </div>
       )}
       {user?.passkeys.length === 0 && (
         <button
@@ -149,11 +151,12 @@ const Header = () => {
       } sticky top-0 z-10 transition-all duration-500 ease-in-out flex items-center px-3 py-3 relative`}
     >
       <div className="flex w-full items-center justify-between">
-        {/* Left side: Logo and Search */}
+        {/* Left side: Logo and Company Name */}
         <div className="flex items-center space-x-4 flex-1">
+          {/* Logo for Mobile */}
           <Link
             href="/"
-            className="font-bold hover:opacity-50 cursor-pointer sm:mx-0"
+            className="font-bold hover:opacity-50 cursor-pointer sm:mx-0 sm:hidden"
           >
             <Image
               src="/icons/logo.webp"
@@ -163,6 +166,18 @@ const Header = () => {
               className="w-8 h-8 opacity-70"
             />
           </Link>
+
+          {/* Company Title for Desktop */}
+          <div className="hidden sm:flex items-center space-x-2">
+            <Image
+              src="/icons/logo.webp"
+              alt="Nextcommerce"
+              width={30}
+              height={30}
+              className="w-8 h-8 opacity-70"
+            />
+            <span className="font-bold text-lg">NextCommerce</span>
+          </div>
 
           {/* Search Bar for Desktop */}
           <form
@@ -175,20 +190,20 @@ const Header = () => {
                 alt="Search"
                 width={25}
                 height={25}
-                className="w-6 h-6 opacity-70 mr-2"
+                className="w-5 h-5 opacity-60 mr-2"
               />
               <input
                 type="search"
                 name="query"
                 placeholder="Search"
-                className="w-full caret-blue-500 focus:outline-none bg-transparent placeholder:text-lg appearance-none"
+                className="w-full caret-blue-500 focus:outline-none bg-transparent placeholder:text-md appearance-none"
               />
             </div>
           </form>
         </div>
 
         {/* Right side: Cart Button and Auth Buttons */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center ">
           <CartButton itemCount={itemCount} />
           <div className="hidden sm:flex items-center space-x-4">
             <AuthButtons user={user} createClerkPasskey={createClerkPasskey} />
