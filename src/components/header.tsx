@@ -32,6 +32,7 @@ const AuthButtons = ({
   user,
   createClerkPasskey,
 }: {
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   user: any;
   createClerkPasskey: () => void;
 }) => (
@@ -145,59 +146,66 @@ const Header = () => {
     <header
       className={`${
         scrolled ? 'bg-white shadow-lg' : 'bg-transparent'
-      } sticky top-0 z-10 transition-all duration-500 ease-in-out flex flex-wrap justify-between items-center px-3 py-3 relative`}
+      } sticky top-0 z-10 transition-all duration-500 ease-in-out flex items-center px-3 py-3 relative`}
     >
-      <div className="flex w-full flex-wrap justify-between items-center">
-        <Link
-          href="/"
-          className="font-bold hover:opacity-50 cursor-pointer sm:mx-0"
-        >
-          <Image
-            src="/icons/logo.webp"
-            alt="Nextcommerce"
-            width={30}
-            height={30}
-            className="w-8 h-8 opacity-70"
-          />
-        </Link>
-
-        {/* Search Bar for Desktop */}
-        <form
-          onSubmit={handleSearchSubmit}
-          className="hidden sm:flex items-center w-1/2"
-        >
-          <div className="flex items-center px-4 py-2 rounded-lg bg-gray-50  w-full">
-            <Image
-              src="/icons/search.webp"
-              alt="Search"
-              width={25}
-              height={25}
-              className="w-6 h-6 opacity-70 mr-2"
-            />
-            <input
-              type="search"
-              name="query"
-              placeholder="Search"
-              className="w-full caret-blue-500 focus:outline-none bg-transparent placeholder:text-lg appearance-none"
-            />
-          </div>
-        </form>
-
-        <div className="flex items-center space-x-2 sm:mt-0">
-          <CartButton itemCount={itemCount} />
-
-          <button
-            onClick={toggleMenu}
-            className="sm:hidden flex flex-col justify-center items-center space-y-1 z-30 relative group"
+      <div className="flex w-full items-center justify-between">
+        {/* Left side: Logo and Search */}
+        <div className="flex items-center space-x-4 flex-1">
+          <Link
+            href="/"
+            className="font-bold hover:opacity-50 cursor-pointer sm:mx-0"
           >
-            <div
-              className={`w-7 h-0.5 bg-black opacity-50 transition-all duration-300 ease-in-out transform ${isMenuOpen ? 'rotate-45 translate-y-0.5' : ''}`}
-            ></div>
-            <div
-              className={`w-7 h-0.5 bg-black opacity-50 transition-all duration-300 ease-in-out transform ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
-            ></div>
-          </button>
+            <Image
+              src="/icons/logo.webp"
+              alt="Nextcommerce"
+              width={30}
+              height={30}
+              className="w-8 h-8 opacity-70"
+            />
+          </Link>
+
+          {/* Search Bar for Desktop */}
+          <form
+            onSubmit={handleSearchSubmit}
+            className="hidden sm:flex items-center w-1/2"
+          >
+            <div className="flex items-center px-4 py-2 rounded-lg bg-gray-50 w-full">
+              <Image
+                src="/icons/search.webp"
+                alt="Search"
+                width={25}
+                height={25}
+                className="w-6 h-6 opacity-70 mr-2"
+              />
+              <input
+                type="search"
+                name="query"
+                placeholder="Search"
+                className="w-full caret-blue-500 focus:outline-none bg-transparent placeholder:text-lg appearance-none"
+              />
+            </div>
+          </form>
         </div>
+
+        {/* Right side: Cart Button and Auth Buttons */}
+        <div className="flex items-center space-x-4">
+          <CartButton itemCount={itemCount} />
+          <div className="hidden sm:flex items-center space-x-4">
+            <AuthButtons user={user} createClerkPasskey={createClerkPasskey} />
+          </div>
+        </div>
+
+        <button
+          onClick={toggleMenu}
+          className="sm:hidden flex flex-col justify-center items-center space-y-1 z-30 relative group"
+        >
+          <div
+            className={`w-7 h-0.5 bg-black opacity-50 transition-all duration-300 ease-in-out transform ${isMenuOpen ? 'rotate-45 translate-y-0.5' : ''}`}
+          ></div>
+          <div
+            className={`w-7 h-0.5 bg-black opacity-50 transition-all duration-300 ease-in-out transform ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
+          ></div>
+        </button>
       </div>
 
       {/* Backdrop (Mobile) */}
