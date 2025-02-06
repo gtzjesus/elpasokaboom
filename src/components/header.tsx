@@ -1,5 +1,4 @@
 'use client';
-
 import { ClerkLoaded, SignInButton, UserButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
 import useBasketStore from '../../store/store';
@@ -39,7 +38,6 @@ const AuthButtons = ({
     <ClerkLoaded>
       {user ? (
         <>
-          {/* Orders Button */}
           <Link
             href="/orders"
             className="flex items-center space-x-2 opacity-60 text-black font-bold py-2 px-4 rounded"
@@ -47,7 +45,6 @@ const AuthButtons = ({
             <span>orders</span>
           </Link>
 
-          {/* User Profile */}
           <div className="flex items-center space-x-2">
             <div className="relative">
               <UserButton />
@@ -64,7 +61,6 @@ const AuthButtons = ({
         </div>
       )}
 
-      {/* Passkey Creation Button */}
       {user?.passkeys.length === 0 && (
         <button
           onClick={createClerkPasskey}
@@ -86,33 +82,38 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState<number>(0); // Initialize as 0
 
   const router = useRouter();
   const pathname = usePathname();
 
+  // Ensuring the code runs only on the client side
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
+  // Handling scroll and window resize events
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
+    if (typeof window !== 'undefined') {
+      const handleScroll = () => {
+        if (window.scrollY > 50) {
+          setScrolled(true);
+        } else {
+          setScrolled(false);
+        }
+      };
 
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', () => setWindowWidth(window.innerWidth));
+      const handleResize = () => setWindowWidth(window.innerWidth);
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', () =>
-        setWindowWidth(window.innerWidth)
-      );
-    };
+      window.addEventListener('scroll', handleScroll);
+      window.addEventListener('resize', handleResize);
+
+      // Clean up the event listeners on component unmount
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('resize', handleResize);
+      };
+    }
   }, []);
 
   useEffect(() => {
@@ -172,7 +173,6 @@ const Header = () => {
       <div className="flex w-full items-center justify-between">
         {/* Left side: Logo and Company Name */}
         <div className="flex items-center space-x-4 flex-1">
-          {/* Logo for Mobile */}
           <Link href="/" className="font-bold cursor-pointer sm:mx-0 sm:hidden">
             <Image
               src="/icons/logo.webp"
@@ -183,7 +183,6 @@ const Header = () => {
             />
           </Link>
 
-          {/* Company Title for Desktop */}
           <div className="hidden sm:flex items-center space-x-2">
             <Image
               src="/icons/logo.webp"
@@ -192,10 +191,9 @@ const Header = () => {
               height={30}
               className=" opacity-70 "
             />
-            <span className=" font-bold text-md opacity-70">nextcommerce</span>
+            <span className="font-bold text-md opacity-70">nextcommerce</span>
           </div>
 
-          {/* Search Bar for Desktop */}
           <form
             onSubmit={handleSearchSubmit}
             className="hidden sm:flex items-center w-1/2"
@@ -218,7 +216,6 @@ const Header = () => {
           </form>
         </div>
 
-        {/* Right side: Cart Button and Auth Buttons */}
         <div className="flex items-center ">
           <CartButton itemCount={itemCount} />
           <div className="hidden sm:flex items-center space-x-4">
@@ -239,22 +236,18 @@ const Header = () => {
         </button>
       </div>
 
-      {/* Backdrop (Mobile) */}
       <div
         className={`fixed inset-0 bg-black bg-opacity-50 z-10 transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         onClick={toggleMenu}
       />
 
-      {/* Sliding Menu (Mobile) */}
       <div
         className={`fixed right-0 top-0 h-full w-full bg-white shadow-xl z-20 transform transition-opacity duration-300 ease-in-out ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       >
         <button
           onClick={toggleMenu}
           className="absolute top-3 right-7 text-3xl text-gray-600"
-        >
-          {/* &times; */}
-        </button>
+        />
         <div className="flex flex-col space-y-6 p-16">
           <form onSubmit={handleSearchSubmit} className="w-full">
             <div className="flex items-center px-4 py-4 rounded-lg bg-gray-50">
