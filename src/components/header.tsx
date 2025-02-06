@@ -79,6 +79,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [windowWidth, setWindowWidth] = useState<number>(0); // Initial state set to 0
 
   const router = useRouter();
   const pathname = usePathname();
@@ -102,6 +103,20 @@ const Header = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  // Now only set window width after the component has mounted (client-side)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setWindowWidth(window.innerWidth);
+    }
+  }, []); // Empty dependency array to run this effect only once after mount
+
+  useEffect(() => {
+    // Close menu when resizing to desktop view
+    if (windowWidth >= 768) {
+      setIsMenuOpen(false);
+    }
+  }, [windowWidth]);
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
