@@ -15,6 +15,7 @@ export default {
       colors: {
         // Custom Colors
         'custom-gray': '#D5D5D5', // Add your custom gray color here
+        pearl: '#F5F5F5',
 
         // Existing custom colors
         background: 'hsl(var(--background))',
