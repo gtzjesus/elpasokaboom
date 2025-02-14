@@ -19,11 +19,11 @@ const CartButton = ({ itemCount }: { itemCount: number }) => (
       alt="Bag"
       width={50}
       height={50}
-      className="w-6 h-6 opacity-70"
+      className="w-6 h-6"
     />
     {itemCount > 0 && (
       // Displays the item count as a small badge on the cart icon if there are items
-      <span className="absolute opacity-55 -top-0.5 bg-custom-gray text-black rounded-full w-3 h-3 flex items-center justify-center text-[8px] font-bold transition-all duration-200 ease-in-out">
+      <span className="absolute opacity-75 -top-0.5 bg-custom-gray text-black rounded-full w-3 h-3 flex items-center justify-center text-[8px] font-bold transition-all duration-200 ease-in-out">
         {itemCount}
       </span>
     )}
@@ -158,7 +158,7 @@ const Header = () => {
     <header
       className={`${
         scrolled ? 'bg-pearl shadow-lg' : 'bg-transparent'
-      } sticky top-0 z-10 transition-all duration-500 ease-in-out flex items-center px-3 py-3`}
+      } fixed top-0 z-20 transition-all duration-500 ease-in-out flex items-center px-3 py-3 w-full`}
     >
       <div className="flex w-full items-center justify-between">
         {/* Left side: Logo and Company Name */}
@@ -169,7 +169,7 @@ const Header = () => {
               alt="nextcommerce"
               width={30}
               height={30}
-              className="w-8 h-8 opacity-70"
+              className="w-8 h-8 "
             />
           </Link>
 
@@ -179,9 +179,9 @@ const Header = () => {
               alt="nextcommerce"
               width={30}
               height={30}
-              className=" opacity-70 "
+              className=""
             />
-            <span className="font-bold text-md opacity-70">nextcommerce</span>
+            <span className="font-bold text-md">nextcommerce</span>
           </div>
 
           {/* Search Bar: Visible on larger screens */}
@@ -221,10 +221,10 @@ const Header = () => {
           className="sm:hidden flex flex-col justify-center items-center space-y-1 z-30 relative group"
         >
           <div
-            className={`w-7 h-0.5 bg-black opacity-50 transition-all duration-300 ease-in-out transform ${isMenuOpen ? 'rotate-45 translate-y-0.5' : ''}`}
+            className={`w-7 h-0.5 bg-black  transition-all duration-300 ease-in-out transform ${isMenuOpen ? 'rotate-45 translate-y-0.5' : ''}`}
           ></div>
           <div
-            className={`w-7 h-0.5 bg-black opacity-50 transition-all duration-300 ease-in-out transform ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
+            className={`w-7 h-0.5 bg-black  transition-all duration-300 ease-in-out transform ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
           ></div>
         </button>
       </div>

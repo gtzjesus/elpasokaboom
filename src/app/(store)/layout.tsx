@@ -2,7 +2,6 @@
 import type { Metadata } from 'next';
 import '../globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
-import Header from '../../components/header';
 import { SanityLive } from '@/sanity/lib/live';
 import { draftMode } from 'next/headers';
 import { DisableDraftMode } from '@/components/DisableDraftMode';
@@ -27,7 +26,6 @@ export default async function StoreLayout({
         </>
       )}
       <main>
-        <Header />
         {children} {/* Render the page content here */}
       </main>
 
