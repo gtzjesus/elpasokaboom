@@ -8,22 +8,22 @@ function ProductThumb({ product }: { product: Product }) {
   return (
     <Link
       href={`/product/${product.slug?.current}`}
-      className={`group flex flex-col overflow-hidden ${isOutOfStock ? 'opacity-65' : ''}`}
+      className={` group flex flex-col overflow-hidden  ${isOutOfStock ? 'opacity-50' : ''}`}
     >
-      <div className="relative aspect-square w-full h-full overflow-hidden">
+      <div className=" relative aspect-square w-full h-full overflow-hidden">
         {product.image && (
           <Image
             className="object-contain w-full h-full"
             src={imageUrl(product.image).url()}
             alt={product.name || 'product image'}
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="(max-width: 728px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         )}
 
         {isOutOfStock && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <span className="text-white font-bold text-lg">out of stock</span>
+          <div className="absolute inset-0 flex items-center justify-center  bg-opacity-50">
+            <span className="text-white font-light text-xs">out of stock</span>
           </div>
         )}
       </div>
