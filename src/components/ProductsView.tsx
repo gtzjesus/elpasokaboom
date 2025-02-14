@@ -7,19 +7,29 @@ interface ProductsViewProps {
   categories: Category[];
 }
 
+/**
+ * ProductsView Component
+ *
+ * Displays a list of products within a responsive layout.
+ *
+ * @param {Object} props - Component properties.
+ * @param {Product[]} props.products - Array of product objects to display.
+ * @param {Category[]} props.categories - Array of category objects for filtering products.
+ *
+ * @returns {JSX.Element} The rendered ProductsView component.
+ */
 const ProductsView = ({ products }: ProductsViewProps) => {
   return (
     <div className="flex flex-col">
-      {/* categories */}
+      {/* Category Selector */}
       {/* <div className="w-full sm:w-[200px]">
         <CategorySelector categories={categories} />
       </div> */}
-      {/* products grid */}
+
+      {/* Products Grid */}
       <div>
-        <div className="">
-          <ProductGrid products={products} />
-          <hr className="w-1/2 sm:w-3/4" />
-        </div>
+        <ProductGrid products={products} />
+        <hr className="w-1/2 sm:w-3/4" />
       </div>
     </div>
   );
