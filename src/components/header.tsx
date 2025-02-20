@@ -193,23 +193,32 @@ const Header = () => {
           <div className="hidden sm:flex items-center space-x-2">
             <Image
               // Default logo for larger screens
-              src="/icons/logo.webp"
+              // Conditionally switch logo based on scroll state
+              src={scrolled ? '/icons/logo.webp' : '/icons/logo-white.webp'}
               alt="nextcommerce"
               width={30}
               height={30}
               className=""
             />
-            <span className="font-bold text-md">nextcommerce</span>
+            <span
+              className={`font-bold text-md ${scrolled ? 'text-black' : 'text-white'}`}
+            >
+              Nextcommerce
+            </span>
           </div>
 
           {/* Search Bar: Visible on larger screens */}
           <form
             onSubmit={handleSearchSubmit}
-            className="hidden sm:flex items-center w-1/2"
+            className={`hidden sm:flex items-center w-1/2 transition-all duration-300 ease-in-out ${
+              scrolled
+                ? 'bg-white border border-gray-300 shadow-lg'
+                : 'bg-transparent border border-transparent'
+            } px-4 py-2 rounded-lg`}
           >
-            <div className="flex items-center px-4 py-2 rounded-lg bg-gray-50 w-full">
+            <div className="flex items-center w-full">
               <Image
-                src="/icons/search.webp"
+                src={`${scrolled ? '/icons/search.webp' : '/icons/search-white.webp'}`}
                 alt="search"
                 width={25}
                 height={25}
@@ -218,8 +227,8 @@ const Header = () => {
               <input
                 type="search"
                 name="query"
-                placeholder="search"
-                className="w-full caret-blue-500 focus:outline-none bg-transparent placeholder:text-md appearance-none"
+                placeholder="Search"
+                className={`w-full caret-blue-500 focus:outline-none bg-transparent placeholder:text-md appearance-none ${scrolled ? 'text-black' : 'text-white'}`}
               />
             </div>
           </form>
@@ -228,7 +237,9 @@ const Header = () => {
         {/* Right side: Cart and Auth Buttons */}
         <div className="flex items-center ">
           <CartButton itemCount={itemCount} scrolled={scrolled} />
-          <div className="hidden sm:flex items-center space-x-4">
+          <div
+            className={`hidden sm:flex items-center space-x-4 ${scrolled ? 'text-black' : 'text-white'}`}
+          >
             <AuthButtons user={user} />
           </div>
         </div>
@@ -286,7 +297,9 @@ const Header = () => {
           </form>
 
           {/* Mobile Auth Buttons */}
-          <AuthButtons user={user} />
+          <div className={` sm:flex items-center space-x-4 text-white`}>
+            <AuthButtons user={user} />
+          </div>
         </div>
       </div>
     </header>
