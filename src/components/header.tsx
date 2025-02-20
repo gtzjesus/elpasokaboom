@@ -133,11 +133,21 @@ const Header = () => {
 
   // Manage body overflow based on menu visibility to prevent scrolling when menu is open
   useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
+    // Prevent scrolling when the menu is open
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden'; // Disable scroll on <html> element
+    } else {
+      document.body.style.overflow = 'auto';
+      document.documentElement.style.overflow = 'auto'; // Re-enable scroll on <html> element
+    }
+
+    // Cleanup the styles on component unmount
     return () => {
       document.body.style.overflow = 'auto';
+      document.documentElement.style.overflow = 'auto';
     };
-  }, [isMenuOpen]);
+  }, [isMenuOpen]); // Only run when menu state changes
 
   // Handle search submission by redirecting to the search page
   const handleSearchSubmit = (e: React.FormEvent) => {
