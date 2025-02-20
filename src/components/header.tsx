@@ -9,13 +9,19 @@ import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
 
 // CartButton component displays the cart icon and the number of items in the basket
-const CartButton = ({ itemCount }: { itemCount: number }) => (
+const CartButton = ({
+  itemCount,
+  scrolled,
+}: {
+  itemCount: number;
+  scrolled: boolean;
+}) => (
   <Link
     href="/basket"
     className="relative flex justify-center items-center space-x-2 font-bold py-2 px-4 rounded"
   >
     <Image
-      src="/icons/bag.webp"
+      src={scrolled ? '/icons/bag.webp' : '/icons/bag-white.webp'} // Change the image based on the scroll state
       alt="Bag"
       width={50}
       height={50}
@@ -165,7 +171,8 @@ const Header = () => {
         <div className="flex items-center space-x-4 flex-1">
           <Link href="/" className="font-bold cursor-pointer sm:mx-0 sm:hidden">
             <Image
-              src="/icons/logo.webp"
+              // Conditionally switch logo based on scroll state
+              src={scrolled ? '/icons/logo.webp' : '/icons/logo-white.webp'}
               alt="nextcommerce"
               width={30}
               height={30}
@@ -175,6 +182,7 @@ const Header = () => {
 
           <div className="hidden sm:flex items-center space-x-2">
             <Image
+              // Default logo for larger screens
               src="/icons/logo.webp"
               alt="nextcommerce"
               width={30}
@@ -209,7 +217,7 @@ const Header = () => {
 
         {/* Right side: Cart and Auth Buttons */}
         <div className="flex items-center ">
-          <CartButton itemCount={itemCount} />
+          <CartButton itemCount={itemCount} scrolled={scrolled} />
           <div className="hidden sm:flex items-center space-x-4">
             <AuthButtons user={user} />
           </div>
@@ -221,10 +229,14 @@ const Header = () => {
           className="sm:hidden flex flex-col justify-center items-center space-y-1 z-30 relative group"
         >
           <div
-            className={`w-7 h-0.5 bg-black  transition-all duration-300 ease-in-out transform ${isMenuOpen ? 'rotate-45 translate-y-0.5' : ''}`}
+            className={`w-7 h-0.5  ${
+              scrolled ? 'bg-black text-white' : 'bg-white text-black'
+            }  transition-all duration-300 ease-in-out transform ${isMenuOpen ? 'rotate-45 translate-y-0.5' : ''}`}
           ></div>
           <div
-            className={`w-7 h-0.5 bg-black  transition-all duration-300 ease-in-out transform ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
+            className={`w-7 h-0.5 ${
+              scrolled ? 'bg-black text-white' : 'bg-white text-black'
+            } transition-all duration-300 ease-in-out transform ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
           ></div>
         </button>
       </div>
@@ -237,7 +249,7 @@ const Header = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed right-0 top-0 h-full w-full bg-white shadow-xl z-20 transform transition-opacity duration-300 ease-in-out ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed right-0 top-0 h-full w-full shadow-xl z-20 transform transition-opacity duration-300 ease-in-out ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       >
         <button
           onClick={toggleMenu}
