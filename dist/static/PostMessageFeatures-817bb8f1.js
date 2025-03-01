@@ -1,0 +1,1 @@
+import{r as a,c as u}from"./sanity-3b6b2486.js";const n=o=>{const t=u(3),{comlink:e}=o;let s,r;return t[0]!==e?(s=()=>e.on("visual-editing/features",c),r=[e],t[0]=e,t[1]=s,t[2]=r):(s=t[1],r=t[2]),a.useEffect(s,r),null};var f=a.memo(n);function c(){return{features:{optimistic:!0}}}export{f as default};

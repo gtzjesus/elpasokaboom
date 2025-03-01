@@ -22,11 +22,20 @@ export const categoryType = defineType({
       name: 'description',
       type: 'text',
     }),
+    defineField({
+      name: 'image', // This is the new image field
+      title: 'Category Image',
+      type: 'image', // Field type is 'image'
+      options: {
+        hotspot: true, // Allow cropping if needed
+      },
+    }),
   ],
   preview: {
     select: {
       title: 'title',
       subtitle: 'description',
+      media: 'image', // Display the image in the preview panel
     },
   },
 });
