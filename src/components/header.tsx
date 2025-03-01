@@ -220,8 +220,8 @@ const Header = () => {
               <Image
                 src={`${scrolled ? '/icons/search.webp' : '/icons/search-white.webp'}`}
                 alt="search"
-                width={25}
-                height={25}
+                width={30}
+                height={30}
                 className="w-5 h-5 opacity-60 mr-2"
               />
               <input
@@ -283,8 +283,8 @@ const Header = () => {
               <Image
                 src="/icons/search.webp"
                 alt="search"
-                width={25}
-                height={25}
+                width={30}
+                height={30}
                 className="w-5 h-5 opacity-60 mr-2"
               />
               <input
