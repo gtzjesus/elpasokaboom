@@ -10,6 +10,7 @@ import BlackFridayBanner from '@/components/BlackFridayBanner';
 import VideoBackground from '@/components/VideoBackground';
 import Header from '@/components/header';
 import HeroSection from '@/components/HeroSection';
+import Footer from '@/components/Footer';
 
 // Enabling static generation and setting revalidation interval
 export const dynamic = 'force-static';
@@ -35,6 +36,8 @@ async function Home() {
         {/* Displaying products and categories */}
         <ProductsView products={products} categories={categories} />
       </div>
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }

@@ -201,7 +201,7 @@ const Header = () => {
               className=""
             />
             <span
-              className={`font-bold text-md ${scrolled ? 'text-black' : 'text-white'}`}
+              className={` text-md ${scrolled ? 'text-black' : 'text-white'}`}
             >
               Nextcommerce
             </span>
@@ -264,7 +264,7 @@ const Header = () => {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 bg-black bg-opacity-50 z-10 transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 bg-black bg-opacity-75 z-10 transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         onClick={toggleMenu}
       />
 
