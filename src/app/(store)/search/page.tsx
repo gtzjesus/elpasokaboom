@@ -1,3 +1,4 @@
+// app/search/page.tsx
 import ProductGrid from '@/components/ProductGrid';
 import { searchProductsByName } from '@/sanity/lib/products/searchProductsByName';
 import React from 'react';
@@ -5,11 +6,9 @@ import React from 'react';
 async function SearchPage({
   searchParams,
 }: {
-  searchParams: Promise<{
-    query: string;
-  }>;
+  searchParams: { query: string }; // Directly access searchParams (no Promise wrapper)
 }) {
-  const { query } = await searchParams;
+  const { query } = searchParams; // searchParams is directly available, no need to await
   const products = await searchProductsByName(query);
 
   if (!products.length) {

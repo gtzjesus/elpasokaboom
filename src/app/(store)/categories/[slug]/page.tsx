@@ -1,3 +1,4 @@
+// app/categories/[slug]/page.tsx
 import { getProductsByCategory } from '@/sanity/lib/products/getProductsByCategory';
 import { getAllCategories } from '@/sanity/lib/products/getAllCategories';
 import ProductsView from '@/components/ProductsView';
@@ -9,8 +10,7 @@ export default async function CategoryPage({
 }: {
   params: { slug: string };
 }) {
-  // Await params.slug to ensure we correctly access it
-  const { slug } = await params; // Ensure params is awaited
+  const { slug } = params; // params is directly available, no need to await
 
   // Fetch the category products based on slug
   const products = await getProductsByCategory(slug);

@@ -1,3 +1,4 @@
+// app/products/[slug]/page.tsx
 import AddToBasketButton from '@/components/AddToBasketButton';
 import { Button } from '@/components/ui/button';
 import { imageUrl } from '@/lib/imageUrl';
@@ -9,8 +10,8 @@ import { notFound } from 'next/navigation';
 export const dynamic = 'force-static';
 export const revalidate = 60;
 
-async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+async function ProductPage({ params }: { params: { slug: string } }) {
+  const { slug } = params; // params is directly available, no need to await
   const product = await getProductBySlug(slug);
   if (!product) {
     return notFound();
