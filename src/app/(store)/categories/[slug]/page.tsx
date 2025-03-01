@@ -9,9 +9,9 @@ import { notFound } from 'next/navigation';
 export default async function CategoryPage({
   params,
 }: {
-  params: { slug: string }; // This is now no longer wrapped in a Promise
+  params: Promise<{ slug: string }>; // Return 'Promise' wrapped params
 }) {
-  const { slug } = params; // Directly destructure slug from params
+  const { slug } = await params; // Await the resolved 'params'
 
   // Fetch the products based on the slug
   const products = await getProductsByCategory(slug);
