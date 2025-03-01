@@ -6,11 +6,11 @@ const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!;
 const apiVersion = process.env.NEXT_PUBLIC_API_VERSION || '2023-09-01'; // Use a default version if not set
 
-console.log('Sanity Client Configuration', {
-  projectId,
-  dataset,
-  apiVersion,
-}); // Log the values
+// console.log('Sanity Client Configuration', {
+//   projectId,
+//   dataset,
+//   apiVersion,
+// }); // Log the values
 
 export const client = createClient({
   projectId,

@@ -23,7 +23,6 @@ export const revalidate = 60;
 async function Home() {
   // Fetching categories data
   const categories: Category[] = await client.fetch('*[_type == "category"]');
-  console.log('Categories fetched:', categories);
 
   return (
     <div>
