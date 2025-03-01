@@ -1,16 +1,28 @@
-// app/categories/[slug]/page.tsx
+// app/(store)/categories/[slug]/page.tsx
+
 import { getProductsByCategory } from '@/sanity/lib/products/getProductsByCategory';
 import { getAllCategories } from '@/sanity/lib/products/getAllCategories';
 import ProductsView from '@/components/ProductsView';
 import { notFound } from 'next/navigation';
 
-// Fetching category data and products by category based on slug
+// Fetch static parameters for pre-rendering dynamic routes
+export async function generateStaticParams() {
+  const categories = await getAllCategories(); // Ensure you fetch your categories dynamically
+
+  return categories
+    .filter((category) => category.slug?.current) // Only include categories with a valid slug
+    .map((category) => ({
+      slug: category.slug.current, // Now we are sure slug is defined
+    }));
+}
+
+// Default function to handle the page rendering
 export default async function CategoryPage({
   params,
 }: {
-  params: { slug: string };
+  params: { slug: string }; // no Promise wrapper here
 }) {
-  const { slug } = params; // params is directly available, no need to await
+  const { slug } = params;
 
   // Fetch the category products based on slug
   const products = await getProductsByCategory(slug);
