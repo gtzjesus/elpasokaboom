@@ -5,32 +5,23 @@ import { getAllCategories } from '@/sanity/lib/products/getAllCategories';
 import ProductsView from '@/components/ProductsView';
 import { notFound } from 'next/navigation';
 
-// Fetching static params for dynamic pages
-export async function generateStaticParams() {
-  const categories = await getAllCategories();
-
-  return categories.map((category) => ({
-    slug: category.slug.current, // Use slug for each category
-  }));
-}
-
-// CategoryPage component handling dynamic page rendering
+// Default function to handle page rendering
 export default async function CategoryPage({
   params,
 }: {
-  params: Promise<{ slug: string }>; // Returning Promise here
+  params: { slug: string }; // This is now no longer wrapped in a Promise
 }) {
-  const { slug } = await params; // Wait for params to resolve
+  const { slug } = params; // Directly destructure slug from params
 
-  // Fetch the category products based on the slug
+  // Fetch the products based on the slug
   const products = await getProductsByCategory(slug);
 
-  // Fetch all categories for displaying category information
+  // Fetch all categories to show fallback information
   const categories = await getAllCategories();
 
-  // If no products found for the category, show 404 page
+  // If no products are found, return a 404 page
   if (!products || products.length === 0) {
-    return notFound(); // Use built-in Next.js method for 404
+    return notFound(); // Built-in method to handle 404 page in Next.js
   }
 
   return (
@@ -43,7 +34,7 @@ export default async function CategoryPage({
             .join(' ')}{' '}
           Collection
         </h1>
-        {/* Display products for this category */}
+        {/* Display the products for this category */}
         <ProductsView products={products} categories={categories} />
       </div>
     </div>
