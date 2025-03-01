@@ -1,4 +1,5 @@
-// app/search/page.tsx
+// app/(store)/search/page.tsx
+
 import ProductGrid from '@/components/ProductGrid';
 import { searchProductsByName } from '@/sanity/lib/products/searchProductsByName';
 import React from 'react';
@@ -6,9 +7,10 @@ import React from 'react';
 async function SearchPage({
   searchParams,
 }: {
-  searchParams: { query: string }; // Directly access searchParams (no Promise wrapper)
+  searchParams: Promise<{ query: string }>;
 }) {
-  const { query } = searchParams; // searchParams is directly available, no need to await
+  const { query } = await searchParams; // Resolve the searchParams promise
+
   const products = await searchProductsByName(query);
 
   if (!products.length) {
@@ -23,6 +25,7 @@ async function SearchPage({
       </div>
     );
   }
+
   return (
     <div className="flex flex-col items-center justify-top min-h-screen bg-gray-100 p-4">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl">

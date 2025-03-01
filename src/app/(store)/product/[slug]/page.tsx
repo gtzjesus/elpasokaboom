@@ -1,4 +1,5 @@
-// app/products/[slug]/page.tsx
+// app/(store)/product/[slug]/page.tsx
+
 import AddToBasketButton from '@/components/AddToBasketButton';
 import { Button } from '@/components/ui/button';
 import { imageUrl } from '@/lib/imageUrl';
@@ -7,22 +8,26 @@ import { PortableText } from 'next-sanity';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
+// Force static rendering and set revalidation
 export const dynamic = 'force-static';
 export const revalidate = 60;
 
-async function ProductPage({ params }: { params: { slug: string } }) {
-  const { slug } = params; // params is directly available, no need to await
+async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params; // Resolve promise
+
   const product = await getProductBySlug(slug);
+
   if (!product) {
     return notFound();
   }
 
   const isOutOfStock = product.stock != null && product.stock <= 0;
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div
-          className={`relative aspect-square overflow-hidden rounded-lg , shadow-lg ${isOutOfStock ? 'opacity-50' : ''}`}
+          className={`relative aspect-square overflow-hidden rounded-lg shadow-lg ${isOutOfStock ? 'opacity-50' : ''}`}
         >
           {product.image && (
             <Image

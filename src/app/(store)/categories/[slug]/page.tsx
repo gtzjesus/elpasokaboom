@@ -5,34 +5,32 @@ import { getAllCategories } from '@/sanity/lib/products/getAllCategories';
 import ProductsView from '@/components/ProductsView';
 import { notFound } from 'next/navigation';
 
-// Fetch static parameters for pre-rendering dynamic routes
+// Fetching static params for dynamic pages
 export async function generateStaticParams() {
-  const categories = await getAllCategories(); // Ensure you fetch your categories dynamically
+  const categories = await getAllCategories();
 
-  return categories
-    .filter((category) => category.slug?.current) // Only include categories with a valid slug
-    .map((category) => ({
-      slug: category.slug.current, // Now we are sure slug is defined
-    }));
+  return categories.map((category) => ({
+    slug: category.slug.current, // Use slug for each category
+  }));
 }
 
-// Default function to handle the page rendering
+// CategoryPage component handling dynamic page rendering
 export default async function CategoryPage({
   params,
 }: {
-  params: { slug: string }; // no Promise wrapper here
+  params: Promise<{ slug: string }>; // Returning Promise here
 }) {
-  const { slug } = params;
+  const { slug } = await params; // Wait for params to resolve
 
-  // Fetch the category products based on slug
+  // Fetch the category products based on the slug
   const products = await getProductsByCategory(slug);
 
-  // Fetch all categories for displaying the category details or fallback info
+  // Fetch all categories for displaying category information
   const categories = await getAllCategories();
 
-  // If no products found for the category, show a 404 page
+  // If no products found for the category, show 404 page
   if (!products || products.length === 0) {
-    return notFound(); // Built-in method to handle 404 page in Next.js
+    return notFound(); // Use built-in Next.js method for 404
   }
 
   return (
@@ -45,7 +43,7 @@ export default async function CategoryPage({
             .join(' ')}{' '}
           Collection
         </h1>
-        {/* Display the products for this category */}
+        {/* Display products for this category */}
         <ProductsView products={products} categories={categories} />
       </div>
     </div>
