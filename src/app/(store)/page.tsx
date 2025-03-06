@@ -55,7 +55,9 @@ const Home = async () => {
       <BlackFridayBanner />
       {/* Main content area */}
       <div className="w-full max-w-7xl mx-auto p-6">
-        <h2 className="text-2xl font-bold mb-6 text-center">Our Collection</h2>
+        <h2 className="barlow-condensed-regular text-3xl font-bold mb-6 text-center ">
+          Our Collection
+        </h2>
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {categories.map((category) => (
             <Link
@@ -76,7 +78,7 @@ const Home = async () => {
                   priority={true}
                 />
                 {/* Capitalize the first word of category title */}
-                <h3 className=" text-sm font-light">
+                <h3 className="barlow-condensed-regular text-left text-md font-semibold">
                   {capitalizeFirstWord(category.title)}
                 </h3>
               </div>

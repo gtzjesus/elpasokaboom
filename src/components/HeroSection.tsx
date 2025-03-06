@@ -20,12 +20,12 @@ const HeroSection: FC = () => {
       {/* Wrapper for text content: Max width of 3xl ensures it doesn't stretch too wide on large screens */}
       <div className="space-y-4 max-w-3xl">
         {/* Headline: Large, bold, and prominent */}
-        <h1 className="text-3xl sm:text-4xl font-extrabold leading-tight">
+        <h1 className="barlow-condensed-regular text-3xl sm:text-4xl font-extrabold leading-tight">
           Nextcommerce
         </h1>
 
         {/* Subheading: Smaller font for technology stack or description */}
-        <p className="text-sm sm:text-xl font-medium">
+        <p className="barlow-condensed-regular text-sm sm:text-xl font-medium">
           nextjs | sanity | clerk | vercel | stripe
         </p>
       </div>

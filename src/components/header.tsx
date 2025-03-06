@@ -200,7 +200,7 @@ const Header = () => {
               className=""
             />
             <span
-              className={` text-md ${scrolled ? 'text-black' : 'text-white'}`}
+              className={`barlow-condensed-regular text-md ${scrolled ? 'text-black' : 'text-white'}`}
             >
               Nextcommerce
             </span>
