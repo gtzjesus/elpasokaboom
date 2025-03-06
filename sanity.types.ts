@@ -182,6 +182,17 @@ export type Category = {
   title?: string;
   slug?: Slug;
   description?: string;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
 };
 
 export type Slug = {
@@ -378,6 +389,17 @@ export type ALL_CATEGORIES_QUERYResult = Array<{
   title?: string;
   slug?: Slug;
   description?: string;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
 }>;
 
 // Source: ./src/sanity/lib/products/getAllProducts.ts
@@ -658,7 +680,7 @@ declare module "@sanity/client" {
     "\n  *[_type == 'category'] | order(name asc)\n  ": ALL_CATEGORIES_QUERYResult;
     "\n  *[_type == 'product'] | order(name asc)\n  ": ALL_PRODUCTS_QUERYResult;
     "\n      *[_type == 'product' && slug.current == $slug] | order(name asc)\n    ": PRODUCT_BY_ID_QUERYResult;
-    "\n      *[_type == 'product' && references(*[_type == 'category' && slug.current == $categorySlug]._id)] | order(name asc)\n    ": PRODUCTS_BY_CATEGORY_QUERYResult;
+    "\n    *[_type == 'product' && references(*[_type == 'category' && slug.current == $categorySlug]._id)] | order(name asc)\n  ": PRODUCTS_BY_CATEGORY_QUERYResult;
     "\n  *[\n    _type == 'product'\n     && name match $searchParam \n  ]| order(name asc)\n  ": PRODUCT_SEARCH_QUERYResult;
     "\n    *[\n        _type == 'sale'\n        && isActive == true \n        && couponCode == $couponCode\n    ] | order(validFfrom desc)[0]\n    ": ACTIVE_SALE_BY_COUPON_QUERYResult;
   }
