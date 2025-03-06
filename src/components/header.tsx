@@ -37,6 +37,7 @@ const CartButton = ({
 );
 
 // AuthButtons component handles user authentication states, showing different buttons based on whether the user is signed in or not
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 const AuthButtons = ({ user }: { user: any }) => (
   <ClerkLoaded>
     {user ? (
