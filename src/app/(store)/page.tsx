@@ -47,23 +47,23 @@ const Home = async () => {
       {/* Main content area */}
       <div className="w-full max-w-7xl mx-auto p-6">
         <h2 className="text-2xl font-bold mb-6 text-center">Our Collection</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {categories.map((category) => (
             <Link
               key={category._id}
               href={`/categories/${category.slug.current}`}
             >
-              <div className="flex flex-col items-center bg-white shadow-lg p-4 rounded-lg">
+              <div className="flex flex-col items-center bg-transparent shadow-lg p-4 rounded-lg">
                 <Image
                   src={
                     category.image
-                      ? urlFor(category.image).width(96).height(96).url()
+                      ? urlFor(category.image).width(200).height(200).url() // You can adjust the size here
                       : '/default-image.jpg'
                   }
                   alt={category.title}
-                  width={96}
-                  height={96}
-                  className="object-cover rounded-full mb-4"
+                  width={200} // Adjusting width
+                  height={200} // Adjusting height to match the width (square)
+                  className="object-cover mb-4" // Remove rounded-full, make image square and cover the space
                   priority={true}
                 />
                 <h3 className="text-lg font-semibold">{category.title}</h3>
