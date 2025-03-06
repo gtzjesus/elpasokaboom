@@ -37,7 +37,6 @@ const CartButton = ({
 );
 
 // AuthButtons component handles user authentication states, showing different buttons based on whether the user is signed in or not
-/* eslint-disable @typescript-eslint/no-explicit-any */
 const AuthButtons = ({ user }: { user: any }) => (
   <ClerkLoaded>
     {user ? (
@@ -71,7 +70,7 @@ const AuthButtons = ({ user }: { user: any }) => (
 );
 
 const Header = () => {
-  // Fetching user data from Clerk
+  // Fetching user data from Clerk (ensure it's client-side)
   const { user } = useUser();
 
   // Basket item count calculation using custom store

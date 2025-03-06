@@ -31,6 +31,15 @@ interface Category {
   image?: SanityImage; // Use the SanityImage type for image
 }
 
+// Helper function to capitalize the first word of the title
+function capitalizeFirstWord(text: string) {
+  const words = text.split(' ');
+  if (words.length > 0) {
+    words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1); // Capitalize first word
+  }
+  return words.join(' ');
+}
+
 const Home = async () => {
   const categories: Category[] = await client.fetch('*[_type == "category"]');
 
@@ -66,7 +75,10 @@ const Home = async () => {
                   className="object-cover mb-4" // Remove rounded-full, make image square and cover the space
                   priority={true}
                 />
-                <h3 className="text-lg font-semibold">{category.title}</h3>
+                {/* Capitalize the first word of category title */}
+                <h3 className=" text-sm font-light">
+                  {capitalizeFirstWord(category.title)}
+                </h3>
               </div>
             </Link>
           ))}
