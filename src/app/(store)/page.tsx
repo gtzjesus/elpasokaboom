@@ -3,8 +3,8 @@ import VideoBackground from '@/components/VideoBackground';
 import HeroSection from '@/components/HeroSection';
 import BlackFridayBanner from '@/components/BlackFridayBanner';
 import Footer from '@/components/Footer';
-import Categories from '@/components/Categories'; // Import the Categories component
-import { Category } from '@/types'; // Import the Category type
+import Categories from '@/components/Categories';
+import { Category } from '@/types';
 import Header from '@/components/Header';
 
 const Home = async () => {
