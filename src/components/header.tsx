@@ -289,7 +289,7 @@ const Header = () => {
                 type="search"
                 name="query"
                 placeholder="Search"
-                className="w-full caret-blue-500 focus:outline-none bg-transparent placeholder:text-md text-gray-700"
+                className="w-full text-white focus:outline-none bg-transparent placeholder:text-md"
               />
               <Image
                 src="/icons/search-white.webp"
