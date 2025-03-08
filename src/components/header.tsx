@@ -264,10 +264,9 @@ const Header = () => {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 bg-black bg-opacity-75 z-10 transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 bg-black bg-opacity-85 z-10 transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         onClick={toggleMenu}
       />
-
       {/* Mobile Menu */}
       <div
         className={`fixed right-0 top-0 h-full w-full shadow-xl z-20 transform transition-opacity duration-300 ease-in-out ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
@@ -276,30 +275,29 @@ const Header = () => {
           onClick={toggleMenu}
           className="absolute top-3 right-7 text-3xl text-gray-600"
         />
-        <div className="flex flex-col space-y-6 p-16">
+        <div className="flex flex-col items-center justify-center h-full p-16 space-y-6">
+          {/* Mobile Auth Buttons */}
+          <div className="text-white text-2xl flex flex-col items-center space-y-4">
+            <AuthButtons user={user} />
+          </div>
           {/* Mobile Search */}
           <form onSubmit={handleSearchSubmit} className="w-full">
-            <div className="flex items-center px-4 py-4 rounded-lg bg-gray-50">
-              <Image
-                src="/icons/search.webp"
-                alt="search"
-                width={30}
-                height={30}
-                className="w-5 h-5 opacity-60 mr-2"
-              />
+            <div className="flex items-center border-b-2 border-gray-300 px-4 py-2">
               <input
                 type="search"
                 name="query"
                 placeholder="Search"
-                className="w-full caret-blue-500 focus:outline-none bg-transparent placeholder:text-md appearance-none"
+                className="w-full text-white focus:outline-none bg-transparent placeholder:text-md "
+              />
+              <Image
+                src="/icons/search-white.webp"
+                alt="search"
+                width={30}
+                height={30}
+                className="w-5 h-5 opacity-80 ml-2"
               />
             </div>
           </form>
-
-          {/* Mobile Auth Buttons */}
-          <div className={` sm:flex items-center space-x-4 text-white`}>
-            <AuthButtons user={user} />
-          </div>
         </div>
       </div>
     </header>
