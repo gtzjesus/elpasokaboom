@@ -264,7 +264,7 @@ const Header = () => {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 bg-black bg-opacity-85 z-10 transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 bg-black bg-opacity-90 z-10 transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         onClick={toggleMenu}
       />
       {/* Mobile Menu */}
@@ -273,11 +273,13 @@ const Header = () => {
       >
         <button
           onClick={toggleMenu}
-          className="absolute top-3 right-7 text-3xl text-gray-600"
-        />
+          className="absolute top-3.5 right-12 text-lg text-white"
+        >
+          {isMenuOpen ? 'close' : <span className="text-white"></span>}
+        </button>
         <div className="flex flex-col items-center justify-center h-full p-16 space-y-6">
           {/* Mobile Auth Buttons */}
-          <div className="text-white text-2xl flex flex-col items-center space-y-4">
+          <div className="flex flex-col items-center space-y-4 text-white text-2xl">
             <AuthButtons user={user} />
           </div>
           {/* Mobile Search */}
@@ -287,14 +289,14 @@ const Header = () => {
                 type="search"
                 name="query"
                 placeholder="Search"
-                className="w-full text-white focus:outline-none bg-transparent placeholder:text-md "
+                className="w-full caret-blue-500 focus:outline-none bg-transparent placeholder:text-md text-gray-700"
               />
               <Image
                 src="/icons/search-white.webp"
                 alt="search"
                 width={30}
                 height={30}
-                className="w-5 h-5 opacity-80 ml-2"
+                className="w-5 h-5 opacity-90 ml-2"
               />
             </div>
           </form>
