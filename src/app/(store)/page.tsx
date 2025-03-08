@@ -1,11 +1,11 @@
 import { client } from '@/sanity/lib/client';
-import Header from '@/components/header';
 import VideoBackground from '@/components/VideoBackground';
 import HeroSection from '@/components/HeroSection';
 import BlackFridayBanner from '@/components/BlackFridayBanner';
 import Footer from '@/components/Footer';
 import Categories from '@/components/Categories'; // Import the Categories component
 import { Category } from '@/types'; // Import the Category type
+import Header from '@/components/Header';
 
 const Home = async () => {
   // Fetch categories from Sanity
