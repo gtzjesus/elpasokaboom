@@ -5,7 +5,7 @@ import BlackFridayBanner from '@/components/BlackFridayBanner';
 import Footer from '@/components/Footer';
 import Categories from '@/components/Categories';
 import { Category } from '@/types';
-import Header from '@/components/Header';
+import Header from '@/components/header';
 
 const Home = async () => {
   // Fetch categories from Sanity
