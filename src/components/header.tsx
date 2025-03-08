@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
 
-// CartButton component displays the cart icon and the number of items in the basket
+// CartButton component displays the cart icon and the number of items in the basket.
 const CartButton = ({
   itemCount,
   scrolled,
@@ -21,36 +21,32 @@ const CartButton = ({
     className="relative flex justify-center items-center space-x-2 font-bold py-2 px-4 rounded"
   >
     <Image
-      src={scrolled ? '/icons/bag.webp' : '/icons/bag-white.webp'} // Change the image based on the scroll state
+      src={scrolled ? '/icons/bag.webp' : '/icons/bag-white.webp'}
       alt="Bag"
       width={50}
       height={50}
       className="w-6 h-6"
     />
     {itemCount > 0 && (
-      // Displays the item count as a small badge on the cart icon if there are items
-      <span className="absolute opacity-75 -top-0.5 bg-custom-gray text-black rounded-full w-3 h-3 flex items-center justify-center text-[8px] font-bold transition-all duration-200 ease-in-out">
+      <span className="absolute opacity-75 -top-0.5 bg-custom-gray text-black rounded-full w-3 h-3 flex items-center justify-center text-[8px] font-bold">
         {itemCount}
       </span>
     )}
   </Link>
 );
 
-// AuthButtons component handles user authentication states, showing different buttons based on whether the user is signed in or not
+// AuthButtons component handles user authentication states, showing different buttons based on whether the user is signed in or not.
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 const AuthButtons = ({ user }: { user: any }) => (
   <ClerkLoaded>
     {user ? (
       <>
-        {/* Link to user orders */}
         <Link
           href="/orders"
           className="flex items-center space-x-2 opacity-70 text-black font-bold py-2 px-4 rounded"
         >
           <span>orders</span>
         </Link>
-
-        {/* User profile button */}
         <div className="flex items-center space-x-2">
           <div className="relative">
             <UserButton />
@@ -62,7 +58,6 @@ const AuthButtons = ({ user }: { user: any }) => (
         </div>
       </>
     ) : (
-      // SignInButton renders if user is not logged in
       <div className="opacity-60">
         <SignInButton mode="modal" />
       </div>
@@ -71,44 +66,34 @@ const AuthButtons = ({ user }: { user: any }) => (
 );
 
 const Header = () => {
-  // Fetching user data from Clerk (ensure it's client-side)
   const { user } = useUser();
-
-  // Basket item count calculation using custom store
   const itemCount = useBasketStore((state) =>
     state.items.reduce((total, item) => total + item.quantity, 0)
   );
 
-  // State management for various UI functionalities
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Controls the visibility of the mobile menu
-  const [isMounted, setIsMounted] = useState(false); // Ensures the code runs on the client-side
-  const [scrolled, setScrolled] = useState(false); // Tracks the scroll position to apply different header styles
-  const [windowWidth, setWindowWidth] = useState<number>(0); // Keeps track of window width for responsive design
+  // States for managing various UI features
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [windowWidth, setWindowWidth] = useState<number>(0);
 
-  // Router and pathname hooks
   const router = useRouter();
   const pathname = usePathname();
 
-  // Effect hook to ensure the component mounts on the client-side
+  // Client-side mounting
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  // Effect hook to manage scroll and window resize events
+  // Scroll and resize event handling
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const handleScroll = () => {
-        // Add a shadow to header when scrolling past 50px
-        setScrolled(window.scrollY > 50);
-      };
+      const handleScroll = () => setScrolled(window.scrollY > 50);
+      const handleResize = () => setWindowWidth(window.innerWidth);
 
-      const handleResize = () => setWindowWidth(window.innerWidth); // Update window width on resize
-
-      // Adding event listeners for scroll and resize
       window.addEventListener('scroll', handleScroll);
       window.addEventListener('resize', handleResize);
 
-      // Clean-up function for event listeners
       return () => {
         window.removeEventListener('scroll', handleScroll);
         window.removeEventListener('resize', handleResize);
@@ -116,84 +101,61 @@ const Header = () => {
     }
   }, []);
 
-  // Close the menu when resizing to a desktop view (width >= 648px)
+  // Close menu on desktop or when pathname changes
   useEffect(() => {
-    if (windowWidth >= 648) {
-      setIsMenuOpen(false);
-    }
+    if (windowWidth >= 648) setIsMenuOpen(false);
   }, [windowWidth]);
 
-  // Toggle menu visibility (mobile view)
-  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
-
-  // Close the menu when pathname changes (navigation)
   useEffect(() => {
     setIsMenuOpen(false);
   }, [pathname]);
 
-  // Manage body overflow based on menu visibility to prevent scrolling when menu is open
+  // Disable body scrolling when the mobile menu is open
   useEffect(() => {
-    // Prevent scrolling when the menu is open
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden'; // Disable scroll on <html> element
+      document.documentElement.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto';
-      document.documentElement.style.overflow = 'auto'; // Re-enable scroll on <html> element
+      document.documentElement.style.overflow = 'auto';
     }
 
-    // Cleanup the styles on component unmount
     return () => {
       document.body.style.overflow = 'auto';
       document.documentElement.style.overflow = 'auto';
     };
-  }, [isMenuOpen]); // Only run when menu state changes
+  }, [isMenuOpen]);
 
-  // Handle search submission by redirecting to the search page
+  // Handle search form submission
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    const form = e.target as HTMLFormElement;
-    const query = new FormData(form).get('query') as string;
-
-    setIsMenuOpen(false); // Close mobile menu after search
+    const query = new FormData(e.target as HTMLFormElement).get(
+      'query'
+    ) as string;
+    setIsMenuOpen(false);
     router.push(`/search?query=${query}`);
-
-    const inputElement = form.querySelector(
-      'input[name="query"]'
-    ) as HTMLInputElement;
-    if (inputElement) {
-      inputElement.blur(); // Blur the input field after submitting
-    }
   };
 
-  // Prevent rendering until the component is fully mounted (client-side)
-  if (!isMounted) return null;
+  if (!isMounted) return null; // Prevent rendering on server-side
 
   return (
     <header
-      className={`${
-        scrolled ? 'bg-pearl shadow-lg' : 'bg-transparent'
-      } fixed top-0 z-20 transition-all duration-500 ease-in-out flex items-center px-3 py-3 w-full`}
+      className={`${scrolled ? 'bg-pearl shadow-lg' : 'bg-transparent'} fixed top-0 z-20 flex items-center px-3 py-3 w-full`}
     >
       <div className="flex w-full items-center justify-between">
         {/* Left side: Logo and Company Name */}
         <div className="flex items-center space-x-4 flex-1">
           <Link href="/" className="font-bold cursor-pointer sm:mx-0 sm:hidden">
             <Image
-              // Conditionally switch logo based on scroll state
               src={scrolled ? '/icons/logo.webp' : '/icons/logo-white.webp'}
               alt="nextcommerce"
               width={30}
               height={30}
-              className="w-8 h-8 "
+              className="w-8 h-8"
             />
           </Link>
-
           <div className="hidden sm:flex items-center space-x-2">
             <Image
-              // Default logo for larger screens
-              // Conditionally switch logo based on scroll state
               src={scrolled ? '/icons/logo.webp' : '/icons/logo-white.webp'}
               alt="nextcommerce"
               width={30}
@@ -207,14 +169,10 @@ const Header = () => {
             </span>
           </div>
 
-          {/* Search Bar: Visible on larger screens */}
+          {/* Search Bar */}
           <form
             onSubmit={handleSearchSubmit}
-            className={`hidden sm:flex items-center w-1/2 transition-all duration-300 ease-in-out ${
-              scrolled
-                ? 'bg-white border border-gray-300 shadow-lg'
-                : 'bg-transparent border border-transparent'
-            } px-4 py-2 rounded-lg`}
+            className={`hidden sm:flex items-center w-1/2 ${scrolled ? 'bg-white border border-gray-300 shadow-lg' : 'bg-transparent border-transparent'} px-4 py-2 rounded-lg`}
           >
             <div className="flex items-center w-full">
               <Image
@@ -235,7 +193,7 @@ const Header = () => {
         </div>
 
         {/* Right side: Cart and Auth Buttons */}
-        <div className="flex items-center ">
+        <div className="flex items-center">
           <CartButton itemCount={itemCount} scrolled={scrolled} />
           <div
             className={`hidden sm:flex items-center space-x-4 ${scrolled ? 'text-black' : 'text-white'}`}
@@ -246,39 +204,34 @@ const Header = () => {
 
         {/* Mobile Menu Button */}
         <button
-          onClick={toggleMenu}
+          onClick={() => setIsMenuOpen((prev) => !prev)}
           className="sm:hidden flex flex-col justify-center items-center space-y-1 z-30 relative group"
         >
           <div
-            className={`w-7 h-0.5  ${
-              scrolled ? 'bg-black text-white' : 'bg-white text-black'
-            }  transition-all duration-300 ease-in-out transform ${isMenuOpen ? 'rotate-45 translate-y-0.5' : ''}`}
-          ></div>
+            className={`w-7 h-0.5 ${scrolled ? 'bg-black' : 'bg-white'} transition-all duration-300 ease-in-out transform ${isMenuOpen ? 'rotate-45 translate-y-0.5' : ''}`}
+          />
           <div
-            className={`w-7 h-0.5 ${
-              scrolled ? 'bg-black text-white' : 'bg-white text-black'
-            } transition-all duration-300 ease-in-out transform ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
-          ></div>
+            className={`w-7 h-0.5 ${scrolled ? 'bg-black' : 'bg-white'} transition-all duration-300 ease-in-out transform ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
+          />
         </button>
       </div>
 
       {/* Mobile Menu Overlay */}
       <div
         className={`fixed inset-0 bg-black bg-opacity-90 z-10 transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-        onClick={toggleMenu}
+        onClick={() => setIsMenuOpen(false)}
       />
       {/* Mobile Menu */}
       <div
         className={`fixed right-0 top-0 h-full w-full shadow-xl z-20 transform transition-opacity duration-300 ease-in-out ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       >
         <button
-          onClick={toggleMenu}
+          onClick={() => setIsMenuOpen(false)}
           className="absolute top-3.5 right-12 text-lg text-white"
         >
           {isMenuOpen ? 'close' : <span className="text-white"></span>}
         </button>
         <div className="flex flex-col items-center justify-center h-full p-16 space-y-6">
-          {/* Mobile Auth Buttons */}
           <div className="flex flex-col items-center space-y-4 text-white text-2xl">
             <AuthButtons user={user} />
           </div>

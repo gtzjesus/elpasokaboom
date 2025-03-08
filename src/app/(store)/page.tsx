@@ -6,6 +6,7 @@ import Header from '@/components/header';
 import VideoBackground from '@/components/VideoBackground';
 import HeroSection from '@/components/HeroSection';
 import BlackFridayBanner from '@/components/BlackFridayBanner';
+import Footer from '@/components/Footer';
 
 // Define the image type for Sanity
 interface SanityImage {
@@ -53,7 +54,7 @@ const Home = async () => {
       <HeroSection />
       {/* Black Friday promotional banner */}
       <BlackFridayBanner />
-      {/* Main content area */}
+      {/* Main Categories Area */}
       <div className="w-full max-w-7xl mx-auto p-6">
         <h2 className="barlow-condensed-regular text-3xl font-bold mb-6 text-center ">
           Our Collection
@@ -86,6 +87,7 @@ const Home = async () => {
           ))}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
