@@ -3,9 +3,9 @@
 import Header from '@/components/header';
 import ProductGrid from '@/components/ProductGrid';
 import { searchProductsByName } from '@/sanity/lib/products/searchProductsByName';
-interface SearchPageProps {
-  searchParams: { q: string };
-}
+// interface SearchPageProps {
+//   searchParams: { q: string };
+// }
 
 const SearchPage = async ({
   searchParams,
