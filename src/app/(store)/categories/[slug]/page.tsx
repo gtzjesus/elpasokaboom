@@ -4,6 +4,7 @@ import { getProductsByCategory } from '@/sanity/lib/products/getProductsByCatego
 import { getAllCategories } from '@/sanity/lib/products/getAllCategories';
 import ProductsView from '@/components/ProductsView';
 import { notFound } from 'next/navigation';
+import Header from '@/components/header';
 
 // Default function to handle page rendering
 export default async function CategoryPage({
@@ -25,17 +26,21 @@ export default async function CategoryPage({
   }
 
   return (
-    <div className="flex flex-col items-center justify-top min-h-screen bg-gray-100 p-4">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl">
-        <h1 className="text-3xl font-bold mb-6 text-center">
-          {slug
-            .split('-')
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(' ')}{' '}
-          Collection
-        </h1>
-        {/* Display the products for this category */}
-        <ProductsView products={products} categories={categories} />
+    <div>
+      <Header />
+
+      <div className="">
+        <div className="">
+          <h1 className="text-2xl font-bold mb-6 mt-14 text-center">
+            {slug
+              .split('-')
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(' ')}{' '}
+            Collection
+          </h1>
+          {/* Display the products for this category */}
+          <ProductsView products={products} categories={categories} />
+        </div>
       </div>
     </div>
   );
