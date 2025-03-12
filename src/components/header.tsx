@@ -21,7 +21,7 @@ const CartButton = ({
     className="relative flex justify-center items-center space-x-2 font-bold py-2 px-4 rounded"
   >
     <Image
-      src={scrolled ? '/icons/bag.webp' : '/icons/bag-white.webp'}
+      src={scrolled ? '/icons/bag.webp' : '/icons/bag.webp'}
       alt="Bag"
       width={50}
       height={50}
@@ -147,7 +147,7 @@ const Header = () => {
         <div className="flex items-center space-x-4 flex-1">
           <Link href="/" className="font-bold cursor-pointer sm:mx-0 sm:hidden">
             <Image
-              src={scrolled ? '/icons/logo.webp' : '/icons/logo-white.webp'}
+              src={scrolled ? '/icons/logo.webp' : '/icons/logo.webp'}
               alt="nextcommerce"
               width={30}
               height={30}
@@ -156,14 +156,14 @@ const Header = () => {
           </Link>
           <div className="hidden sm:flex items-center space-x-2">
             <Image
-              src={scrolled ? '/icons/logo.webp' : '/icons/logo-white.webp'}
+              src={scrolled ? '/icons/logo.webp' : '/icons/logo.webp'}
               alt="nextcommerce"
               width={30}
               height={30}
               className=""
             />
             <span
-              className={`barlow-condensed-regular text-md ${scrolled ? 'text-black' : 'text-white'}`}
+              className={`barlow-condensed-regular text-md ${scrolled ? 'text-black' : 'text-black'}`}
             >
               Nextcommerce
             </span>
@@ -208,10 +208,10 @@ const Header = () => {
           className="sm:hidden flex flex-col justify-center items-center space-y-1 z-30 relative group"
         >
           <div
-            className={`w-7 h-0.5 ${scrolled ? 'bg-black' : 'bg-white'} transition-all duration-300 ease-in-out transform ${isMenuOpen ? 'rotate-45 translate-y-0.5' : ''}`}
+            className={`w-7 h-0.5 ${scrolled ? 'bg-black' : 'bg-black'} transition-all duration-300 ease-in-out transform ${isMenuOpen ? 'rotate-45 translate-y-0.5' : ''}`}
           />
           <div
-            className={`w-7 h-0.5 ${scrolled ? 'bg-black' : 'bg-white'} transition-all duration-300 ease-in-out transform ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
+            className={`w-7 h-0.5 ${scrolled ? 'bg-black' : 'bg-black'} transition-all duration-300 ease-in-out transform ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
           />
         </button>
       </div>

@@ -1,5 +1,6 @@
 // app/(store)/search/page.tsx
 
+import Header from '@/components/header';
 import ProductGrid from '@/components/ProductGrid';
 import { searchProductsByName } from '@/sanity/lib/products/searchProductsByName';
 import React from 'react';
@@ -15,25 +16,25 @@ async function SearchPage({
 
   if (!products.length) {
     return (
-      <div className="flex flex-col items-center justify-top min-h-screen bg-gray-100 p-4">
-        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl">
-          <h1 className="text-3xl font-bold mb-6 text-center">
-            no products found for: {query}
-          </h1>
-          <p className="text-gray-600 text-center">try searching another</p>
-        </div>
+      <div className="">
+        <Header />
+        <h1 className="text-xl font-bold mb-10 mt-16 text-center">
+          no results were found for &ldquo;{query}&ldquo;
+        </h1>
+        <p className="text-gray-600 text-center">
+          please try a different search.
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col items-center justify-top min-h-screen bg-gray-100 p-4">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl">
-        <h1 className="text-3xl font-bold mb-6 text-center">
-          search for {query}
-        </h1>
-        <ProductGrid products={products} />
-      </div>
+    <div>
+      <Header />
+      <h1 className="text-xl font-bold mb-10 mt-16 text-center">
+        &ldquo;{query}&ldquo;
+      </h1>
+      <ProductGrid products={products} />
     </div>
   );
 }

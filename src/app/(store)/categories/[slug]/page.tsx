@@ -28,20 +28,15 @@ export default async function CategoryPage({
   return (
     <div>
       <Header />
-
-      <div className="">
-        <div className="">
-          <h1 className="text-2xl font-bold mb-6 mt-14 text-center">
-            {slug
-              .split('-')
-              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-              .join(' ')}{' '}
-            Collection
-          </h1>
-          {/* Display the products for this category */}
-          <ProductsView products={products} categories={categories} />
-        </div>
-      </div>
+      <h1 className="text-xl font-bold mb-10 mt-16 text-center">
+        {slug
+          .split('-')
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ')}{' '}
+        Collection
+      </h1>
+      {/* Display the products for this category */}
+      <ProductsView products={products} categories={categories} />
     </div>
   );
 }
