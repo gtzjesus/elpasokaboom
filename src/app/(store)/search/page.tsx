@@ -32,7 +32,7 @@ async function SearchPage({
     return (
       <div className="">
         <Header />
-        <h1 className="text-xl font-bold mb-10 mt-16 text-center">
+        <h1 className="text-xl font-bold mb-10 mt-20 text-center">
           No results were found for &ldquo;{query}&rdquo;
         </h1>
         <p className="text-gray-600 text-center">
@@ -46,7 +46,7 @@ async function SearchPage({
   return (
     <div>
       <Header />
-      <h1 className="text-xl font-bold mb-10 mt-16 text-center">
+      <h1 className="text-xl font-bold mb-10 mt-20 text-center">
         &ldquo;{query}&rdquo;({resultCount}
         {resultCount === 1 ? '' : ''})
       </h1>
