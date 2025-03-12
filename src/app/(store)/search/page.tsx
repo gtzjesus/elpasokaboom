@@ -3,10 +3,8 @@
 import Header from '@/components/header';
 import ProductGrid from '@/components/ProductGrid';
 import { searchProductsByName } from '@/sanity/lib/products/searchProductsByName';
-// interface SearchPageProps {
-//   searchParams: { q: string };
-// }
 
+// SearchPage Component that expects resolved searchParams
 const SearchPage = async ({
   searchParams,
 }: {
@@ -43,16 +41,18 @@ const SearchPage = async ({
   );
 };
 
-// Since we're using a server component, we can fetch data directly within the component
+// Wrapper Component to resolve searchParams (Promise) before passing to SearchPage
 const SearchPageWrapper = async ({
   searchParams,
 }: {
-  searchParams: { q: string };
+  searchParams: Promise<{ q: string }>; // Accepting a Promise here
 }) => {
-  const resolvedParams = await Promise.resolve(searchParams); // Resolving searchParams
+  // Resolve the Promise before passing to SearchPage
+  const resolvedSearchParams = await searchParams;
 
-  // Pass resolved params to the SearchPage component
-  return <SearchPage searchParams={resolvedParams} />;
+  // Pass resolvedParams to the SearchPage component
+  return <SearchPage searchParams={resolvedSearchParams} />;
 };
 
+// Default export of the wrapper
 export default SearchPageWrapper;
