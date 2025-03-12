@@ -3,34 +3,32 @@
 import Header from '@/components/header';
 import ProductGrid from '@/components/ProductGrid';
 import { searchProductsByName } from '@/sanity/lib/products/searchProductsByName';
-import React from 'react';
 
-/**
- * SearchPage Component
- * Handles the search results display based on the query provided in the URL parameters.
- * It shows the number of results found for the query and displays the products in a grid format.
- *
- * @param {Object} searchParams - The query parameters from the URL
- * @returns {JSX.Element} The rendered page showing search results or a message if no results are found.
- */
-async function SearchPage({
+export async function generateMetadata({
   searchParams,
 }: {
-  searchParams: Promise<{ query: string }>;
+  searchParams: { q: string };
 }) {
-  // Resolving the searchParams promise to get the search query
-  const { query } = await searchParams;
+  const query = searchParams.q || '';
+  return {
+    title: `Search results for "${query}"`,
+    description: `Results for "${query}" search in Nextcommerce.`,
+  };
+}
 
-  // Fetch products that match the search query
+export default async function SearchPage({
+  searchParams,
+}: {
+  searchParams: { q: string };
+}) {
+  const query = searchParams.q || '';
   const products = await searchProductsByName(query);
 
-  // Get the number of products found
   const resultCount = products.length;
 
-  // If no products are found, return a message indicating no results
   if (resultCount === 0) {
     return (
-      <div className="">
+      <div>
         <Header />
         <h1 className="text-xl font-bold mb-10 mt-20 text-center">
           No results were found for &ldquo;{query}&rdquo;
@@ -42,17 +40,13 @@ async function SearchPage({
     );
   }
 
-  // If products are found, display the search results with the number of items
   return (
     <div>
       <Header />
       <h1 className="text-xl font-bold mb-10 mt-20 text-center">
-        &ldquo;{query}&rdquo;({resultCount}
-        {resultCount === 1 ? '' : ''})
+        Results for &ldquo;{query}&rdquo; ({resultCount} results)
       </h1>
       <ProductGrid products={products} />
     </div>
   );
 }
-
-export default SearchPage;
