@@ -4,15 +4,11 @@ import Header from '@/components/header';
 import ProductGrid from '@/components/ProductGrid';
 import { searchProductsByName } from '@/sanity/lib/products/searchProductsByName';
 
-// interface SearchPageProps {
-//   searchParams: { q: string };
-// }
-
-const SearchPage = async ({
-  searchParams,
-}: {
+interface SearchPageProps {
   searchParams: { q: string };
-}) => {
+}
+
+const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const query = searchParams.q;
 
   // Fetch products based on the query parameter
