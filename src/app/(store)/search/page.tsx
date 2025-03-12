@@ -4,24 +4,18 @@ import Header from '@/components/header';
 import ProductGrid from '@/components/ProductGrid';
 import { searchProductsByName } from '@/sanity/lib/products/searchProductsByName';
 
-export async function generateMetadata({
-  searchParams,
-}: {
-  searchParams: { q: string };
-}) {
-  const query = searchParams.q || '';
-  return {
-    title: `Search results for "${query}"`,
-    description: `Results for "${query}" search in Nextcommerce.`,
-  };
-}
+// interface SearchPageProps {
+//   searchParams: { q: string };
+// }
 
-export default async function SearchPage({
+const SearchPage = async ({
   searchParams,
 }: {
   searchParams: { q: string };
-}) {
-  const query = searchParams.q || '';
+}) => {
+  const query = searchParams.q;
+
+  // Fetch products based on the query parameter
   const products = await searchProductsByName(query);
 
   const resultCount = products.length;
@@ -44,9 +38,11 @@ export default async function SearchPage({
     <div>
       <Header />
       <h1 className="text-xl font-bold mb-10 mt-20 text-center">
-        Results for &ldquo;{query}&rdquo; ({resultCount} results)
+        &ldquo;{query}&rdquo; ({resultCount} results)
       </h1>
       <ProductGrid products={products} />
     </div>
   );
-}
+};
+
+export default SearchPage;
