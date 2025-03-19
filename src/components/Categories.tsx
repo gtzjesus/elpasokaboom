@@ -30,7 +30,7 @@ const Categories = ({ categories }: CategoriesProps) => {
   return (
     <div className="w-full max-w-7xl mx-auto p-6">
       <h2 className="barlow-condensed-regular text-3xl font-bold mb-6 text-center">
-        Our Collection
+        our collection
       </h2>
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {categories.map((category) => (

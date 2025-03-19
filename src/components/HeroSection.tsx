@@ -21,7 +21,7 @@ const HeroSection: FC = () => {
       <div className="space-y-4 max-w-3xl">
         {/* Headline: Large, bold, and prominent */}
         <h1 className="barlow-condensed-regular text-3xl sm:text-4xl font-extrabold leading-tight">
-          Nextcommerce
+          nextcommerce
         </h1>
 
         {/* Subheading: Smaller font for technology stack or description */}

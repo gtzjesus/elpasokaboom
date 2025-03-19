@@ -104,7 +104,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         <h1
           className={`text-sm font-semibold mb-2 ${scrolled ? 'text-black' : 'text-black'}`}
         >
-          What are you looking for?
+          what are you looking for?
         </h1>
         <div className="relative flex items-center w-full bg-white shadow-md">
           <input
