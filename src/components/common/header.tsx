@@ -90,18 +90,21 @@ const Header = () => {
             />
           </Link>
           <div className="hidden sm:flex items-center space-x-2">
-            <Image
-              src={scrolled ? '/icons/logo.webp' : '/icons/logo.webp'}
-              alt="nextcommerce"
-              width={30}
-              height={30}
-              className=""
-            />
-            <span
+            <Link href="/">
+              <Image
+                src={scrolled ? '/icons/logo.webp' : '/icons/logo.webp'}
+                alt="nextcommerce"
+                width={30}
+                height={30}
+                className=""
+              />
+            </Link>
+            <Link
+              href="/"
               className={`barlow-condensed-regular text-md ${scrolled ? 'text-black' : 'text-black'}`}
             >
               Nextcommerce
-            </span>
+            </Link>
           </div>
         </div>
 

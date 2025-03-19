@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import axios from 'axios'; // Axios for making API requests
 import { debounce } from 'lodash'; // Debounce function to limit API calls
+import Loader from '../common/Loader';
 
 interface SearchBarProps {
   scrolled: boolean;
@@ -14,6 +15,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState<string[]>([]); // Store search suggestions
   const [selectedIndex, setSelectedIndex] = useState<number>(-1); // Track selected suggestion
+  const [loading, setLoading] = useState<boolean>(false); // Track loading state
   const inputRef = useRef<HTMLInputElement>(null); // Create a reference for the input field
 
   // Default suggestions (mock data) to display when the input is empty
@@ -23,6 +25,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const fetchSuggestions = async (query: string) => {
     try {
       if (query.trim()) {
+        setLoading(true); // Set loading to true before starting the API request
         // Replace with your API URL and query parameter (e.g., `q` for search query)
         const response = await axios.get('/api/search-suggestions', {
           params: { query },
@@ -36,6 +39,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
     } catch (error) {
       console.error('Error fetching suggestions:', error);
       setSuggestions([]); // Clear suggestions in case of an error
+    } finally {
+      setLoading(false); // Set loading to false once the request finishes
     }
   };
 
@@ -140,6 +145,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
           )}
         </div>
       </form>
+
+      {/* Loader */}
+      {loading && <Loader />}
 
       {/* Suggestions Dropdown */}
       {suggestions.length > 0 || query.trim() === '' ? (

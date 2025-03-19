@@ -11,7 +11,7 @@ const AuthButtons = ({ user }: { user: any }) => (
       <>
         <Link
           href="/orders"
-          className="flex items-center space-x-2 opacity-70 text-black font-bold py-2 px-4 rounded"
+          className="flex items-center space-x-2 opacity-70 text-black font-bold py-2 px-4 rounded lowercase"
         >
           <span>orders</span>
         </Link>
@@ -21,12 +21,12 @@ const AuthButtons = ({ user }: { user: any }) => (
             <div className="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-blue-500 border-2 border-white"></div>
           </div>
           <div className="hidden sm:block text-xs">
-            <p className="text-gray-400 font-bold">{user.fullName}</p>
+            <p className="text-gray-400 font-bold lowercase">{user.fullName}</p>
           </div>
         </div>
       </>
     ) : (
-      <div className="opacity-60">
+      <div className="opacity-60 lowercase">
         <SignInButton mode="modal" />
       </div>
     )}
