@@ -1,7 +1,7 @@
 // app/(store)/search/page.tsx
 
-import Header from '@/components/header';
-import ProductGrid from '@/components/ProductGrid';
+import Header from '@/components/common/header';
+import ProductGrid from '@/components/products/ProductGrid';
 import { searchProductsByName } from '@/sanity/lib/products/searchProductsByName';
 
 // SearchPage Component that expects resolved searchParams

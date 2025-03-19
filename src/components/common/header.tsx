@@ -2,14 +2,14 @@
 'use client';
 
 import { useUser } from '@clerk/nextjs';
-import useBasketStore from '../../store/store'; // Import custom store for basket items
+import useBasketStore from '../../../store/store'; // Import custom store for basket items
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
-import AuthButtons from './AuthButtons'; // Import the AuthButtons component
-import CartButton from './CartButton'; // Import CartButton
-import SearchButton from './SearchButton';
+import AuthButtons from '../auth/AuthButtons'; // Import the AuthButtons component
+import CartButton from '../cart/CartButton'; // Import CartButton
+import SearchButton from '../search/SearchButton';
 
 const Header = () => {
   const { user } = useUser();

@@ -1,6 +1,6 @@
 // app/(store)/product/[slug]/page.tsx
 
-import AddToBasketButton from '@/components/AddToBasketButton';
+import AddToBasketButton from '@/components/cart/AddToBasketButton';
 import { Button } from '@/components/ui/button';
 import { imageUrl } from '@/lib/imageUrl';
 import { getProductBySlug } from '@/sanity/lib/products/getProductBySlug';

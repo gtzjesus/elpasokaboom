@@ -4,10 +4,10 @@ import { SignInButton, useAuth, useUser } from '@clerk/nextjs';
 import useBasketStore from '../../../../store/store';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import AddToBasketButton from '@/components/AddToBasketButton';
+import AddToBasketButton from '@/components/cart/AddToBasketButton';
 import Image from 'next/image';
 import { imageUrl } from '@/lib/imageUrl';
-import Loader from '@/components/Loader';
+import Loader from '@/components/common/Loader';
 import {
   createCheckoutSession,
   Metadata,

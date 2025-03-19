@@ -1,6 +1,6 @@
 'use client';
 
-import { Product } from '../../sanity.types';
+import { Product } from '../../../sanity.types';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProductThumb from './ProductThumb';
 

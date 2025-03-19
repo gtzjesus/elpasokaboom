@@ -2,9 +2,9 @@
 
 import { getProductsByCategory } from '@/sanity/lib/products/getProductsByCategory';
 import { getAllCategories } from '@/sanity/lib/products/getAllCategories';
-import ProductsView from '@/components/ProductsView';
+import ProductsView from '@/components/products/ProductsView';
 import { notFound } from 'next/navigation';
-import Header from '@/components/header';
+import Header from '@/components/common/header';
 
 /**
  * CategoryPage Component

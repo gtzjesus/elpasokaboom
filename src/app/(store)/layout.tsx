@@ -4,7 +4,7 @@ import '../globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
 import { SanityLive } from '@/sanity/lib/live';
 import { draftMode } from 'next/headers';
-import { DisableDraftMode } from '@/components/DisableDraftMode';
+import { DisableDraftMode } from '@/components/auth/DisableDraftMode';
 import { VisualEditing } from 'next-sanity';
 
 export const metadata: Metadata = {
