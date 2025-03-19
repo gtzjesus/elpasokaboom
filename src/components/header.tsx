@@ -82,7 +82,7 @@ const Header = () => {
         <div className="flex items-center space-x-4 flex-1">
           <Link href="/" className="font-bold cursor-pointer sm:mx-0 sm:hidden">
             <Image
-              src={scrolled ? '/icons/logo.webp' : '/icons/logo-white.webp'}
+              src={scrolled ? '/icons/logo.webp' : '/icons/logo.webp'}
               alt="nextcommerce"
               width={30}
               height={30}
@@ -106,7 +106,7 @@ const Header = () => {
         </div>
 
         {/* Right side: Search , Cart and Auth Buttons */}
-        <div className="flex items-center">
+        <div className="flex items-center ">
           <SearchButton scrolled={scrolled} />
           <CartButton itemCount={itemCount} scrolled={scrolled} />
           <div
@@ -123,19 +123,19 @@ const Header = () => {
         >
           {/* Top Bar (first line) */}
           <div
-            className={`w-7 h-0.5 ${scrolled ? 'bg-black' : 'bg-white'} transition-all duration-300 ease-in-out transform ${isMenuOpen ? 'rotate-45 translate-y-0.5' : ''}`}
+            className={`w-7 h-0.5 ${scrolled ? 'bg-black' : 'bg-black'} transition-all duration-300 ease-in-out transform ${isMenuOpen ? 'rotate-45 translate-y-0.5' : ''}`}
           />
 
           {/* Bottom Bar (third line) */}
           <div
-            className={`w-7 h-0.5 ${scrolled ? 'bg-black' : 'bg-white'} transition-all duration-300 ease-in-out transform ${isMenuOpen ? '-rotate-45 -translate-y-0.5' : ''}`}
+            className={`w-7 h-0.5 ${scrolled ? 'bg-black' : 'bg-black'} transition-all duration-300 ease-in-out transform ${isMenuOpen ? '-rotate-45 -translate-y-0.5' : ''}`}
           />
         </button>
       </div>
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 bg-black bg-opacity-90 z-10 transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 bg-white bg-opacity-100 z-10 transition-opacity duration-300 ${isMenuOpen ? 'opacity-95' : 'opacity-0 pointer-events-none'}`}
         onClick={() => setIsMenuOpen(false)}
       />
       {/* Mobile Menu */}
@@ -148,8 +148,8 @@ const Header = () => {
         >
           {isMenuOpen ? '' : <span className="text-white"></span>}
         </button>
-        <div className="flex flex-col items-center justify-center h-full p-16 space-y-6">
-          <div className="flex flex-col items-center space-y-4 text-white text-2xl">
+        <div className="flex flex-col items-center  h-full p-20 space-y-6">
+          <div className="flex flex-col items-center space-y-4 text-black text-2xl">
             <AuthButtons user={user} />
           </div>
         </div>

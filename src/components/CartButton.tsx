@@ -10,10 +10,10 @@ interface CartButtonProps {
 const CartButton: React.FC<CartButtonProps> = ({ itemCount, scrolled }) => (
   <Link
     href="/basket"
-    className="relative flex justify-center items-center space-x-2 font-bold py-2 px-4 rounded"
+    className="relative flex justify-center items-center space-x-4 font-bold px-6 rounded"
   >
     <Image
-      src={scrolled ? '/icons/bag.webp' : '/icons/bag-white.webp'}
+      src={scrolled ? '/icons/bag.webp' : '/icons/bag.webp'}
       alt="Bag"
       width={50}
       height={50}

@@ -36,10 +36,10 @@ const SearchButton: React.FC<SearchButtonProps> = ({ scrolled }) => {
       {/* Search Button */}
       <button
         onClick={handleSearchMenuToggle}
-        className="relative flex justify-center items-center space-x-2 font-bold py-2 px-4 rounded"
+        className="relative flex justify-center items-center space-x-2 font-bold rounded"
       >
         <Image
-          src={scrolled ? '/icons/search.webp' : '/icons/search-white.webp'}
+          src={scrolled ? '/icons/search.webp' : '/icons/search.webp'}
           alt="Search"
           width={50}
           height={50}
