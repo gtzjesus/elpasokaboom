@@ -72,7 +72,7 @@ const SearchButton: React.FC<SearchButtonProps> = ({ scrolled }) => {
             {/* Close Button */}
             <button
               onClick={handleSearchMenuToggle}
-              className="absolute top-3.5 right-8 text-lg text-black underline"
+              className="absolute top-3.5 right-8 text-md text-black underline"
             >
               cancel
             </button>

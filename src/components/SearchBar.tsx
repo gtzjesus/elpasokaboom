@@ -17,7 +17,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const inputRef = useRef<HTMLInputElement>(null); // Create a reference for the input field
 
   // Default suggestions (mock data) to display when the input is empty
-  const defaultSuggestions = ['jewelry', 'pant', 'shirt'];
+  const defaultSuggestions = ['jewel', 'pant', 'shirt'];
 
   // API call function for fetching search suggestions
   const fetchSuggestions = async (query: string) => {

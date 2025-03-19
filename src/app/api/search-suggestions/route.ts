@@ -7,7 +7,7 @@ export async function GET(request: Request) {
   const query = url.searchParams.get('query')?.toLowerCase();
 
   // Mocked suggestions (replace with real data or database queries)
-  const allSuggestions = ['jewelry', 'pants', 'shirt'];
+  const allSuggestions = ['jewel', 'pants', 'shirt'];
 
   if (query) {
     // Filter suggestions based on the query
