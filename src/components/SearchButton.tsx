@@ -43,7 +43,7 @@ const SearchButton: React.FC<SearchButtonProps> = ({ scrolled }) => {
           alt="Search"
           width={50}
           height={50}
-          className="w-6 h-6"
+          className="w-5 h-5"
         />
       </button>
 

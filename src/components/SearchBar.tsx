@@ -53,7 +53,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
             placeholder=""
             value={query}
             onChange={handleChange}
-            className="w-full p-4 text-sm text-gray-800 border-b-2 border-white focus:border-white focus:outline-none transition-all duration-300 pr-10"
+            className="w-full p-4 text-sm text-gray-800 border-b-2 border-white focus:border-white focus:outline-none transition-all duration-300 pr-10 font-medium" // Added font-medium here
           />
           {query && (
             <button
