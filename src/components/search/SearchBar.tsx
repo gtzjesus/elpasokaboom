@@ -16,6 +16,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const [suggestions, setSuggestions] = useState<string[]>([]); // Store search suggestions
   const [selectedIndex, setSelectedIndex] = useState<number>(-1); // Track selected suggestion
   const [loading, setLoading] = useState<boolean>(false); // Track loading state
+  const [noResults, setNoResults] = useState<boolean>(false); // Track if no results are found
   const inputRef = useRef<HTMLInputElement>(null); // Create a reference for the input field
 
   // Default suggestions (mock data) to display when the input is empty
@@ -32,6 +33,11 @@ const SearchBar: React.FC<SearchBarProps> = ({
         });
 
         // Set the suggestions state to the response data
+        if (response.data.suggestions.length === 0) {
+          setNoResults(true); // Set noResults to true if no suggestions are returned
+        } else {
+          setNoResults(false); // Reset noResults if there are suggestions
+        }
         setSuggestions(response.data.suggestions);
       } else {
         setSuggestions([]); // Clear suggestions if query is empty
@@ -71,6 +77,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const handleClear = () => {
     setQuery('');
     setSuggestions([]);
+    setNoResults(false); // Reset noResults state when clearing input
   };
 
   // Handle selection of suggestion
@@ -148,6 +155,13 @@ const SearchBar: React.FC<SearchBarProps> = ({
 
       {/* Loader */}
       {loading && <Loader />}
+
+      {/* Display No Results Message */}
+      {noResults && !loading && (
+        <div className="uppercase text-xs font-semibold mb-2 mt-4 ${scrolled ? 'text-black' : 'text-black '">
+          sorry, we couldn&lsquo;t find any matching results for your query.
+        </div>
+      )}
 
       {/* Suggestions Dropdown */}
       {suggestions.length > 0 || query.trim() === '' ? (
