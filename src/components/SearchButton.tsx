@@ -50,7 +50,7 @@ const SearchButton: React.FC<SearchButtonProps> = ({ scrolled }) => {
       {/* Search Menu (Popup) */}
       {isSearchMenuOpen && (
         <div
-          className={`fixed inset-0 bg-black bg-opacity-50 z-50 transition-opacity duration-300 ${
+          className={`fixed inset-0 bg-white bg-opacity-50 z-50 transition-opacity duration-300 ${
             isSearchMenuOpen
               ? 'opacity-100 pointer-events-auto'
               : 'opacity-0 pointer-events-none'
@@ -65,11 +65,14 @@ const SearchButton: React.FC<SearchButtonProps> = ({ scrolled }) => {
             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the menu
           >
             {/* Search Bar inside the Menu */}
-            <SearchBar scrolled={scrolled} />
+            <SearchBar
+              scrolled={scrolled}
+              isSearchMenuOpen={isSearchMenuOpen}
+            />
             {/* Close Button */}
             <button
               onClick={handleSearchMenuToggle}
-              className="absolute top-3.5 right-8 text-lg text-black"
+              className="absolute top-3.5 right-8 text-lg text-black underline"
             >
               cancel
             </button>
