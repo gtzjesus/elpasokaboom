@@ -139,12 +139,12 @@ const SearchBar: React.FC<SearchBarProps> = ({
       </form>
       {/* Suggestions Dropdown */}
       {suggestions.length > 0 && (
-        <ul className="absolute w-full bg-white shadow-lg rounded-lg mt-2 z-20 max-h-60 overflow-auto">
+        <ul className="absolute w-full  mt-4 z-20 max-h-60 overflow-auto">
           {suggestions.map((suggestion, index) => (
             <li
               key={suggestion}
               onClick={() => handleSelectSuggestion(suggestion)}
-              className={`cursor-pointer px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 ${
+              className={`cursor-pointer px-4 py-2 text-xs text-gray-700 hover:none ${
                 selectedIndex === index ? 'bg-gray-200' : ''
               }`}
             >
