@@ -16,6 +16,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const [selectedIndex, setSelectedIndex] = useState<number>(-1); // Track selected suggestion
   const inputRef = useRef<HTMLInputElement>(null); // Create a reference for the input field
 
+  // Default suggestions (mock data) to display when the input is empty
+  const defaultSuggestions = ['jewelry', 'pant', 'shirt'];
+
   // API call function for fetching search suggestions
   const fetchSuggestions = async (query: string) => {
     try {
@@ -96,7 +99,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   }, [isSearchMenuOpen]);
 
   return (
-    <div className="w-full max-w-xl mx-auto ">
+    <div className="w-full max-w-xl mx-auto">
       <form onSubmit={handleSearchSubmit} className="flex flex-col w-full">
         <h1
           className={`text-sm font-semibold mb-2 ${scrolled ? 'text-black' : 'text-black'}`}
@@ -111,7 +114,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
             value={query}
             onChange={handleChange}
             onKeyDown={handleKeyDown} // Listen for key events
-            className="w-full p-4 text-gray-800 border-b-2 border-white focus:border-white focus:outline-none transition-all duration-300 pr-10 text-base" // text-base ensures font size is >= 16px
+            className="w-full p-4 text-gray-800 border-b-2 border-white focus:border-white focus:outline-none transition-all duration-300 pr-10 text-base"
           />
           {query && (
             <button
@@ -127,9 +130,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
                 className="w-5 h-5"
               >
                 <path
-                  strokeLinecap="round" // Corrected here
-                  strokeLinejoin="round" // Corrected here
-                  strokeWidth="2" // Corrected here
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M6 18L18 6M6 6l12 12"
                 ></path>
               </svg>
@@ -137,22 +140,26 @@ const SearchBar: React.FC<SearchBarProps> = ({
           )}
         </div>
       </form>
+
       {/* Suggestions Dropdown */}
-      {suggestions.length > 0 && (
-        <ul className="absolute w-full  mt-4 z-20 max-h-60 overflow-auto">
-          {suggestions.map((suggestion, index) => (
-            <li
-              key={suggestion}
-              onClick={() => handleSelectSuggestion(suggestion)}
-              className={`cursor-pointer px-4 py-2 text-xs text-gray-700 hover:none ${
-                selectedIndex === index ? 'bg-gray-200' : ''
-              }`}
-            >
-              {suggestion}
-            </li>
-          ))}
+      {suggestions.length > 0 || query.trim() === '' ? (
+        <ul className="absolute w-full mt-4 z-20 max-h-60 overflow-auto">
+          {/* Display the default suggestions if query is empty */}
+          {(query.trim() === '' ? defaultSuggestions : suggestions).map(
+            (suggestion, index) => (
+              <li
+                key={suggestion}
+                onClick={() => handleSelectSuggestion(suggestion)}
+                className={`cursor-pointer px-4 py-2 text-xs text-gray-700 hover:none ${
+                  selectedIndex === index ? 'bg-gray-200' : ''
+                }`}
+              >
+                {suggestion}
+              </li>
+            )
+          )}
         </ul>
-      )}
+      ) : null}
     </div>
   );
 };
