@@ -48,12 +48,12 @@ const SearchBar: React.FC<SearchBarProps> = ({
         </h1>
         <div className="relative flex items-center w-full bg-white shadow-md">
           <input
-            ref={inputRef} // Attach the ref to the input element
+            ref={inputRef}
             type="text"
             placeholder=""
             value={query}
             onChange={handleChange}
-            className="w-full p-4 text-sm text-gray-800 border-b-2 border-white focus:border-white focus:outline-none transition-all duration-300 pr-10 font-medium" // Added font-medium here
+            className="w-full p-4 text-gray-800 border-b-2 border-white focus:border-white focus:outline-none transition-all duration-300 pr-10 text-base" // text-base ensures font size is >= 16px
           />
           {query && (
             <button
