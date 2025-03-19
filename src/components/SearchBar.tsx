@@ -144,15 +144,23 @@ const SearchBar: React.FC<SearchBarProps> = ({
       {/* Suggestions Dropdown */}
       {suggestions.length > 0 || query.trim() === '' ? (
         <ul className="absolute w-full mt-4 z-20 max-h-60 overflow-auto">
+          <h1
+            className={`text-xs font-semibold mb-2 mt-4 ${scrolled ? 'text-black' : 'text-black'}`}
+          >
+            trending searches
+          </h1>
           {/* Display the default suggestions if query is empty */}
           {(query.trim() === '' ? defaultSuggestions : suggestions).map(
             (suggestion, index) => (
               <li
                 key={suggestion}
                 onClick={() => handleSelectSuggestion(suggestion)}
-                className={`cursor-pointer px-4 py-2 text-xs text-gray-700 hover:none ${
+                className={`cursor-pointer px-2 py-2 text-xs text-gray-700 hover:none ${
                   selectedIndex === index ? 'bg-gray-200' : ''
                 }`}
+                style={{
+                  textDecoration: 'underline', // Apply underline style
+                }}
               >
                 {suggestion}
               </li>
