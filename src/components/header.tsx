@@ -119,7 +119,8 @@ const Header = () => {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMenuOpen((prev) => !prev)}
-          className="sm:hidden flex flex-col justify-center items-center space-y-1 z-30 relative group"
+          className="sm:hidden flex justify-center items-center z-30 relative group"
+          style={{ width: '50px', height: '50px' }} // Match the logo size to the button
         >
           {/* Top Bar (first line) */}
           <div
