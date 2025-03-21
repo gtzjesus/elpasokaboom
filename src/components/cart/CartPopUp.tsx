@@ -56,66 +56,66 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
           </h2>
         </div>
 
-        {/* Products List - Scrollable */}
-        <div className="flex-1 overflow-y-auto max-h-[calc(100vh-200px)]">
-          {hasItems ? (
-            <div>
-              {cartItems.map((item) => (
-                <div
-                  key={item.product._id}
-                  className="flex items-center justify-between mb-6 pb-4"
-                >
-                  {/* Product Image with Link */}
-                  <div className="mt-2 flex-shrink-0">
-                    <Link
-                      href={`/product/${item.product.slug?.current || ''}`} // Ensure slug is a valid string
-                    >
-                      <Image
-                        src={
-                          item.product.image
-                            ? urlFor(item.product.image).url()
-                            : '/fallback-image.jpg'
-                        }
-                        alt={item.product.name || 'Product'}
-                        width={100}
-                        height={100}
-                        className="rounded-lg"
-                      />
-                    </Link>
-                  </div>
-
-                  {/* Product Details */}
-                  <div className="flex-1 ml-4">
-                    {/* Product Name */}
-                    <p className="font-semibold text-xs uppercase text-gray-800 mb-2">
-                      {item.product.name}
-                    </p>
-
-                    {/* Price */}
-                    <p className="text-sm font-light mb-2">
-                      $ {((item.product.price || 0) * item.quantity).toFixed(0)}
-                    </p>
-
-                    {/* Quantity */}
-                    <p className="text-xs font-light">
-                      Quantity: {item.quantity}
-                    </p>
-                  </div>
+        {/* Conditionally Render Products or Empty Message */}
+        {hasItems ? (
+          <div className="flex-1 overflow-y-auto max-h-[calc(100vh-200px)]">
+            {cartItems.map((item) => (
+              <div
+                key={item.product._id}
+                className="flex items-center justify-between mb-6 pb-4"
+              >
+                {/* Product Image with Link */}
+                <div className="mt-2 flex-shrink-0">
+                  <Link
+                    href={`/product/${item.product.slug?.current || ''}`} // Ensure slug is a valid string
+                  >
+                    <Image
+                      src={
+                        item.product.image
+                          ? urlFor(item.product.image).url()
+                          : '/fallback-image.jpg'
+                      }
+                      alt={item.product.name || 'Product'}
+                      width={100}
+                      height={100}
+                      className="rounded-lg"
+                    />
+                  </Link>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-center text-gray-500">Shopping bag is empty.</p>
-          )}
-        </div>
 
-        {/* View Basket Link */}
-        <Link
-          href="/basket"
-          className="block text-center text-xs bg-white border text-black uppercase py-3 mt-4 transition-all"
-        >
-          View shopping bag
-        </Link>
+                {/* Product Details */}
+                <div className="flex-1 ml-4">
+                  {/* Product Name */}
+                  <p className="font-semibold text-xs uppercase text-gray-800 mb-2">
+                    {item.product.name}
+                  </p>
+
+                  {/* Price */}
+                  <p className="text-sm font-light mb-2">
+                    $ {((item.product.price || 0) * item.quantity).toFixed(0)}
+                  </p>
+
+                  {/* Quantity */}
+                  <p className="text-xs font-light">
+                    Quantity: {item.quantity}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-gray-500">Shopping bag is empty.</p>
+        )}
+
+        {/* View Basket Link (only show if there are items) */}
+        {hasItems && (
+          <Link
+            href="/basket"
+            className="block text-center text-xs bg-white border text-black uppercase py-3 mt-4 transition-all"
+          >
+            View shopping bag
+          </Link>
+        )}
       </div>
     </div>
   );
