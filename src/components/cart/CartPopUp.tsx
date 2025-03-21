@@ -13,7 +13,7 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 z-50">
-      <div className="bg-white mt-0 p-4 w-full h-full max-w-[325px] overflow-hidden relative">
+      <div className="bg-white mt-0 p-4 w-full h-[90vh] max-w-[325px] overflow-hidden relative flex flex-col">
         {/* Header Section */}
         <div className="border-b mb-4">
           {/* Close Button */}
@@ -30,7 +30,7 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
         </div>
 
         {/* Products List - Scrollable */}
-        <div className="overflow-y-auto max-h-[calc(100vh-160px)]">
+        <div className="flex-1 overflow-y-auto max-h-[calc(100vh-200px)]">
           {hasItems ? (
             <div>
               {cartItems.map((item) => (
