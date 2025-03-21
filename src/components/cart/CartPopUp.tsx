@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { urlFor } from '@/sanity/lib/image';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -11,9 +12,35 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
   const cartItems = useBasketStore((state) => state.getGroupedItems());
   const hasItems = cartItems.length > 0;
 
+  // Create a ref for the popup container
+  const popupRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Function to handle clicks outside the popup
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        popupRef.current &&
+        !popupRef.current.contains(event.target as Node)
+      ) {
+        onClose(); // Close the popup if the click is outside
+      }
+    };
+
+    // Add the event listener
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Cleanup event listener when the component is unmounted
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [onClose]);
+
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 z-50">
-      <div className="bg-white mt-0 p-4 w-full h-[90vh] max-w-[325px] overflow-hidden relative flex flex-col">
+      <div
+        ref={popupRef} // Attach the ref here
+        className="bg-white mt-0 p-4 w-full h-[90vh] max-w-[325px] overflow-hidden relative flex flex-col"
+      >
         {/* Header Section */}
         <div className="border-b mb-4">
           {/* Close Button */}
@@ -38,19 +65,23 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
                   key={item.product._id}
                   className="flex items-center justify-between mb-6 pb-4"
                 >
-                  {/* Product Image */}
+                  {/* Product Image with Link */}
                   <div className="mt-2 flex-shrink-0">
-                    <Image
-                      src={
-                        item.product.image
-                          ? urlFor(item.product.image).url()
-                          : '/fallback-image.jpg'
-                      }
-                      alt={item.product.name || 'Product'}
-                      width={100}
-                      height={100}
-                      className="rounded-lg"
-                    />
+                    <Link
+                      href={`/product/${item.product.slug?.current || ''}`} // Ensure slug is a valid string
+                    >
+                      <Image
+                        src={
+                          item.product.image
+                            ? urlFor(item.product.image).url()
+                            : '/fallback-image.jpg'
+                        }
+                        alt={item.product.name || 'Product'}
+                        width={100}
+                        height={100}
+                        className="rounded-lg"
+                      />
+                    </Link>
                   </div>
 
                   {/* Product Details */}
