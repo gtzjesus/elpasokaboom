@@ -12,9 +12,9 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
   const hasItems = cartItems.length > 0;
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 z-50 flex justify-center items-center">
-      <div className="bg-white rounded-lg p-6 w-96 h-auto max-h-[90vh] overflow-hidden relative">
-        <div className="border-b mb-4 ">
+    <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 z-50 flex justify-center ">
+      <div className="bg-white mt-14 p-4 w-96 h-auto max-h-[35vh] overflow-hidden relative">
+        <div className="border-b mb-4  ">
           {' '}
           {/* Close Button */}
           <button
@@ -24,21 +24,21 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
             &times;
           </button>
           {/* Title */}
-          <h2 className="uppercase text-sm font-semibold text-center mb-4  text-gray-800 ">
+          <h2 className="uppercase text-xs font-semibold text-center mb-4  text-gray-800 ">
             added to shopping bag
           </h2>
         </div>
 
         {/* Products List */}
         {hasItems ? (
-          <div className="max-h-[20vh] overflow-y-auto border-b">
+          <div className="max-h-[20vh]  overflow-y-auto  border-b">
             {cartItems.map((item) => (
               <div
                 key={item.product._id}
-                className="flex items-center justify-between mb-6 pb-4"
+                className="flex  justify-between mb-6 pb-4"
               >
                 {/* Product Image */}
-                <div className="flex-shrink-0">
+                <div className="mt-2 flex-shrink-0">
                   <Image
                     src={
                       item.product.image
@@ -46,22 +46,27 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
                         : '/fallback-image.jpg'
                     }
                     alt={item.product.name || 'Product'}
-                    width={80}
-                    height={80}
+                    width={120}
+                    height={120}
                     className="rounded-lg"
                   />
                 </div>
 
                 {/* Product Details */}
-                <div className="flex-1 ml-4">
-                  <p className="font-semibold text-lg text-gray-800">
+                <div className="flex-1 ml-4 ">
+                  {/* Product Name */}
+                  <p className=" font-semibold text-xs uppercase text-gray-800 mb-2">
                     {item.product.name}
                   </p>
-                  <p className="text-sm text-gray-600">
-                    Quantity: {item.quantity}
+
+                  {/* Price */}
+                  <p className="text-sm font-light mb-2">
+                    $ {((item.product.price || 0) * item.quantity).toFixed(0)}
                   </p>
-                  <p className="text-sm text-gray-900">
-                    ${((item.product.price || 0) * item.quantity).toFixed(2)}
+
+                  {/* Quantity */}
+                  <p className="text-xs font-light">
+                    Quantity: {item.quantity}
                   </p>
                 </div>
               </div>
@@ -73,7 +78,7 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
         {/* View Basket Link */}
         <Link
           href="/basket"
-          className="block text-center text-xs bg-blue-600 text-white uppercase py-3  mt-4 transition-all hover:bg-blue-700"
+          className="block text-center text-xs bg-white border text-black uppercase py-3  mt-4 transition-all "
         >
           view shopping bag
         </Link>
