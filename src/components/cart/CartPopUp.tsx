@@ -13,7 +13,7 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 z-50">
-      <div className="bg-white mt-0 p-4 w-full h-full max-w-[400px] overflow-hidden relative">
+      <div className="bg-white mt-0 p-4 w-full h-full max-w-[325px] overflow-hidden relative">
         {/* Header Section */}
         <div className="border-b mb-4">
           {/* Close Button */}
