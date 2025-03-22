@@ -191,11 +191,13 @@ function BasketPage() {
             })}
           </div>
 
-          <div className="w-full lg:w-80 lg:sticky lg:top-4 h-fit bg-white p-6 border rounded order-first lg:order-last fixed bottom-0 left-0 lg:left-auto">
-            <h3 className="text-xl font-semibold">order summary</h3>
-            <div className="mt-4 space-y-2">
-              <p className="flex justify-between">
-                <span>items:</span>
+          <div className="w-full lg:w-80 lg:sticky lg:top-4 h-fit bg-white p-6 border rounded order-first lg:order-last fixed bottom-0 left-0 lg:left-auto ">
+            <h3 className="text-xs  uppercase font-semibold border-b pb-2">
+              order summary
+            </h3>
+            <div className="">
+              <p className="flex justify-between text-sm font-light pt-2 ">
+                <span>total items:</span>
                 <span>
                   {groupedItems.reduce(
                     (total, item) => total + item.quantity,
@@ -203,10 +205,10 @@ function BasketPage() {
                   )}
                 </span>
               </p>
-              <p className="flex justify-between text-2xl font-bold border-t pt-2">
-                <span>total:</span>
+              <p className="flex justify-between text-md font-light pt-2">
+                <span>subtotal:</span>
                 <span>
-                  ${useBasketStore.getState().getTotalPrice().toFixed(2)}
+                  $ {useBasketStore.getState().getTotalPrice().toFixed(2)}
                 </span>
               </p>
             </div>
@@ -221,8 +223,8 @@ function BasketPage() {
               </button>
             ) : (
               <SignInButton mode="modal">
-                <button className="mt-4 w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                  sign in to checkout
+                <button className="block text-center text-xs bg-black border text-white uppercase py-3 mt-4 transition-all w-full">
+                  checkout
                 </button>
               </SignInButton>
             )}
