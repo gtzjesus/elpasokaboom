@@ -29,16 +29,16 @@ interface CategoriesProps {
 const Categories = ({ categories }: CategoriesProps) => {
   return (
     <div className="w-full max-w-7xl mx-auto p-6">
-      <h2 className="barlow-condensed-regular uppercase text-3xl tracking-very-wide font-semibold text-center text-black pb-4">
+      <h2 className="barlow-condensed-regular text-2xl tracking-very-wide font-semibold text-center text-black pb-4">
         Our Collection
       </h2>
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 py-6">
         {categories.map((category) => (
           <Link
             key={category._id}
             href={`/categories/${category.slug.current}`}
           >
-            <div className="flex flex-col items-center bg-transparent shadow-md p-2 ">
+            <div className="flex flex-col items-center bg-transparent shadow-md p-4 ">
               <Image
                 src={
                   category.image
@@ -51,7 +51,7 @@ const Categories = ({ categories }: CategoriesProps) => {
                 className="object-cover mb-4"
                 priority={true}
               />
-              <h3 className="barlow-condensed-regular  text-lg tracking-very-wide font-light text-center text-black">
+              <h3 className="barlow-condensed-regular  text-md tracking-very-wide font-light text-center text-black py-2">
                 {capitalizeFirstWord(category.title)}{' '}
                 {/* Capitalize the first word of the title */}
               </h3>
