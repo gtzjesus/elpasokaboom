@@ -13,7 +13,7 @@ const Footer = () => {
             width={25} // Customize based on your logo's size
             height={25} // Customize based on your logo's size
           />
-          <p className="text-sm text-black">nextcommerce</p>
+          <p className="text-sm text-black">Nextcommerce</p>
         </div>
 
         {/* Copyright Text */}
