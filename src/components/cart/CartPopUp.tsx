@@ -62,7 +62,7 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
             &times; {/* Close symbol */}
           </button>
           {/* Title */}
-          <h2 className="uppercase text-xs font-semibold text-center mb-4 text-gray-800">
+          <h2 className="uppercase text-sm font-light text-center text-gray-800 mb-2">
             Added to shopping bag
           </h2>
         </div>
@@ -73,7 +73,7 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
             {cartItems.map((item) => (
               <div
                 key={item.product._id} // Use product ID as key for optimal rendering
-                className="flex items-center justify-between mb-6 pb-4"
+                className="flex items-center justify-between mb-5 pb-3"
               >
                 {/* Product Image with Link to Product Page */}
                 <div className="mt-2 flex-shrink-0">
@@ -87,28 +87,28 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
                           : '/fallback-image.jpg' // Fallback image in case no product image
                       }
                       alt={item.product.name || 'Product'} // Alt text for accessibility
-                      width={100} // Fixed width for image
-                      height={100} // Fixed height for image
-                      className="rounded-lg" // Image styling
+                      width={120} // Fixed width for image
+                      height={120} // Fixed height for image
+                      className="" // Image styling
                     />
                   </Link>
                 </div>
 
                 {/* Product Details */}
-                <div className="flex-1 ml-4">
+                <div className="flex-1 ml-6 space-y-2">
                   {/* Product Name */}
-                  <p className="font-semibold text-xs uppercase text-gray-800 mb-2">
+                  <p className="uppercase text-sm font-light text-gray-800">
                     {item.product.name}
                   </p>
 
                   {/* Price */}
-                  <p className="text-sm font-light mb-2">
-                    $ {((item.product.price || 0) * item.quantity).toFixed(0)}{' '}
+                  <p className=" text-xs font-light text-gray-800">
+                    ${((item.product.price || 0) * item.quantity).toFixed(0)}{' '}
                     {/* Calculate total price */}
                   </p>
 
                   {/* Quantity */}
-                  <p className="text-xs font-light">
+                  <p className=" text-xs font-light text-gray-800">
                     Quantity: {item.quantity}
                   </p>
                 </div>
@@ -124,7 +124,7 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
         {hasItems && (
           <Link
             href="/basket"
-            className="block text-center text-xs bg-white border text-black uppercase py-3 mt-4 transition-all"
+            className="block bg-white borde py-3 mt-4 transition-all uppercase text-xs font-light text-center text-gray-800 border"
           >
             View shopping bag
           </Link>
