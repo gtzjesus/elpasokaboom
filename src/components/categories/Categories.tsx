@@ -38,7 +38,7 @@ const Categories = ({ categories }: CategoriesProps) => {
             key={category._id}
             href={`/categories/${category.slug.current}`}
           >
-            <div className="flex flex-col items-center bg-transparent shadow-md p-4 ">
+            <div className="flex flex-col items-center bg-transparent shadow-md p-4 bg-white">
               <Image
                 src={
                   category.image

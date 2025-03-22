@@ -31,9 +31,9 @@ const SearchPage = async ({
   }
 
   return (
-    <div>
+    <div className="container mx-auto max-w-6xl bg-white">
       <Header />
-      <h1 className="text-xl font-bold mb-10 mt-20 text-center">
+      <h1 className="uppercase text-sm font-semibold text-center p-6 text-gray-800">
         &ldquo;{q}&rdquo; ({resultCount} results)
       </h1>
       <ProductGrid products={products} />
