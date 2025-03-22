@@ -115,7 +115,8 @@ function BasketPage() {
           shopping bag
         </h1>
         <div className="flex flex-col lg:flex-row gap-8">
-          <div className="flex-grow">
+          {/* Product List Container */}
+          <div className="flex-grow overflow-y-auto pr-4 pb-40 lg:pb-0">
             {groupedItems?.map((item) => {
               const stock = item.product.stock ?? 0; // Ensure stock is never undefined
               return (
@@ -164,9 +165,12 @@ function BasketPage() {
                       onChange={(e) =>
                         handleQuantityChange(item.product._id, +e.target.value)
                       }
-                      className="border px-2 py-2 text-xs"
+                      className="border px-3 py-2 text-sm rounded-md w-full max-w-[120px] bg-white focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
                       disabled={stock === 0} // Disable if stock is 0
                     >
+                      <option value="" disabled>
+                        Select Quantity
+                      </option>
                       {Array.from({ length: stock }, (_, i) => i + 1).map(
                         (quantity) => (
                           <option key={quantity} value={quantity}>
@@ -191,12 +195,13 @@ function BasketPage() {
             })}
           </div>
 
-          <div className="w-full lg:w-80 lg:sticky lg:top-4 h-fit bg-white p-6 border rounded order-first lg:order-last fixed bottom-0 left-0 lg:left-auto ">
-            <h3 className="text-xs  uppercase font-semibold border-b pb-2">
+          {/* Fixed Order Summary */}
+          <div className="w-full lg:w-80 lg:sticky lg:top-4 h-fit bg-white p-6 border rounded order-first lg:order-last fixed bottom-0 left-0 lg:left-auto">
+            <h3 className="text-xs uppercase font-semibold border-b pb-1">
               order summary
             </h3>
             <div className="">
-              <p className="flex justify-between text-sm font-light pt-2 ">
+              <p className="flex justify-between text-sm font-light pt-1 ">
                 <span>total items:</span>
                 <span>
                   {groupedItems.reduce(
@@ -205,7 +210,7 @@ function BasketPage() {
                   )}
                 </span>
               </p>
-              <p className="flex justify-between text-md font-light pt-2">
+              <p className="flex justify-between text-md font-light pt-1">
                 <span>subtotal:</span>
                 <span>
                   $ {useBasketStore.getState().getTotalPrice().toFixed(2)}
@@ -217,13 +222,13 @@ function BasketPage() {
               <button
                 onClick={handleCheckout}
                 disabled={isLoading}
-                className="mt-4 w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:bg-gray-400"
+                className="mt-2 w-full  text-white px-4 py-1 rounded hover:bg-blue-600 disabled:bg-gray-400"
               >
                 {isLoading ? 'processing...' : 'checkout'}
               </button>
             ) : (
               <SignInButton mode="modal">
-                <button className="block text-center text-xs bg-black border text-white uppercase py-3 mt-4 transition-all w-full">
+                <button className="block text-center text-xs bg-black border text-white uppercase py-3 mt-2 transition-all w-full">
                   checkout
                 </button>
               </SignInButton>
