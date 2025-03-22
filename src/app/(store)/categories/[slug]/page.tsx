@@ -37,7 +37,7 @@ export default async function CategoryPage({
   return (
     <div className="container mx-auto max-w-6xl bg-white">
       <Header />
-      <h1 className="uppercase text-sm font-light text-center p-6 text-gray-800">
+      <h1 className="uppercase text-sm font-light text-center p-5 text-gray-800">
         {/* Format the category title by capitalizing words in the slug */}
         {slug
           .split('-')

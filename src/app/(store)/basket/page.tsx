@@ -117,14 +117,14 @@ function BasketPage() {
     <div className="bg-white min-h-screen">
       <Header />
 
-      <div className="container mx-auto max-w-6xl bg-white">
-        <h1 className="uppercase text-sm font-semibold text-center p-6 text-gray-800">
+      <div className="container mx-auto max-w-3xl bg-white">
+        <h1 className="uppercase text-sm font-light text-center p-5 text-gray-800">
           Shopping Bag
         </h1>
 
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row">
           {/* Product List */}
-          <div className="flex-grow overflow-y-auto pr-4 pb-40 lg:pb-0">
+          <div className="flex-grow overflow-y-auto pb-40 lg:pb-0">
             {groupedItems.map((item) => {
               const stock = item.product.stock ?? 0;
 
@@ -148,58 +148,65 @@ function BasketPage() {
                       )}
                     </div>
                   </div>
-
-                  <div className="flex justify-center items-center text-center p-10">
+                  <div className="flex flex-col justify-center items-center text-center p-3 gap-10">
                     <div className="min-w-0">
-                      <h2 className="text-md uppercase sm:text-xl font-semibold truncate">
+                      <h2 className="uppercase text-md font-light text-center text-gray-800">
                         {item.product.name}
                       </h2>
                       {item.product.description && (
-                        <p className="py-2 text-xs font-light">
+                        <p className=" text-xs font-light text-center text-gray-800">
                           {getTruncatedDescription(item.product.description)}
                         </p>
                       )}
-                      <p className="text-sm font-light mt-2">
-                        ${' '}
+                    </div>
+                    <div className="min-w-0">
+                      <p className=" text-md font-light text-center text-gray-800">
+                        $
                         {((item.product.price ?? 0) * item.quantity).toFixed(0)}
                       </p>
-                      <p className="mt-2 text-xs uppercase">
+                      <p className="uppercase text-xs font-light text-center text-gray-800 my-2">
                         {getStockStatus(stock)}
                       </p>
                     </div>
                   </div>
 
                   {/* Quantity Dropdown */}
-                  <div className="flex justify-center mb-4">
-                    <select
-                      value={`${item.quantity}`}
-                      onChange={(e) =>
-                        handleQuantityChange(item.product._id, +e.target.value)
-                      }
-                      className="border px-3 py-2 text-sm rounded-md w-full max-w-[120px] bg-white focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
-                      disabled={stock === 0} // Disable if out of stock
-                    >
-                      <option value="" disabled>
-                        quantity
-                      </option>
-                      {Array.from({ length: stock }, (_, i) => i + 1).map(
-                        (quantity) => (
-                          <option key={quantity} value={quantity}>
-                            {quantity}
-                          </option>
-                        )
-                      )}
-                    </select>
+                  <div className="min-w-0">
+                    <div className="flex justify-center mb-4">
+                      <select
+                        value={`${item.quantity}`}
+                        onChange={(e) =>
+                          handleQuantityChange(
+                            item.product._id,
+                            +e.target.value
+                          )
+                        }
+                        className="border px-3 py-2 text-sm rounded-md w-full max-w-[120px] bg-white focus:ring-2 focus:ring-blue-500 disabled:opacity-50 font-light text-center text-gray-800"
+                        disabled={stock === 0} // Disable if out of stock
+                      >
+                        <option value="" disabled>
+                          QTY
+                        </option>
+                        {Array.from({ length: stock }, (_, i) => i + 1).map(
+                          (quantity) => (
+                            <option key={quantity} value={quantity}>
+                              {quantity}
+                            </option>
+                          )
+                        )}
+                      </select>
+                    </div>
                   </div>
-
                   {/* Remove Item Button */}
-                  <div className="flex justify-center">
-                    <button
-                      onClick={() => handleRemoveItem(item.product._id)}
-                      className="uppercase underline text-xs"
-                    >
-                      Remove
-                    </button>
+                  <div className="min-w-0">
+                    <div className="flex justify-center">
+                      <button
+                        onClick={() => handleRemoveItem(item.product._id)}
+                        className="uppercase text-sm underline font-light text-center text-gray-800"
+                      >
+                        Remove
+                      </button>
+                    </div>
                   </div>
                 </div>
               );
@@ -208,12 +215,12 @@ function BasketPage() {
 
           {/* Fixed Order Summary */}
           <div className="w-full lg:w-80 lg:sticky lg:top-4 h-fit bg-white p-6 border order-first lg:order-last fixed bottom-0 left-0 lg:left-auto">
-            <h3 className="text-xs uppercase font-semibold border-b pb-1">
+            <h3 className="uppercase text-sm font-light text-center text-gray-800 border-b pb-1">
               Order Summary
             </h3>
 
             <div>
-              <p className="flex justify-between text-sm font-light pt-1">
+              <p className="flex justify-between uppercase text-xs pt-1 font-light text-center text-gray-800">
                 <span>total items:</span>
                 <span>
                   {groupedItems.reduce(
@@ -222,10 +229,10 @@ function BasketPage() {
                   )}
                 </span>
               </p>
-              <p className="flex justify-between text-md font-light pt-1">
+              <p className="flex justify-between uppercase text-sm font-light text-center text-gray-800 pt-1">
                 <span>subtotal:</span>
                 <span>
-                  $ {useBasketStore.getState().getTotalPrice().toFixed(2)}
+                  ${useBasketStore.getState().getTotalPrice().toFixed(2)}
                 </span>
               </p>
             </div>
@@ -234,13 +241,13 @@ function BasketPage() {
               <button
                 onClick={handleCheckout}
                 disabled={isLoading}
-                className="mt-2 w-full text-white px-4 py-1 rounded hover:bg-blue-600 disabled:bg-gray-400"
+                className="mt-2 w-full text-white px-4 py-1 rounded hover:bg-blue-600 disabled:bg-gray-400 "
               >
                 {isLoading ? 'Processing...' : 'Checkout'}
               </button>
             ) : (
               <SignInButton mode="modal">
-                <button className="block text-center text-xs bg-black border text-white uppercase py-3 mt-2 transition-all w-full">
+                <button className="block text-center text-xs bg-black border  uppercase py-3 mt-2 transition-all w-full text-white   font-light  ">
                   Checkout
                 </button>
               </SignInButton>
