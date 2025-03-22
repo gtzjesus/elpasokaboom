@@ -87,8 +87,8 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
                           : '/fallback-image.jpg' // Fallback image in case no product image
                       }
                       alt={item.product.name || 'Product'} // Alt text for accessibility
-                      width={120} // Fixed width for image
-                      height={120} // Fixed height for image
+                      width={110} // Fixed width for image
+                      height={110} // Fixed height for image
                       className="" // Image styling
                     />
                   </Link>

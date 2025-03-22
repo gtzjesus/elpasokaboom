@@ -35,7 +35,7 @@ export default async function CategoryPage({
 
   // Render the category page with a header, category title, and product grid
   return (
-    <div className="container mx-auto max-w-6xl bg-white">
+    <div className="container bg-white">
       <Header />
       <h1 className="uppercase text-sm font-light text-center p-5 text-gray-800">
         {/* Format the category title by capitalizing words in the slug */}

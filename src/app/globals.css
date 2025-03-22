@@ -30,8 +30,9 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
 body {
-  /* font-family: 'Roboto Condensed', sans-serif; */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 @layer base {
