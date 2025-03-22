@@ -1,4 +1,3 @@
-// components/Header.tsx
 'use client';
 
 import { useUser } from '@clerk/nextjs';
@@ -17,13 +16,13 @@ const Header = () => {
     state.items.reduce((total, item) => total + item.quantity, 0)
   );
 
+  const pathname = usePathname();
+
   // States for managing various UI features
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [windowWidth, setWindowWidth] = useState<number>(0);
-
-  const pathname = usePathname();
 
   // Client-side mounting
   useEffect(() => {
@@ -109,9 +108,14 @@ const Header = () => {
         </div>
 
         {/* Right side: Search , Cart and Auth Buttons */}
-        <div className="flex items-center ">
+        <div className="flex items-center p-2">
           <SearchButton scrolled={scrolled} />
-          <CartButton itemCount={itemCount} scrolled={scrolled} />
+
+          {/* Conditionally render CartButton only if the pathname is not '/basket' */}
+          {pathname !== '/basket' && (
+            <CartButton itemCount={itemCount} scrolled={scrolled} />
+          )}
+
           <div
             className={`hidden sm:flex items-center ${scrolled ? 'text-black' : 'text-black'}`}
           >

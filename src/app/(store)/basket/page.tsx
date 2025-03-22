@@ -12,6 +12,7 @@ import {
   createCheckoutSession,
   Metadata,
 } from '../../../../actions/createCheckoutSession';
+import Header from '@/components/common/header';
 
 function BasketPage() {
   const groupedItems = useBasketStore((state) => state.getGroupedItems());
@@ -63,14 +64,15 @@ function BasketPage() {
 
   return (
     <div className="bg-white min-h-screen">
+      <Header />
       <div className="container mx-auto max-w-6xl bg-white">
-        <h1 className="uppercase text-sm font-semibold text-center p-4 text-gray-800 ">
+        <h1 className="uppercase text-sm font-semibold text-center p-6 text-gray-800 ">
           shopping bag
         </h1>
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="flex-grow">
             {groupedItems?.map((item) => (
-              <div key={item.product._id} className="p-4 border-b">
+              <div key={item.product._id} className="p-6 border-b">
                 <div
                   className="min-w-0"
                   onClick={() =>
