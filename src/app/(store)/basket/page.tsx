@@ -14,6 +14,7 @@ import {
 import Header from '@/components/common/header';
 
 function BasketPage() {
+  // Fetch basket items and user info
   const groupedItems = useBasketStore((state) => state.getGroupedItems());
   const { isSignedIn } = useAuth();
   const { user } = useUser();
@@ -22,30 +23,35 @@ function BasketPage() {
   const [isClient, setIsClient] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Check if the component is rendered on the client side
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  // Loading state if client is not yet available
   if (!isClient) {
     return <Loader />;
   }
 
+  // Display message if basket is empty
   if (groupedItems.length === 0) {
     return (
       <div className="container mx-auto p-4 min-h-[50vh] bg-white">
-        <p className="text-gray-600 text-lg">your basket is empty.</p>
+        <p className="text-gray-600 text-lg">Your basket is empty.</p>
       </div>
     );
   }
 
+  // Handle checkout session creation
   const handleCheckout = async () => {
     if (!isSignedIn) return;
-    setIsLoading(true);
 
+    setIsLoading(true);
     try {
       const metadata: Metadata = {
         orderNumber: crypto.randomUUID(),
-        customerName: user?.fullName ?? 'unknown',
-        customerEmail: user?.emailAddresses[0].emailAddress ?? 'unknown',
+        customerName: user?.fullName ?? 'Unknown',
+        customerEmail: user?.emailAddresses[0].emailAddress ?? 'Unknown',
         clerkUserId: user!.id,
       };
 
@@ -55,11 +61,13 @@ function BasketPage() {
         window.location.href = checkoutUrl;
       }
     } catch (error) {
-      console.error('error creating checkout session', error);
+      console.error('Error creating checkout session', error);
     } finally {
       setIsLoading(false);
     }
   };
+
+  // Helper function to truncate product descriptions
   /* eslint-disable  @typescript-eslint/no-explicit-any */
 
   const getTruncatedDescription = (description: any) => {
@@ -72,13 +80,11 @@ function BasketPage() {
     if (Array.isArray(description)) {
       let combinedText = '';
       description.forEach((block: any) => {
-        if (block.children && Array.isArray(block.children)) {
-          block.children.forEach((child: any) => {
-            if (child.text) {
-              combinedText += child.text;
-            }
-          });
-        }
+        block.children?.forEach((child: any) => {
+          if (child.text) {
+            combinedText += child.text;
+          }
+        });
       });
       return combinedText.length > 30
         ? combinedText.substring(0, 30) + '...'
@@ -88,41 +94,44 @@ function BasketPage() {
     return '';
   };
 
+  // Display stock status
   const getStockStatus = (stock: number | undefined) => {
-    const validStock = stock ?? 0;
-    return validStock > 0 ? (
-      <span className="font-semibold">available</span>
+    return stock && stock > 0 ? (
+      <span className="font-semibold">Available</span>
     ) : (
-      <span className="font-semibold">out of stock</span>
+      <span className="font-semibold">Out of stock</span>
     );
   };
 
   // Handle item removal from the basket
   const handleRemoveItem = (productId: string) => {
-    useBasketStore.getState().removeItem(productId); // Calling the remove method from the store
+    useBasketStore.getState().removeItem(productId);
   };
 
-  // Handle updating the item quantity
+  // Handle updating item quantity in the basket
   const handleQuantityChange = (productId: string, quantity: number) => {
-    useBasketStore.getState().updateItemQuantity(productId, quantity); // Update the quantity in the store
+    useBasketStore.getState().updateItemQuantity(productId, quantity);
   };
 
   return (
     <div className="bg-white min-h-screen">
       <Header />
+
       <div className="container mx-auto max-w-6xl bg-white">
-        <h1 className="uppercase text-sm font-semibold text-center p-6 text-gray-800 ">
-          shopping bag
+        <h1 className="uppercase text-sm font-semibold text-center p-6 text-gray-800">
+          Shopping Bag
         </h1>
+
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Product List Container */}
+          {/* Product List */}
           <div className="flex-grow overflow-y-auto pr-4 pb-40 lg:pb-0">
-            {groupedItems?.map((item) => {
-              const stock = item.product.stock ?? 0; // Ensure stock is never undefined
+            {groupedItems.map((item) => {
+              const stock = item.product.stock ?? 0;
+
               return (
                 <div key={item.product._id} className="p-6 border-b">
                   <div
-                    className="min-w-0"
+                    className="min-w-0 cursor-pointer"
                     onClick={() =>
                       router.push(`/product/${item.product.slug?.current}`)
                     }
@@ -131,7 +140,7 @@ function BasketPage() {
                       {item.product.image && (
                         <Image
                           src={imageUrl(item.product.image).url()}
-                          alt={item.product.name ?? 'product image'}
+                          alt={item.product.name ?? 'Product Image'}
                           className="w-full h-full object-cover"
                           width={120}
                           height={120}
@@ -139,6 +148,7 @@ function BasketPage() {
                       )}
                     </div>
                   </div>
+
                   <div className="flex justify-center items-center text-center p-10">
                     <div className="min-w-0">
                       <h2 className="text-md uppercase sm:text-xl font-semibold truncate">
@@ -158,6 +168,7 @@ function BasketPage() {
                       </p>
                     </div>
                   </div>
+
                   {/* Quantity Dropdown */}
                   <div className="flex justify-center mb-4">
                     <select
@@ -166,10 +177,10 @@ function BasketPage() {
                         handleQuantityChange(item.product._id, +e.target.value)
                       }
                       className="border px-3 py-2 text-sm rounded-md w-full max-w-[120px] bg-white focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
-                      disabled={stock === 0} // Disable if stock is 0
+                      disabled={stock === 0} // Disable if out of stock
                     >
                       <option value="" disabled>
-                        Select Quantity
+                        quantity
                       </option>
                       {Array.from({ length: stock }, (_, i) => i + 1).map(
                         (quantity) => (
@@ -181,7 +192,7 @@ function BasketPage() {
                     </select>
                   </div>
 
-                  {/* Remove button */}
+                  {/* Remove Item Button */}
                   <div className="flex justify-center">
                     <button
                       onClick={() => handleRemoveItem(item.product._id)}
@@ -196,12 +207,13 @@ function BasketPage() {
           </div>
 
           {/* Fixed Order Summary */}
-          <div className="w-full lg:w-80 lg:sticky lg:top-4 h-fit bg-white p-6 border rounded order-first lg:order-last fixed bottom-0 left-0 lg:left-auto">
+          <div className="w-full lg:w-80 lg:sticky lg:top-4 h-fit bg-white p-6 border order-first lg:order-last fixed bottom-0 left-0 lg:left-auto">
             <h3 className="text-xs uppercase font-semibold border-b pb-1">
-              order summary
+              Order Summary
             </h3>
-            <div className="">
-              <p className="flex justify-between text-sm font-light pt-1 ">
+
+            <div>
+              <p className="flex justify-between text-sm font-light pt-1">
                 <span>total items:</span>
                 <span>
                   {groupedItems.reduce(
@@ -222,14 +234,14 @@ function BasketPage() {
               <button
                 onClick={handleCheckout}
                 disabled={isLoading}
-                className="mt-2 w-full  text-white px-4 py-1 rounded hover:bg-blue-600 disabled:bg-gray-400"
+                className="mt-2 w-full text-white px-4 py-1 rounded hover:bg-blue-600 disabled:bg-gray-400"
               >
-                {isLoading ? 'processing...' : 'checkout'}
+                {isLoading ? 'Processing...' : 'Checkout'}
               </button>
             ) : (
               <SignInButton mode="modal">
                 <button className="block text-center text-xs bg-black border text-white uppercase py-3 mt-2 transition-all w-full">
-                  checkout
+                  Checkout
                 </button>
               </SignInButton>
             )}
