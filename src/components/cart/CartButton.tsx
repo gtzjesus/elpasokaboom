@@ -31,7 +31,7 @@ const CartButton: React.FC<CartButtonProps> = ({ itemCount, scrolled }) => {
       {/* Button that opens the cart popup */}
       <button
         onClick={openPopup} // When clicked, open the cart popup
-        className="relative flex justify-center items-center space-x-4 font-bold px-6 rounded"
+        className="relative flex justify-center items-center rounded "
       >
         {/* Cart icon */}
         <Image
@@ -44,7 +44,7 @@ const CartButton: React.FC<CartButtonProps> = ({ itemCount, scrolled }) => {
 
         {/* Display cart item count as a badge on top of the icon */}
         {itemCount > 0 && (
-          <span className="absolute opacity-75 -top-0.5 bg-custom-gray text-black rounded-full w-3 h-3 flex items-center justify-center text-[8px] font-bold">
+          <span className="absolute opacity-75 -top-0.5 bg-pearl text-black rounded-full w-3 h-3 flex items-center justify-center text-[8px] font-bold">
             {itemCount}
           </span>
         )}
