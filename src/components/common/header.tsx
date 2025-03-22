@@ -108,7 +108,7 @@ const Header = () => {
         </div>
 
         {/* Right side: Search , Cart and Auth Buttons */}
-        <div className="flex items-center space-x-3 font-bold px-3">
+        <div className="flex items-center space-x-5 font-bold px-5">
           <SearchButton scrolled={scrolled} />
 
           {/* Conditionally render CartButton only if the pathname is not '/basket' */}
