@@ -74,7 +74,7 @@ const Header = () => {
 
   return (
     <header
-      className={`${scrolled ? 'bg-pearl shadow-lg' : 'bg-transparent'} fixed top-0 z-20 flex items-center px-3 py-3 w-full`}
+      className={`${scrolled ? 'bg-pearl shadow-lg' : 'bg-transparent'} fixed top-0 z-20 flex items-center px-4 py-3 w-full`}
     >
       <div className="flex w-full items-center justify-between">
         {/* Left side: Logo and Company Name */}
@@ -107,15 +107,15 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Right side: Search , Cart and Auth Buttons */}
-        <div className="flex items-center p-2">
+        {/* Right side: Search, Cart, and Auth Buttons */}
+        <div className="flex items-center space-x-1">
+          {' '}
+          {/* Reduced space between buttons */}
           <SearchButton scrolled={scrolled} />
-
           {/* Conditionally render CartButton only if the pathname is not '/basket' */}
           {pathname !== '/basket' && (
             <CartButton itemCount={itemCount} scrolled={scrolled} />
           )}
-
           <div
             className={`hidden sm:flex items-center ${scrolled ? 'text-black' : 'text-black'}`}
           >
@@ -155,7 +155,7 @@ const Header = () => {
         >
           {isMenuOpen ? '' : <span className="text-white"></span>}
         </button>
-        <div className="flex flex-col items-center  h-full p-20 space-y-6">
+        <div className="flex flex-col items-center h-full p-20 space-y-6">
           <div className="flex flex-col items-center space-y-4 text-black text-2xl">
             <AuthButtons user={user} />
           </div>
