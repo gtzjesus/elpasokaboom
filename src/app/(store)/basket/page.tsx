@@ -4,7 +4,6 @@ import { SignInButton, useAuth, useUser } from '@clerk/nextjs';
 import useBasketStore from '../../../../store/store';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-// import AddToBasketButton from '@/components/cart/AddToBasketButton';
 import Image from 'next/image';
 import { imageUrl } from '@/lib/imageUrl';
 import Loader from '@/components/common/Loader';
@@ -65,18 +64,14 @@ function BasketPage() {
   // Function to handle truncating both plain text and rich text descriptions
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   const getTruncatedDescription = (description: any) => {
-    // If description is a string, truncate it to the first 20 characters
     if (typeof description === 'string') {
       return description.length > 30
-        ? description.substring(0, 30) + ''
+        ? description.substring(0, 30) + '...'
         : description;
     }
 
-    // If description is an array (rich text), extract and combine all children text
     if (Array.isArray(description)) {
       let combinedText = '';
-
-      // Loop through the rich text blocks and extract the text
       description.forEach((block: any) => {
         if (block.children && Array.isArray(block.children)) {
           block.children.forEach((child: any) => {
@@ -86,14 +81,27 @@ function BasketPage() {
           });
         }
       });
-
-      // Truncate the combined text
       return combinedText.length > 30
-        ? combinedText.substring(0, 30) + ''
+        ? combinedText.substring(0, 30) + '...'
         : combinedText;
     }
 
     return '';
+  };
+
+  // Function to display stock availability
+  const getStockStatus = (stock: number | undefined) => {
+    const validStock = stock ?? 0;
+    return validStock > 0 ? (
+      <span className="font-semibold">available</span>
+    ) : (
+      <span className="font-semibold">out of stock</span>
+    );
+  };
+
+  // Handle item removal from the basket
+  const handleRemoveItem = (productId: string) => {
+    useBasketStore.getState().removeItem(productId); // Calling the remove method from the store
   };
 
   return (
@@ -124,26 +132,36 @@ function BasketPage() {
                       />
                     )}
                   </div>
-                  <div className="flex justify-center items-center text-center p-10">
+                  <div className="flex justify-center items-center text-center p-8">
                     <div className="min-w-0">
                       <h2 className="text-md uppercase sm:text-xl font-semibold truncate">
                         {item.product.name}
                       </h2>
                       {item.product.description && (
-                        <p className="py-2 text-xs font-light">
+                        <p className="py-3 text-xs font-light">
                           {getTruncatedDescription(item.product.description)}
                         </p>
                       )}
                       <p className="text-sm font-light mt-2">
-                        ${' '}
+                        $
                         {((item.product.price ?? 0) * item.quantity).toFixed(0)}
+                      </p>
+                      <p className="mt-2 text-xs uppercase">
+                        {getStockStatus(item.product.stock)}
                       </p>
                     </div>
                   </div>
                 </div>
-                {/* <div className="flex items-center ml-4 flex-shrink-0">
-                  <AddToBasketButton product={item.product} />
-                </div> */}
+
+                {/* Remove button */}
+                <div className="flex justify-center">
+                  <button
+                    onClick={() => handleRemoveItem(item.product._id)}
+                    className="text-xs underline uppercase"
+                  >
+                    Remove
+                  </button>
+                </div>
               </div>
             ))}
           </div>
