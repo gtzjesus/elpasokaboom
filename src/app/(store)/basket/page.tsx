@@ -60,9 +60,8 @@ function BasketPage() {
       setIsLoading(false);
     }
   };
-
-  // Function to handle truncating both plain text and rich text descriptions
   /* eslint-disable  @typescript-eslint/no-explicit-any */
+
   const getTruncatedDescription = (description: any) => {
     if (typeof description === 'string') {
       return description.length > 30
@@ -89,7 +88,6 @@ function BasketPage() {
     return '';
   };
 
-  // Function to display stock availability
   const getStockStatus = (stock: number | undefined) => {
     const validStock = stock ?? 0;
     return validStock > 0 ? (
@@ -104,6 +102,11 @@ function BasketPage() {
     useBasketStore.getState().removeItem(productId); // Calling the remove method from the store
   };
 
+  // Handle updating the item quantity
+  const handleQuantityChange = (productId: string, quantity: number) => {
+    useBasketStore.getState().updateItemQuantity(productId, quantity); // Update the quantity in the store
+  };
+
   return (
     <div className="bg-white min-h-screen">
       <Header />
@@ -113,57 +116,79 @@ function BasketPage() {
         </h1>
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="flex-grow">
-            {groupedItems?.map((item) => (
-              <div key={item.product._id} className="p-6 border-b">
-                <div
-                  className="min-w-0"
-                  onClick={() =>
-                    router.push(`/product/${item.product.slug?.current}`)
-                  }
-                >
-                  <div className="flex justify-center items-center w-40 h-40 sm:w-24 sm:h-24 flex-shrink-0 mx-auto">
-                    {item.product.image && (
-                      <Image
-                        src={imageUrl(item.product.image).url()}
-                        alt={item.product.name ?? 'product image'}
-                        className="w-full h-full object-cover"
-                        width={120}
-                        height={120}
-                      />
-                    )}
+            {groupedItems?.map((item) => {
+              const stock = item.product.stock ?? 0; // Ensure stock is never undefined
+              return (
+                <div key={item.product._id} className="p-6 border-b">
+                  <div
+                    className="min-w-0"
+                    onClick={() =>
+                      router.push(`/product/${item.product.slug?.current}`)
+                    }
+                  >
+                    <div className="flex justify-center items-center w-40 h-40 sm:w-24 sm:h-24 flex-shrink-0 mx-auto">
+                      {item.product.image && (
+                        <Image
+                          src={imageUrl(item.product.image).url()}
+                          alt={item.product.name ?? 'product image'}
+                          className="w-full h-full object-cover"
+                          width={120}
+                          height={120}
+                        />
+                      )}
+                    </div>
                   </div>
-                  <div className="flex justify-center items-center text-center p-8">
+                  <div className="flex justify-center items-center text-center p-10">
                     <div className="min-w-0">
                       <h2 className="text-md uppercase sm:text-xl font-semibold truncate">
                         {item.product.name}
                       </h2>
                       {item.product.description && (
-                        <p className="py-3 text-xs font-light">
+                        <p className="py-2 text-xs font-light">
                           {getTruncatedDescription(item.product.description)}
                         </p>
                       )}
                       <p className="text-sm font-light mt-2">
-                        $
+                        ${' '}
                         {((item.product.price ?? 0) * item.quantity).toFixed(0)}
                       </p>
                       <p className="mt-2 text-xs uppercase">
-                        {getStockStatus(item.product.stock)}
+                        {getStockStatus(stock)}
                       </p>
                     </div>
                   </div>
-                </div>
+                  {/* Quantity Dropdown */}
+                  <div className="flex justify-center mb-4">
+                    <select
+                      value={`${item.quantity}`}
+                      onChange={(e) =>
+                        handleQuantityChange(item.product._id, +e.target.value)
+                      }
+                      className="border px-2 py-2 text-xs"
+                      disabled={stock === 0} // Disable if stock is 0
+                    >
+                      {Array.from({ length: stock }, (_, i) => i + 1).map(
+                        (quantity) => (
+                          <option key={quantity} value={quantity}>
+                            {quantity}
+                          </option>
+                        )
+                      )}
+                    </select>
+                  </div>
 
-                {/* Remove button */}
-                <div className="flex justify-center">
-                  <button
-                    onClick={() => handleRemoveItem(item.product._id)}
-                    className="text-xs underline uppercase"
-                  >
-                    Remove
-                  </button>
+                  {/* Remove button */}
+                  <div className="flex justify-center">
+                    <button
+                      onClick={() => handleRemoveItem(item.product._id)}
+                      className="uppercase underline text-xs"
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="w-full lg:w-80 lg:sticky lg:top-4 h-fit bg-white p-6 border rounded order-first lg:order-last fixed bottom-0 left-0 lg:left-auto">
