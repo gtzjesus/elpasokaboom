@@ -18,15 +18,18 @@ const HeroSection: FC = () => {
      */
     <section className="absolute inset-0 flex items-center justify-center z-10 text-white text-center">
       {/* Wrapper for text content: Max width of 3xl ensures it doesn't stretch too wide on large screens */}
-      <div className="space-y-3 max-w-3xl">
+      <div className="max-w-3xl">
         {/* Headline: Large, bold, and prominent */}
-        <h1 className="uppercase text-3xl tracking-wide font-semibold text-center text-white">
+        <h1 className="uppercase text-3xl tracking-very-wide font-semibold text-center text-white pb-4 ">
           Nextcommerce
         </h1>
 
         {/* Subheading: Smaller font for technology stack or description */}
-        <p className="barlow-condensed-regular tracking-wide text-sm font-semibold text-center text-white">
-          nextjs | sanity | clerk | vercel | stripe
+        <p className="barlow-condensed-regular tracking-very-wide text-xs font-semibold text-center text-white opacity-60">
+          technology stack
+        </p>
+        <p className="barlow-condensed-regular tracking-very-wide text-sm font-semibold text-center text-white">
+          typescript | next | sanity | clerk | vercel | stripe
         </p>
       </div>
     </section>
