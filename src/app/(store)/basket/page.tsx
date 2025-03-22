@@ -62,6 +62,40 @@ function BasketPage() {
     }
   };
 
+  // Function to handle truncating both plain text and rich text descriptions
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  const getTruncatedDescription = (description: any) => {
+    // If description is a string, truncate it to the first 20 characters
+    if (typeof description === 'string') {
+      return description.length > 30
+        ? description.substring(0, 30) + ''
+        : description;
+    }
+
+    // If description is an array (rich text), extract and combine all children text
+    if (Array.isArray(description)) {
+      let combinedText = '';
+
+      // Loop through the rich text blocks and extract the text
+      description.forEach((block: any) => {
+        if (block.children && Array.isArray(block.children)) {
+          block.children.forEach((child: any) => {
+            if (child.text) {
+              combinedText += child.text;
+            }
+          });
+        }
+      });
+
+      // Truncate the combined text
+      return combinedText.length > 30
+        ? combinedText.substring(0, 30) + ''
+        : combinedText;
+    }
+
+    return '';
+  };
+
   return (
     <div className="bg-white min-h-screen">
       <Header />
@@ -79,25 +113,30 @@ function BasketPage() {
                     router.push(`/product/${item.product.slug?.current}`)
                   }
                 >
-                  <div className="flex justify-center items-center w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 mx-auto">
+                  <div className="flex justify-center items-center w-40 h-40 sm:w-24 sm:h-24 flex-shrink-0 mx-auto">
                     {item.product.image && (
                       <Image
                         src={imageUrl(item.product.image).url()}
                         alt={item.product.name ?? 'product image'}
                         className="w-full h-full object-cover"
-                        width={100}
-                        height={100}
+                        width={120}
+                        height={120}
                       />
                     )}
                   </div>
-                  <div className="flex justify-center items-center">
+                  <div className="flex justify-center items-center text-center p-10">
                     <div className="min-w-0">
-                      <h2 className="text-lg sm:text-xl font-semibold truncate">
+                      <h2 className="text-md uppercase sm:text-xl font-semibold truncate">
                         {item.product.name}
                       </h2>
-                      <p className="text sm sm:text-base">
-                        price: $
-                        {((item.product.price ?? 0) * item.quantity).toFixed(2)}
+                      {item.product.description && (
+                        <p className="py-2 text-xs font-light">
+                          {getTruncatedDescription(item.product.description)}
+                        </p>
+                      )}
+                      <p className="text-sm font-light mt-2">
+                        ${' '}
+                        {((item.product.price ?? 0) * item.quantity).toFixed(0)}
                       </p>
                     </div>
                   </div>
