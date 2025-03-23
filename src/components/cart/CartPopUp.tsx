@@ -106,7 +106,8 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
         {/* Conditionally Render the Button */}
         <Link
           href={hasItems ? '/basket' : '/search?q=*'} // Redirect to search page with a query to show all products
-          className="block bg-white border py-3 mt-4 transition-all uppercase text-xs font-light text-center text-gray-800 "
+          className="block bg-white border py-3 mt-4 transition-all uppercase text-xs font-light text-center text-gray-800"
+          onClick={onClose} // Close the popup when clicked
         >
           {hasItems ? 'View shopping bag' : 'Start shopping'}{' '}
           {/* Button Text */}

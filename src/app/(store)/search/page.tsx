@@ -11,7 +11,7 @@ const SearchPage = async ({
 
   console.log('Search Query: ', q); // Log the query parameter
 
-  // Fetch products based on the query parameter
+  // Fetch products based on the xquery parameter
   const products = await searchProductsByName(q);
   const resultCount = products.length;
 
