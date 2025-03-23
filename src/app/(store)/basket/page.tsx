@@ -131,7 +131,7 @@ function BasketPage() {
           Shopping Bag
         </h1>
 
-        <div className="flex flex-col lg:flex-row">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* Product List */}
           <div className="flex-grow overflow-y-auto pb-40 lg:pb-0">
             {groupedItems.map((item) => {
@@ -163,13 +163,13 @@ function BasketPage() {
                         {item.product.name}
                       </h2>
                       {item.product.description && (
-                        <p className=" text-xs font-light text-center text-gray-800">
+                        <p className="text-xs font-light text-center text-gray-800">
                           {getTruncatedDescription(item.product.description)}
                         </p>
                       )}
                     </div>
                     <div className="min-w-0">
-                      <p className=" text-md font-light text-center text-gray-800">
+                      <p className="text-md font-light text-center text-gray-800">
                         $
                         {((item.product.price ?? 0) * item.quantity).toFixed(0)}
                       </p>
@@ -223,8 +223,8 @@ function BasketPage() {
           </div>
 
           {/* Fixed Order Summary */}
-          <div className="w-full lg:w-80 lg:sticky lg:top-4 h-fit bg-white p-6 border order-first lg:order-last fixed bottom-0 left-0 lg:left-auto">
-            <h3 className="uppercase text-sm font-light text-center text-gray-800 border-b pb-1">
+          <div className="w-full lg:w-90 lg:sticky  h-fit bg-white p-6 border order-first lg:order-last fixed bottom-0 left-0 lg:left-auto">
+            <h3 className="uppercase text-xs font-light text-center text-gray-800 border-b pb-1">
               Order Summary
             </h3>
 
@@ -256,7 +256,7 @@ function BasketPage() {
               </button>
             ) : (
               <SignInButton mode="modal">
-                <button className="block text-center text-xs bg-black border  uppercase py-3 mt-2 transition-all w-full text-white   font-light  ">
+                <button className="block text-center text-xs bg-black border uppercase py-3 mt-2 transition-all w-full text-white font-light">
                   Checkout
                 </button>
               </SignInButton>
