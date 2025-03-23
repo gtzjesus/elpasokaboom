@@ -28,11 +28,11 @@ interface CategoriesProps {
 
 const Categories = ({ categories }: CategoriesProps) => {
   return (
-    <div className="w-full max-w-7xl mx-auto">
+    <div className="w-full max-w-7xl mx-auto bg-gradient-to-br from-pearl via-white-500 to-blue-300 pb-6">
       <h2 className="barlow-condensed-regular text-2xl tracking-very-wide font-semibold text-center text-black py-6">
         3D Inventory
       </h2>
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 px-2">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4">
         {categories.map((category) => (
           <Link
             key={category._id}
