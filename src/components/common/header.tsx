@@ -82,7 +82,7 @@ const Header = () => {
           <Link href="/" className="font-bold cursor-pointer sm:mx-0 sm:hidden">
             <Image
               src={scrolled ? '/icons/logo.webp' : '/icons/logo.webp'}
-              alt="nextcommerce"
+              alt="worldhello"
               width={50}
               height={50}
               className="w-7 h-7"
@@ -92,7 +92,7 @@ const Header = () => {
             <Link href="/">
               <Image
                 src={scrolled ? '/icons/logo.webp' : '/icons/logo.webp'}
-                alt="nextcommerce"
+                alt="worldhello"
                 width={30}
                 height={30}
                 className=""
@@ -102,7 +102,7 @@ const Header = () => {
               href="/"
               className={`barlow-condensed-regular text-md ${scrolled ? 'text-black' : 'text-black'}`}
             >
-              Nextcommerce
+              Worldhello
             </Link>
           </div>
         </div>
