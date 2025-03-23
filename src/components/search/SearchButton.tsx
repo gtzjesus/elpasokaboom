@@ -37,6 +37,7 @@ const SearchButton: React.FC<SearchButtonProps> = ({ scrolled }) => {
       <button
         onClick={handleSearchMenuToggle}
         className="relative flex justify-center items-center font-bold rounded"
+        style={{ padding: 0 }}
       >
         <Image
           src={scrolled ? '/icons/search.webp' : '/icons/search.webp'}
@@ -50,7 +51,7 @@ const SearchButton: React.FC<SearchButtonProps> = ({ scrolled }) => {
       {/* Search Menu (Popup) */}
       {isSearchMenuOpen && (
         <div
-          className={`fixed inset-0 bg-white bg-opacity-50 z-50 transition-opacity duration-300 ${
+          className={`top-0 right-0 bottom-0 left-0 w-screen h-screen bg-white bg-opacity-50 z-50 transition-opacity duration-500 ${
             isSearchMenuOpen
               ? 'opacity-100 pointer-events-auto'
               : 'opacity-0 pointer-events-none'
@@ -59,7 +60,7 @@ const SearchButton: React.FC<SearchButtonProps> = ({ scrolled }) => {
         >
           {/* Sliding search menu */}
           <div
-            className={`absolute bottom-0 left-0 w-full h-full p-6 bg-white rounded-tl-lg rounded-tr-lg shadow-xl transform transition-all duration-500 ease-in-out ${
+            className={`absolute bottom-0 left-0 w-full h-full p-6 bg-white shadow-xl transform transition-all duration-500 ease-in-out ${
               isSearchMenuOpen ? 'translate-y-0' : 'translate-y-full'
             }`}
             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the menu

@@ -31,7 +31,7 @@ function ProductThumb({ product }: { product: Product }) {
             src={imageUrl(product.image).url()}
             alt={product.name || 'product image'}
             fill
-            sizes="(max-width: 728px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="(max-width: 728px) 90vw, (max-width: 1200px) 40vw, 23vw"
           />
         )}
 
@@ -44,12 +44,12 @@ function ProductThumb({ product }: { product: Product }) {
       </div>
 
       {/* Product Details */}
-      <div className="p-4 text-center">
-        <h2 className="text-xs font-extrabold text-transform: uppercase text-gray-700 truncate">
+      <div className="space-y-2 text-center py-4">
+        <h2 className="uppercase text-sm font-semibold text-center text-gray-800">
           {product.name}
         </h2>
 
-        <p className="mt-2 text-xs font-light text-gray-500">
+        <p className="uppercase text-xs font-light text-center text-gray-800">
           ${product.price?.toFixed(0)}
         </p>
       </div>
