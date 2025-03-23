@@ -12,6 +12,7 @@ import {
   Metadata,
 } from '../../../../actions/createCheckoutSession';
 import Header from '@/components/common/header';
+import Link from 'next/link';
 
 function BasketPage() {
   // Fetch basket items and user info
@@ -36,8 +37,16 @@ function BasketPage() {
   // Display message if basket is empty
   if (groupedItems.length === 0) {
     return (
-      <div className="container mx-auto p-4 min-h-[50vh] bg-white">
-        <p className="text-gray-600 text-lg">Your basket is empty.</p>
+      <div className="container mx-auto p-6 min-h-[100vh] bg-white">
+        <p className="uppercase text-sm font-light text-center p-5 text-gray-800">
+          Your basket is empty.
+        </p>
+        <Link
+          href="/search?q=*" // Redirect to search page with a query to show all products
+          className="block bg-white border py-3 mt-4 transition-all uppercase text-xs font-light text-center text-gray-800 "
+        >
+          start shopping
+        </Link>
       </div>
     );
   }
