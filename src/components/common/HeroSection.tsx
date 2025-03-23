@@ -20,7 +20,7 @@ const HeroSection: FC = () => {
       {/* Wrapper for text content: Max width of 3xl ensures it doesn't stretch too wide on large screens */}
       <div className="max-w-3xl">
         {/* Headline: Large, bold, and prominent */}
-        <h1 className="uppercase text-3xl tracking-very-wide font-semibold text-center text-white pb-4 ">
+        <h1 className="uppercase text-xl tracking-very-wide font-semibold text-center text-white pb-4 ">
           Nextcommerce
         </h1>
 
