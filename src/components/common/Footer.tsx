@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="pt-6">
       <div className="max-w-7xl mx-auto text-center py-2">
         {/* Logo */}
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center mb-2">
           <Image
             src="/icons/logo.webp" // Path to your logo image
             alt="Your Logo"

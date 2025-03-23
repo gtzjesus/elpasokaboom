@@ -28,7 +28,7 @@ interface CategoriesProps {
 
 const Categories = ({ categories }: CategoriesProps) => {
   return (
-    <div className="w-full max-w-7xl mx-auto bg-gradient-to-br from-pearl via-white-500 to-blue-300 pb-6">
+    <div className="w-full max-w-7xl mx-auto bg-gradient-to-br from-pearl via-white-500 to-blue-200 pb-10">
       <h2 className="barlow-condensed-regular text-2xl tracking-very-wide font-semibold text-center text-black py-6">
         3D Inventory
       </h2>
