@@ -44,12 +44,13 @@ const Categories = ({ categories }: CategoriesProps) => {
                 <Image
                   src={
                     category.image
-                      ? urlFor(category.image).width(200).height(200).url() // Generate image URL with Sanity image URL builder
+                      ? urlFor(category.image).url() // Generate image URL with Sanity image URL builder
                       : '/default-image.jpg' // Fallback image if no category image
                   }
                   alt={category.title}
                   layout="fill" // This ensures the image fills the container
                   objectFit="cover" // This ensures the image covers the entire container without distortion
+                  className=""
                   priority={true}
                 />
               </div>
