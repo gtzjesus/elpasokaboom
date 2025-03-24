@@ -30,9 +30,19 @@ export const productType = defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: 'extraImages',
+      title: 'Additional Images',
+      type: 'array',
+      of: [{ type: 'image', options: { hotspot: true } }],
+      validation: (Rule) =>
+        Rule.min(1)
+          .max(4)
+          .error('You can upload between 1 and 4 extra images.'),
+    }),
+    defineField({
       name: 'description',
       title: 'Description',
-      type: 'string', // Change from 'blockConte nt' to 'string'
+      type: 'string', // Change from 'blockContent' to 'string'
     }),
     defineField({
       name: 'price',

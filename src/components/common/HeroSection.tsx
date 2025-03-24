@@ -29,7 +29,7 @@ const HeroSection: FC = () => {
           shop our 3D printed collections
         </p>
         <p className="barlow-condensed-regular tracking-very-wide text-md font-semibold text-center text-white">
-          collectibles | planters | toys | necessities
+          collectibles | vehicles | planters
         </p>
       </div>
     </section>
