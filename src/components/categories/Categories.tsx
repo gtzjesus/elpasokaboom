@@ -50,7 +50,6 @@ const Categories = ({ categories }: CategoriesProps) => {
                   alt={category.title}
                   layout="fill" // This ensures the image fills the container
                   objectFit="cover" // This ensures the image covers the entire container without distortion
-                  className=""
                   priority={true}
                 />
               </div>

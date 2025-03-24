@@ -1,5 +1,3 @@
-// app/(store)/product/[slug]/page.tsx
-
 import AddToBasketButton from '@/components/cart/AddToBasketButton';
 import { Button } from '@/components/ui/button';
 import { imageUrl } from '@/lib/imageUrl';
@@ -26,20 +24,24 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div
-          className={`relative aspect-square overflow-hidden rounded-lg shadow-lg ${isOutOfStock ? 'opacity-50' : ''}`}
-        >
-          {product.image && (
-            <Image
-              src={imageUrl(product.image).url()}
-              alt={product.name ?? 'product image'}
-              fill
-              className="object-contain transition-transform duration-300 hover:scale-105"
-            />
-          )}
+        <div className="flex flex-col space-y-4">
+          {/* Loop through the extraImages and display them */}
+          {product.extraImages?.map((image, index) => (
+            <div
+              key={index}
+              className={`relative aspect-square overflow-hidden rounded-lg shadow-lg ${isOutOfStock ? 'opacity-50' : ''}`}
+            >
+              <Image
+                src={imageUrl(image).url()}
+                alt={`${product.name} extra image ${index + 1}`}
+                fill
+                className="object-contain transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+          ))}
           {isOutOfStock && (
             <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-              <span className="text-white font-bold text-lg">out of stock</span>
+              <span className="text-white font-bold text-lg">Out of Stock</span>
             </div>
           )}
         </div>
