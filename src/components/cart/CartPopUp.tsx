@@ -98,9 +98,18 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
             ))}
           </div>
         ) : (
-          <p className="uppercase text-sm border-b mb-2 pb-2 font-light text-center text-gray-800">
-            Shopping bag is empty
-          </p>
+          <div>
+            {/* Close Button */}
+            <button
+              className="absolute top-2 right-6 text-xl hover:text-gray-900 transition"
+              onClick={onClose} // Trigger close function on click
+            >
+              &times;
+            </button>
+            <p className="uppercase text-sm border-b mb-2 pb-2 font-light text-center text-gray-800">
+              Shopping bag is empty
+            </p>
+          </div>
         )}
 
         {/* Conditionally Render the Button */}
