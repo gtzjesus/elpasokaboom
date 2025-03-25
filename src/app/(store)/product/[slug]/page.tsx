@@ -44,6 +44,7 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
                 />
               </div>
             ))}
+            <ReadMore description={product.description} />
 
             {isOutOfStock && (
               <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -54,14 +55,16 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
             )}
           </div>
           <div className="flex flex-col justify-between fixed bottom-0 left-0 right-0 bg-white px-4 py-2">
-            <div className="flex flex-col justify-center items-center gap-1 ">
-              <h1 className="uppercase text-lg font-semibold text-center text-gray-800">
+            <div className="flex justify-center items-center gap-1 ">
+              <h1 className="uppercase text-md font-semibold text-center text-gray-800">
                 {product.name}
+              </h1>
+              <h1 className="uppercase text-xs font-light text-center text-gray-800">
+                |
               </h1>
               <h1 className="uppercase text-md font-light text-center text-gray-800">
                 ${product.price?.toFixed(0)}
               </h1>
-              <ReadMore description={product.description} />
             </div>
             <ProductClient product={product} />
           </div>
