@@ -14,8 +14,8 @@ const ReadMore: React.FC<ReadMore> = ({ description }) => {
 
   // Truncate the description to 120 characters by default
   const truncatedDescription =
-    description.length > 120
-      ? `${description.substring(0, 120)}...`
+    description.length > 80
+      ? `${description.substring(0, 80)}...`
       : description;
 
   const toggleDescription = () => {
@@ -24,12 +24,12 @@ const ReadMore: React.FC<ReadMore> = ({ description }) => {
 
   return (
     <div>
-      <h2 className=" text-xs font-light text-gray-800 w-[70vw]">
+      <h2 className=" text-xs font-light text-gray-600 w-[70vw]">
         {isExpanded ? description : truncatedDescription}
         {/* Only show 'Read More' if the description is longer than 120 characters */}
-        {description.length > 120 && (
-          <button className="text-blue-500 text-xs" onClick={toggleDescription}>
-            {isExpanded ? 'Read less' : 'Read more'}
+        {description.length > 80 && (
+          <button className="text-gray-800 text-xs" onClick={toggleDescription}>
+            {isExpanded ? '-' : '+'}
           </button>
         )}
       </h2>
