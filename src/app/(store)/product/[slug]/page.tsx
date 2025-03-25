@@ -1,9 +1,8 @@
-import AddToBasketButton from '@/components/cart/AddToBasketButton';
 import Header from '@/components/common/header';
-// import { Button } from '@/components/ui/button';
+import ReadMore from '@/components/common/ReadMore';
+import ProductClient from '@/components/products/ProductClient';
 import { imageUrl } from '@/lib/imageUrl';
 import { getProductBySlug } from '@/sanity/lib/products/getProductBySlug';
-import { PortableText } from 'next-sanity';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
@@ -55,21 +54,16 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
             )}
           </div>
           <div className="flex flex-col justify-between fixed bottom-0 left-0 right-0 bg-white px-4 py-6">
-            <div>
+            <div className="flex flex-col justify-center items-center gap-2 line-clamp-3">
               <h1 className="uppercase text-lg font-semibold text-center text-gray-800">
                 {product.name}
               </h1>
-              <div className="uppercase text-md font-light text-center text-gray-800">
+              <h1 className="uppercase text-md font-light text-center text-gray-800">
                 ${product.price?.toFixed(0)}
-              </div>
-              <div className="prose max-w-none">
-                {Array.isArray(product.description) && (
-                  <PortableText value={product.description} />
-                )}
-              </div>
+              </h1>
+              <ReadMore description={product.description} />
             </div>
-            <AddToBasketButton product={product} disabled={isOutOfStock} />
-            {/* <Button>add to basket</Button> */}
+            <ProductClient product={product} />
           </div>
         </div>
       </div>
