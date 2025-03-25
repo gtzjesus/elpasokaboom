@@ -45,7 +45,7 @@ function BasketPage() {
           href="/search?q=*" // Redirect to search page with a query to show all products
           className="block bg-white border py-3 mt-4 transition-all uppercase text-xs font-light text-center text-gray-800 "
         >
-          start shopping
+          continue shopping
         </Link>
       </div>
     );
@@ -76,33 +76,6 @@ function BasketPage() {
     }
   };
 
-  // Helper function to truncate product descriptions
-  /* eslint-disable  @typescript-eslint/no-explicit-any */
-
-  const getTruncatedDescription = (description: any) => {
-    if (typeof description === 'string') {
-      return description.length > 30
-        ? description.substring(0, 30) + '...'
-        : description;
-    }
-
-    if (Array.isArray(description)) {
-      let combinedText = '';
-      description.forEach((block: any) => {
-        block.children?.forEach((child: any) => {
-          if (child.text) {
-            combinedText += child.text;
-          }
-        });
-      });
-      return combinedText.length > 30
-        ? combinedText.substring(0, 30) + '...'
-        : combinedText;
-    }
-
-    return '';
-  };
-
   // Display stock status
   const getStockStatus = (stock: number | undefined) => {
     return stock && stock > 0 ? (
@@ -131,49 +104,44 @@ function BasketPage() {
           Shopping Bag
         </h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2">
           {/* Product List */}
           <div className="flex-grow overflow-y-auto pb-40 lg:pb-0">
             {groupedItems.map((item) => {
               const stock = item.product.stock ?? 0;
 
               return (
-                <div key={item.product._id} className="p-6 border-b">
+                <div key={item.product._id} className="p-2 border-b">
                   <div
                     className="min-w-0 cursor-pointer"
                     onClick={() =>
                       router.push(`/product/${item.product.slug?.current}`)
                     }
                   >
-                    <div className="flex justify-center items-center w-40 h-40 sm:w-24 sm:h-24 flex-shrink-0 mx-auto">
+                    <div className="flex justify-center items-center w-50 h-50 sm:w-24 sm:h-24 flex-shrink-0 mx-auto">
                       {item.product.image && (
                         <Image
                           src={imageUrl(item.product.image).url()}
                           alt={item.product.name ?? 'Product Image'}
-                          className="w-full h-full object-cover"
-                          width={120}
-                          height={120}
+                          className="object-contain transition-transform duration-300 hover:scale-105"
+                          width={180}
+                          height={180}
                         />
                       )}
                     </div>
                   </div>
-                  <div className="flex flex-col justify-center items-center text-center p-3 gap-10">
+                  <div className="flex flex-col justify-center items-center text-center p-3 gap-4">
                     <div className="min-w-0">
-                      <h2 className="uppercase text-md font-light text-center text-gray-800">
+                      <h2 className="uppercase text-md font-semibold text-center text-gray-800">
                         {item.product.name}
                       </h2>
-                      {item.product.description && (
-                        <p className="text-xs font-light text-center text-gray-800">
-                          {getTruncatedDescription(item.product.description)}
-                        </p>
-                      )}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-md font-light text-center text-gray-800">
+                      <p className="text-sm font-light text-center text-gray-800">
                         $
                         {((item.product.price ?? 0) * item.quantity).toFixed(0)}
                       </p>
-                      <p className="uppercase text-xs font-light text-center text-gray-800 my-2">
+                      <p className=" text-xs font-light text-center text-gray-600 my-2">
                         {getStockStatus(stock)}
                       </p>
                     </div>
@@ -190,7 +158,7 @@ function BasketPage() {
                             +e.target.value
                           )
                         }
-                        className="border px-3 py-2 text-sm rounded-md w-full max-w-[120px] bg-white focus:ring-2 focus:ring-blue-500 disabled:opacity-50 font-light text-center text-gray-800"
+                        className="border py-1 text-sm rounded-md w-full max-w-[50px] bg-white focus:ring-2 focus:ring-blue-500 disabled:opacity-50 font-light text-center text-gray-800"
                         disabled={stock === 0} // Disable if out of stock
                       >
                         <option value="" disabled>
@@ -211,7 +179,7 @@ function BasketPage() {
                     <div className="flex justify-center">
                       <button
                         onClick={() => handleRemoveItem(item.product._id)}
-                        className="uppercase text-sm underline font-light text-center text-gray-800"
+                        className="uppercase text-xs underline font-light text-center text-gray-800"
                       >
                         Remove
                       </button>
