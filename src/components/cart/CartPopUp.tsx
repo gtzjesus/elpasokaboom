@@ -83,15 +83,12 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
                 </div>
 
                 {/* Product Details */}
-                <div className="flex-1 ml-6 space-y-2">
-                  <p className="uppercase text-sm font-light text-gray-800">
+                <div className="flex-1 ml-7 space-y-2">
+                  <p className="uppercase text-sm font-semibold text-gray-800">
                     {item.product.name}
                   </p>
                   <p className="text-xs font-light text-gray-800">
                     ${((item.product.price || 0) * item.quantity).toFixed(0)}
-                  </p>
-                  <p className="text-xs font-light text-gray-800">
-                    Quantity: {item.quantity}
                   </p>
                 </div>
               </div>
