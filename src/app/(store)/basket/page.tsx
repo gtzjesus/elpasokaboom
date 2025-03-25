@@ -96,14 +96,12 @@ function BasketPage() {
   };
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="">
       <Header />
-
       <div className="container mx-auto max-w-3xl bg-white">
         <h1 className="uppercase text-sm font-light text-center p-5 text-gray-800">
           Shopping Bag
         </h1>
-
         <div className="grid grid-cols-1 lg:grid-cols-2">
           {/* Product List */}
           <div className="flex-grow overflow-y-auto pb-40 lg:pb-0">
