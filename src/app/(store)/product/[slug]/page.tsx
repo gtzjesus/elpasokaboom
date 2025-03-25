@@ -1,6 +1,6 @@
 import AddToBasketButton from '@/components/cart/AddToBasketButton';
 import Header from '@/components/common/header';
-import { Button } from '@/components/ui/button';
+// import { Button } from '@/components/ui/button';
 import { imageUrl } from '@/lib/imageUrl';
 import { getProductBySlug } from '@/sanity/lib/products/getProductBySlug';
 import { PortableText } from 'next-sanity';
@@ -23,8 +23,11 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const isOutOfStock = product.stock != null && product.stock <= 0;
 
   return (
-    <div>
+    <div className="">
       <Header />
+      <h1 className="uppercase text-sm font-light text-center p-5 text-gray-800">
+        {product.name}
+      </h1>
       <div className="container mx-auto px-4 py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 ">
           <div className="flex flex-col space-y-0">
@@ -53,10 +56,10 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
           </div>
           <div className="flex flex-col justify-between fixed bottom-0 left-0 right-0 bg-white px-4 py-6">
             <div>
-              <h1 className="uppercase text-xl font-semibold text-center text-gray-800">
+              <h1 className="uppercase text-lg font-semibold text-center text-gray-800">
                 {product.name}
               </h1>
-              <div className="uppercase text-lg font-light text-center text-gray-800">
+              <div className="uppercase text-md font-light text-center text-gray-800">
                 ${product.price?.toFixed(0)}
               </div>
               <div className="prose max-w-none">
@@ -65,10 +68,8 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
                 )}
               </div>
             </div>
-            <div className="mt-6">
-              <AddToBasketButton product={product} disabled={isOutOfStock} />
-              <Button>add to basket</Button>
-            </div>
+            <AddToBasketButton product={product} disabled={isOutOfStock} />
+            {/* <Button>add to basket</Button> */}
           </div>
         </div>
       </div>

@@ -10,12 +10,11 @@ interface AddToBasketButtonProps {
 }
 
 function AddToBasketButton({ product, disabled }: AddToBasketButtonProps) {
-  const { addItem, removeItem, getItemCount } = useBasketStore();
-  const itemCount = getItemCount(product._id);
-
+  const { addItem } = useBasketStore(); // Only need addItem now
   const [isClient, setIsClient] = useState(false);
+  const [isAdded, setIsAdded] = useState(false); // Track if product has been added
 
-  // only rendered once mounted on the client side (no hidration errors (local and server storage))
+  // Only rendered once mounted on the client side (no hydration errors with local storage)
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -23,34 +22,26 @@ function AddToBasketButton({ product, disabled }: AddToBasketButtonProps) {
   if (!isClient) {
     return null;
   }
+
+  const handleAddToBasket = () => {
+    addItem(product); // Add exactly one product when clicked
+    setIsAdded(true); // Mark product as added
+  };
+
   return (
     <div className="flex items-center justify-center space-x-2">
       <button
-        onClick={() => removeItem(product._id)}
-        className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-200 ${
-          itemCount === 0
-            ? 'bg-gray-100 cursor-not-allowed'
-            : 'bg-gray-200 hover:bg-gray-300'
-        }`}
-        disabled={itemCount === 0 || disabled}
-      >
-        <span
-          className={`text-xl font-bold ${itemCount === 0 ? 'text-gray-400' : 'text-gray-600'}`}
-        >
-          -
-        </span>
-      </button>
-      <span className="w-8 text-center font-semibold">{itemCount}</span>
-      <button
-        onClick={() => addItem(product)}
-        className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-200 ${
-          disabled
+        onClick={handleAddToBasket}
+        className={`block text-center text-xs bg-black border uppercase py-3 mt-2 transition-all w-full text-white font-light ${
+          disabled || isAdded
             ? 'bg-gray-400 cursor-not-allowed'
-            : 'bg-blue-500 hover:bg-blue-600'
+            : 'bg-black hover:bg-black'
         }`}
-        disabled={disabled}
+        disabled={disabled || isAdded} // Disable button if item is added
       >
-        <span className={`text-xl font-bold text-white'}`}>+</span>
+        <span className="text-white text-xs">
+          {isAdded ? 'Added to Bag' : 'Add to shopping bag'}
+        </span>
       </button>
     </div>
   );
