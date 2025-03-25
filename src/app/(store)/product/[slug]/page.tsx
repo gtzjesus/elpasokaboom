@@ -29,7 +29,7 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
           {product.name}
         </h1>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 ">
+      <div className="grid grid-cols-1  lg:grid-cols-2 ">
         <div className="flex-grow overflow-y-auto pb-40 lg:pb-0">
           {/* Loop through the extraImages and display them */}
           {product.extraImages?.map((image, index) => (
@@ -53,7 +53,9 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
             </div>
           )}
         </div>
-        <div className="flex flex-col justify-between fixed bottom-0 left-0 right-0 bg-white px-4 py-2">
+
+        {/* Fixed Product Summary */}
+        <div className="w-full lg:w-90 lg:sticky  h-fit bg-white p-6 border order-first lg:order-last fixed bottom-0 left-0 lg:left-auto">
           <div className="flex justify-center items-center gap-1 ">
             <h1 className="uppercase text-md font-semibold text-center text-gray-800">
               {product.name}
