@@ -43,7 +43,7 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
     <div className="fixed top-12 left-0 w-full h-full bg-gray-700 bg-opacity-50 z-[9999]">
       <div
         ref={popupRef}
-        className="bg-white mt-0 p-4 w-full h-[90vh] max-w-[325px] overflow-hidden relative flex flex-col"
+        className="bg-white mt-0 p-4 w-full h-[75vh] max-w-[325px] overflow-hidden relative flex flex-col"
       >
         {/* Conditionally Render Cart Items or Empty Message */}
         {hasItems ? (
