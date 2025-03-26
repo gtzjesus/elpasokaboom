@@ -67,6 +67,7 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
               ${product.price?.toFixed(0)}
             </h1>
           </div>
+
           <ProductClient product={product} />
         </div>
       </div>

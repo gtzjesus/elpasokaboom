@@ -87,7 +87,11 @@ function BasketPage() {
 
   // Handle item removal from the basket
   const handleRemoveItem = (productId: string) => {
+    // Remove the item from the basket store
     useBasketStore.getState().removeItem(productId);
+
+    // Remove the product from session storage
+    sessionStorage.removeItem(productId);
   };
 
   // Handle updating item quantity in the basket

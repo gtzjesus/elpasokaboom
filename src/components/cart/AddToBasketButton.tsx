@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useBasketStore from '../../../store/store';
 import { Product } from '../../../sanity.types';
 
@@ -16,9 +16,18 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({
   const { addItem } = useBasketStore(); // Only need addItem now
   const [isAdded, setIsAdded] = useState(false); // Track if product has been added
 
+  // Check if the product is already added to the session storage
+  useEffect(() => {
+    const addedProduct = sessionStorage.getItem(product._id); // Assuming the product has a unique ID
+    if (addedProduct) {
+      setIsAdded(true);
+    }
+  }, [product._id]);
+
   const handleAddToBasket = () => {
     addItem(product); // Add exactly one product when clicked
     setIsAdded(true); // Mark product as added
+    sessionStorage.setItem(product._id, 'added'); // Store in sessionStorage
     onAddedToBag(); // Open the cart popup
   };
 
