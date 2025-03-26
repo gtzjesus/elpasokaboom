@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useRef } from 'react';
 import { urlFor } from '@/sanity/lib/image'; // Utility to fetch image URLs from Sanity
 import Image from 'next/image'; // Next.js image component for optimized image loading
@@ -39,7 +40,7 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
   }, [onClose]);
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 z-50">
+    <div className="fixed top-12 left-0 w-full h-full bg-gray-700 bg-opacity-50 z-[9999]">
       <div
         ref={popupRef}
         className="bg-white mt-0 p-4 w-full h-[90vh] max-w-[325px] overflow-hidden relative flex flex-col"

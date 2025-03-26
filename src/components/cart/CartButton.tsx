@@ -1,5 +1,3 @@
-// components/CartButton.tsx
-
 import { useState } from 'react';
 import Image from 'next/image';
 import CartPopup from './CartPopUp'; // Importing the CartPopup component to display when the button is clicked
@@ -31,7 +29,8 @@ const CartButton: React.FC<CartButtonProps> = ({ itemCount, scrolled }) => {
       {/* Button that opens the cart popup */}
       <button
         onClick={openPopup} // When clicked, open the cart popup
-        className="relative flex justify-center items-center rounded "
+        className={`relative flex justify-center items-center rounded ${isPopupOpen ? 'cursor-not-allowed opacity-50' : ''}`} // Disable the button when the popup is open
+        disabled={isPopupOpen} // Disable button if the popup is open
       >
         {/* Cart icon */}
         <Image
