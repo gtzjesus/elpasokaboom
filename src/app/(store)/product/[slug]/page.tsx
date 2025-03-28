@@ -6,32 +6,41 @@ import { getProductBySlug } from '@/sanity/lib/products/getProductBySlug';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
-// Force static rendering and set revalidation
+// Force static rendering and set revalidation interval
 export const dynamic = 'force-static';
 export const revalidate = 60;
 
 async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params; // Resolve promise
+  // Resolve the slug from the URL parameters
+  const { slug } = await params;
 
+  // Fetch the product by slug
   const product = await getProductBySlug(slug);
 
+  // Return a 404 page if no product is found
   if (!product) {
     return notFound();
   }
 
+  // Determine if the product is out of stock
   const isOutOfStock = product.stock != null && product.stock <= 0;
 
   return (
     <div className="bg-white min-h-screen">
+      {/* Header section */}
       <Header />
+
+      {/* Product title */}
       <div className="container mx-auto max-w-3xl bg-white">
         <h1 className="uppercase text-sm font-light text-center p-5 text-gray-800">
           {product.name}
         </h1>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 ">
+
+      <div className="grid grid-cols-1 lg:grid-cols-2">
+        {/* Left section: Product images and information */}
         <div className="flex-grow overflow-y-auto pb-40 lg:pb-0">
-          {/* Loop through the extraImages and display them */}
+          {/* Display extra images if available */}
           {product.extraImages?.map((image, index) => (
             <div
               key={index}
@@ -46,17 +55,21 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
             </div>
           ))}
 
-          {/* Using the client component for the description dropdown */}
+          {/* Description dropdown */}
           <InfoDropdown title="Details" info={product.description ?? ''} />
 
-          {/* Display size, care, and shipping information using InfoDropdown */}
+          {/* Care instructions dropdown */}
           {product.care && <InfoDropdown title="Care" info={product.care} />}
+
+          {/* Size information dropdown */}
           {product.size && <InfoDropdown title="Size" info={product.size} />}
 
+          {/* Shipping information dropdown */}
           {product.shipping && (
-            <InfoDropdown title="Shipping " info={product.shipping} />
+            <InfoDropdown title="Shipping" info={product.shipping} />
           )}
 
+          {/* Out of stock overlay */}
           {isOutOfStock && (
             <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
               <span className="text-white font-bold text-lg">Out of Stock</span>
@@ -64,9 +77,9 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
           )}
         </div>
 
-        {/* Fixed Product Summary */}
+        {/* Right section: Product summary (price, name, and add-to-cart) */}
         <div className="w-full lg:w-90 lg:sticky h-fit bg-white p-6 border order-first lg:order-last fixed bottom-0 left-0 lg:left-auto">
-          <div className="flex justify-center items-center gap-1 ">
+          <div className="flex justify-center items-center gap-1">
             <h1 className="uppercase text-md font-semibold text-center text-gray-800">
               {product.name}
             </h1>
@@ -78,6 +91,7 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
             </h1>
           </div>
 
+          {/* Product add-to-cart and other actions */}
           <ProductClient product={product} />
         </div>
       </div>
