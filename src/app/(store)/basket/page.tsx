@@ -193,7 +193,7 @@ function BasketPage() {
           </div>
 
           {/* Right section: Fixed Order Summary */}
-          <div className="w-full lg:w-auto lg:sticky bottom-0 h-fit bg-white p-6 lg:p-12 order-first lg:order-last fixed bottom-0 left-0 lg:left-auto lg:bottom-0">
+          <div className="w-full lg:w-auto lg:sticky  h-fit bg-white p-6 lg:p-12 order-first lg:order-last fixed bottom-0 left-0 lg:left-auto lg:bottom-0">
             <h3 className="uppercase text-xs font-light text-center text-gray-800 border-b pb-1">
               Order Summary
             </h3>

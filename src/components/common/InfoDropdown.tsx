@@ -23,20 +23,20 @@ const InfoDropdown: React.FC<InfoDropdownProps> = ({ title, info }) => {
     >
       <div className="flex items-center justify-between">
         {/* Dropdown Title */}
-        <h3 className="uppercase text-sm font-semibold text-center text-gray-800">
+        <h3 className="uppercase text-sm lg:text-lg font-semibold text-center text-gray-800">
           {title} {/* Display the dynamic title passed via props */}
         </h3>
 
         {/* Button to show/hide the dropdown */}
         <button
-          className="flex items-center justify-center text-xs font-semibold text-black rounded-full hover:bg-gray-100 transition-all duration-300"
+          className="flex items-center justify-center text-xs  lg:text-xl font-semibold text-black rounded-full hover:bg-gray-100 transition-all duration-300"
           aria-hidden="true" // Hide the button's icon from screen readers (for accessibility)
         >
           {/* Show "-" when the dropdown is open, and "+" when it's closed */}
           {isInfoOpen ? (
-            <span className="text-xs">-</span>
+            <span className="text-xs lg:text-lg">-</span>
           ) : (
-            <span className="text-xs">+</span>
+            <span className="text-xs lg:text-lg">+</span>
           )}
         </button>
       </div>
@@ -48,7 +48,7 @@ const InfoDropdown: React.FC<InfoDropdownProps> = ({ title, info }) => {
         }`}
       >
         {/* Display the product info */}
-        <p className="text-xs font-light text-gray-800">{info}</p>
+        <p className="text-xs lg:text-sm font-light text-gray-800">{info}</p>
       </div>
     </div>
   );
