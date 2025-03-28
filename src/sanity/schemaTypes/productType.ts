@@ -9,7 +9,7 @@ export const productType = defineType({
   fields: [
     defineField({
       name: 'name',
-      title: 'Product Name',
+      title: 'Name',
       type: 'string',
       validation: (Rule) => Rule.required(),
     }),
@@ -17,6 +17,8 @@ export const productType = defineType({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
+      description: 'Enter product name.',
+
       options: {
         source: 'name',
         maxLength: 96,
@@ -28,11 +30,14 @@ export const productType = defineType({
       title: 'Product Image',
       type: 'image',
       options: { hotspot: true },
+      description: 'Upload image thumbnail.',
     }),
     defineField({
       name: 'extraImages',
       title: 'Additional Images',
       type: 'array',
+      description: 'Upload images displayed in product page.',
+
       of: [{ type: 'image', options: { hotspot: true } }],
       validation: (Rule) =>
         Rule.min(1)
@@ -43,6 +48,7 @@ export const productType = defineType({
       name: 'description',
       title: 'Description',
       type: 'string', // Change from 'blockContent' to 'string'
+      description: 'Enter summary description for the product.',
     }),
     defineField({
       name: 'size',
@@ -66,18 +72,24 @@ export const productType = defineType({
       name: 'price',
       title: 'Price',
       type: 'number',
+      description: 'Enter product price.',
+
       validation: (Rule) => Rule.required().min(0),
     }),
     defineField({
       name: 'categories',
       title: 'Categories',
       type: 'array',
+      description: 'Choose category that belongs.',
+
       of: [{ type: 'reference', to: { type: 'category' } }],
     }),
     defineField({
       name: 'stock',
       title: 'Stock',
       type: 'number',
+      description: 'Enter how many products in stock.',
+
       validation: (Rule) => Rule.min(0),
     }),
   ],

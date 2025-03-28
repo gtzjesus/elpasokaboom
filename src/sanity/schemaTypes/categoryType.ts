@@ -10,22 +10,29 @@ export const categoryType = defineType({
     defineField({
       name: 'title',
       type: 'string',
+      description: 'Enter category name.',
     }),
     defineField({
       name: 'slug',
       type: 'slug',
+      description: 'Enter slug (same as name).',
+
       options: {
         source: 'title',
       },
     }),
     defineField({
       name: 'description',
+      description: 'Enter summary description for the product.',
+
       type: 'text',
     }),
     defineField({
       name: 'image', // This is the new image field
       title: 'Category Image',
       type: 'image', // Field type is 'image'
+      description: 'Upload image thumbnail.',
+
       options: {
         hotspot: true, // Allow cropping if needed
       },
