@@ -49,6 +49,13 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
           {/* Using the client component for the description dropdown */}
           <DescriptionDropdown description={product.description ?? ''} />
 
+          {/* Display size, care, and shipping information using InfoDropdown */}
+          {product.size && <DescriptionDropdown description={product.size} />}
+          {product.care && <DescriptionDropdown description={product.care} />}
+          {product.shipping && (
+            <DescriptionDropdown description={product.shipping} />
+          )}
+
           {isOutOfStock && (
             <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
               <span className="text-white font-bold text-lg">Out of Stock</span>

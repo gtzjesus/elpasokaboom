@@ -45,6 +45,24 @@ export const productType = defineType({
       type: 'string', // Change from 'blockContent' to 'string'
     }),
     defineField({
+      name: 'size',
+      title: 'Size Information',
+      type: 'string',
+      description: 'Enter size information about the product.',
+    }),
+    defineField({
+      name: 'care',
+      title: 'Care Instructions',
+      type: 'string',
+      description: 'Enter care instructions for the product.',
+    }),
+    defineField({
+      name: 'shipping',
+      title: 'Shipping Information',
+      type: 'string',
+      description: 'Enter shipping details for the product.',
+    }),
+    defineField({
       name: 'price',
       title: 'Price',
       type: 'number',
