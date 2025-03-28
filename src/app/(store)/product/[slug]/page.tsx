@@ -1,5 +1,5 @@
 import Header from '@/components/common/header';
-import DescriptionDropdown from '@/components/common/DescriptionDropdown'; // Importing the client component
+import InfoDropdown from '@/components/common/InfoDropdown';
 import ProductClient from '@/components/products/ProductClient';
 import { imageUrl } from '@/lib/imageUrl';
 import { getProductBySlug } from '@/sanity/lib/products/getProductBySlug';
@@ -47,13 +47,14 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
           ))}
 
           {/* Using the client component for the description dropdown */}
-          <DescriptionDropdown description={product.description ?? ''} />
+          <InfoDropdown title="Details" info={product.description ?? ''} />
 
           {/* Display size, care, and shipping information using InfoDropdown */}
-          {product.size && <DescriptionDropdown description={product.size} />}
-          {product.care && <DescriptionDropdown description={product.care} />}
+          {product.care && <InfoDropdown title="Care" info={product.care} />}
+          {product.size && <InfoDropdown title="Size" info={product.size} />}
+
           {product.shipping && (
-            <DescriptionDropdown description={product.shipping} />
+            <InfoDropdown title="Shipping " info={product.shipping} />
           )}
 
           {isOutOfStock && (
