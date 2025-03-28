@@ -32,10 +32,10 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({
   };
 
   return (
-    <div className="flex items-center justify-center space-x-2">
+    <div className="flex items-center justify-center space-x-2 ">
       <button
         onClick={handleAddToBasket}
-        className={`block text-center text-xs bg-black border uppercase py-3 mt-2 transition-all w-full text-white font-light ${
+        className={`block  text-center text-xs bg-black border uppercase py-3 mt-2 transition-all w-full lg:w-[50vh] text-white font-light ${
           isAdded ? 'bg-gray-400 cursor-not-allowed' : 'bg-black hover:bg-black'
         }`}
         disabled={isAdded} // Disable button if item is added

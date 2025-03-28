@@ -100,15 +100,15 @@ function BasketPage() {
   };
 
   return (
-    <div className="">
+    <div className="bg-white min-h-screen">
       <Header />
-      <div className="container mx-auto max-w-3xl bg-white">
+      <div className="container  bg-white">
         <h1 className="uppercase text-sm font-light text-center p-5 text-gray-800">
           Shopping Bag
         </h1>
-        <div className="grid grid-cols-1 lg:grid-cols-2">
+        <div className="grid grid-cols-1 ">
           {/* Product List */}
-          <div className="flex-grow overflow-y-auto pb-40 lg:pb-0">
+          <div className="flex-grow overflow-y-auto pb-40 ">
             {groupedItems.map((item) => {
               const stock = item.product.stock ?? 0;
 
@@ -120,7 +120,7 @@ function BasketPage() {
                       router.push(`/product/${item.product.slug?.current}`)
                     }
                   >
-                    <div className="flex justify-center items-center w-50 h-50 sm:w-24 sm:h-24 flex-shrink-0 mx-auto">
+                    <div className="flex justify-center items-center w-50 h-50 sm:w-24 sm:h-24 flex-shrink-0 mx-auto ">
                       {item.product.image && (
                         <Image
                           src={imageUrl(item.product.image).url()}
@@ -150,7 +150,7 @@ function BasketPage() {
                   </div>
 
                   {/* Quantity Dropdown */}
-                  <div className="min-w-0">
+                  <div className="min-w-0 ">
                     <div className="flex justify-center mb-4">
                       <select
                         value={`${item.quantity}`}
@@ -193,7 +193,7 @@ function BasketPage() {
           </div>
 
           {/* Fixed Order Summary */}
-          <div className="w-full lg:w-90 lg:sticky  h-fit bg-white p-6 border order-first lg:order-last fixed bottom-0 left-0 lg:left-auto">
+          <div className="w-full  lg:fixed h-fit bg-white p-6 lg:p-12  order-first lg:order-last fixed bottom-0 left-0 lg:bottom-0 lg:left-auto">
             <h3 className="uppercase text-xs font-light text-center text-gray-800 border-b pb-1">
               Order Summary
             </h3>
@@ -225,11 +225,13 @@ function BasketPage() {
                 {isLoading ? 'Processing...' : 'Checkout'}
               </button>
             ) : (
-              <SignInButton mode="modal">
-                <button className="block text-center text-xs bg-black border uppercase py-3 mt-2 transition-all w-full text-white font-light">
-                  Checkout
-                </button>
-              </SignInButton>
+              <div className="flex items-center justify-center">
+                <SignInButton mode="modal">
+                  <button className="block text-center text-xs bg-black border uppercase py-3 mt-2 transition-all w-full text-white font-light lg:w-[50vh]">
+                    Checkout
+                  </button>
+                </SignInButton>
+              </div>
             )}
           </div>
         </div>

@@ -78,7 +78,7 @@ const Header = () => {
     >
       <div className="flex w-full items-center justify-between">
         {/* Left side: Logo and Company Name */}
-        <div className="flex items-center space-x-4 flex-1">
+        <div className="flex items-center space-x-4 flex-1 ">
           <Link href="/" className="font-bold cursor-pointer sm:mx-0 sm:hidden">
             <Image
               src={scrolled ? '/icons/logo.webp' : '/icons/logo.webp'}
