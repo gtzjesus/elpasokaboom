@@ -102,13 +102,13 @@ function BasketPage() {
   return (
     <div className="bg-white min-h-screen">
       <Header />
-      <div className="container  bg-white">
+      <div className="max-w-full bg-white">
         <h1 className="uppercase text-sm font-light text-center p-5 text-gray-800">
           Shopping Bag
         </h1>
-        <div className="grid grid-cols-1 ">
-          {/* Product List */}
-          <div className="flex-grow overflow-y-auto pb-40 ">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 px-4 lg:px-8">
+          {/* Left section: Product List */}
+          <div className="col-span-2 flex-grow overflow-y-auto pb-40">
             {groupedItems.map((item) => {
               const stock = item.product.stock ?? 0;
 
@@ -120,14 +120,14 @@ function BasketPage() {
                       router.push(`/product/${item.product.slug?.current}`)
                     }
                   >
-                    <div className="flex justify-center items-center w-50 h-50 sm:w-24 sm:h-24 flex-shrink-0 mx-auto ">
+                    <div className="flex justify-center items-center w-50 h-50">
                       {item.product.image && (
                         <Image
                           src={imageUrl(item.product.image).url()}
                           alt={item.product.name ?? 'Product Image'}
                           className="object-contain transition-transform duration-300 hover:scale-105"
-                          width={180}
-                          height={180}
+                          width={200}
+                          height={200}
                         />
                       )}
                     </div>
@@ -143,14 +143,14 @@ function BasketPage() {
                         $
                         {((item.product.price ?? 0) * item.quantity).toFixed(0)}
                       </p>
-                      <p className=" text-xs font-light text-center text-gray-600 my-2">
+                      <p className="text-xs font-light text-center text-gray-600 my-2">
                         {getStockStatus(stock)}
                       </p>
                     </div>
                   </div>
 
                   {/* Quantity Dropdown */}
-                  <div className="min-w-0 ">
+                  <div className="min-w-0">
                     <div className="flex justify-center mb-4">
                       <select
                         value={`${item.quantity}`}
@@ -192,8 +192,8 @@ function BasketPage() {
             })}
           </div>
 
-          {/* Fixed Order Summary */}
-          <div className="w-full  lg:fixed h-fit bg-white p-6 lg:p-12  order-first lg:order-last fixed bottom-0 left-0 lg:bottom-0 lg:left-auto">
+          {/* Right section: Fixed Order Summary */}
+          <div className="w-full lg:w-auto lg:sticky bottom-0 h-fit bg-white p-6 lg:p-12 order-first lg:order-last fixed bottom-0 left-0 lg:left-auto lg:bottom-0">
             <h3 className="uppercase text-xs font-light text-center text-gray-800 border-b pb-1">
               Order Summary
             </h3>
@@ -220,7 +220,7 @@ function BasketPage() {
               <button
                 onClick={handleCheckout}
                 disabled={isLoading}
-                className="mt-2 w-full text-white px-4 py-1 rounded hover:bg-blue-600 disabled:bg-gray-400 "
+                className="mt-2 w-full text-white px-4 py-1 rounded hover:bg-blue-600 disabled:bg-gray-400"
               >
                 {isLoading ? 'Processing...' : 'Checkout'}
               </button>
