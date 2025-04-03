@@ -1,11 +1,19 @@
-import { useState, useRef, useEffect } from 'react';
-import axios from 'axios'; // Axios for making API requests
-import { debounce } from 'lodash'; // Debounce function to limit API calls
+import { useState, useRef, useEffect, useMemo } from 'react';
+import axios from 'axios';
+import { debounce } from 'lodash';
 import Loader from '../common/Loader';
+
+interface ProductSuggestion {
+  _id: string;
+  name: string;
+  slug: string;
+  price: number;
+  image?: string;
+}
 
 interface SearchBarProps {
   scrolled: boolean;
-  isSearchMenuOpen: boolean; // Pass this prop to control when to focus the input
+  isSearchMenuOpen: boolean;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
@@ -13,45 +21,49 @@ const SearchBar: React.FC<SearchBarProps> = ({
   isSearchMenuOpen,
 }) => {
   const [query, setQuery] = useState('');
-  const [suggestions, setSuggestions] = useState<string[]>([]); // Store search suggestions
-  const [selectedIndex, setSelectedIndex] = useState<number>(-1); // Track selected suggestion
-  const [loading, setLoading] = useState<boolean>(false); // Track loading state
-  const [noResults, setNoResults] = useState<boolean>(false); // Track if no results are found
-  const inputRef = useRef<HTMLInputElement>(null); // Create a reference for the input field
+  const [suggestions, setSuggestions] = useState<ProductSuggestion[]>([]);
+  const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [noResults, setNoResults] = useState<boolean>(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  // Default suggestions (mock data) to display when the input is empty
-  const defaultSuggestions = ['jewel', 'pant', 'shirt'];
-
-  // API call function for fetching search suggestions
+  // Update fetchSuggestions
   const fetchSuggestions = async (query: string) => {
     try {
       if (query.trim()) {
-        setLoading(true); // Set loading to true before starting the API request
-        // Replace with your API URL and query parameter (e.g., `q` for search query)
+        setLoading(true);
         const response = await axios.get('/api/search-suggestions', {
           params: { query },
         });
 
-        // Set the suggestions state to the response data
-        if (response.data.suggestions.length === 0) {
-          setNoResults(true); // Set noResults to true if no suggestions are returned
-        } else {
-          setNoResults(false); // Reset noResults if there are suggestions
-        }
-        setSuggestions(response.data.suggestions);
+        setSuggestions(response.data || []);
+        setNoResults(response.data.length === 0);
       } else {
-        setSuggestions([]); // Clear suggestions if query is empty
+        // Fetch default suggestions when query is empty
+        const response = await axios.get('/api/search-suggestions', {
+          params: { default: 'true' },
+        });
+        setSuggestions(response.data || []);
+        setNoResults(false);
       }
     } catch (error) {
       console.error('Error fetching suggestions:', error);
-      setSuggestions([]); // Clear suggestions in case of an error
+      setSuggestions([]);
+      setNoResults(false);
     } finally {
-      setLoading(false); // Set loading to false once the request finishes
+      setLoading(false);
     }
   };
 
   // Debounced version of the API call function
-  const debouncedFetchSuggestions = debounce(fetchSuggestions, 500);
+  const debouncedFetchSuggestions = useMemo(
+    () => debounce(fetchSuggestions, 300),
+    []
+  );
+
+  useEffect(() => {
+    return () => debouncedFetchSuggestions.cancel();
+  }, [debouncedFetchSuggestions]);
 
   // Handle search input change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -164,32 +176,42 @@ const SearchBar: React.FC<SearchBarProps> = ({
       )}
 
       {/* Suggestions Dropdown */}
-      {suggestions.length > 0 || query.trim() === '' ? (
-        <ul className="absolute w-full mt-4 z-20 max-h-60 overflow-auto">
-          <h1
-            className={`text-xs font-semibold mb-2 mt-4 ${scrolled ? 'text-black' : 'text-black'}`}
-          >
-            trending searches
-          </h1>
-          {/* Display the default suggestions if query is empty */}
-          {(query.trim() === '' ? defaultSuggestions : suggestions).map(
-            (suggestion, index) => (
+      {(suggestions.length > 0 || loading) && (
+        <ul className="absolute w-full mt-4 z-20 max-h-60 overflow-auto bg-white shadow-lg">
+          {loading ? (
+            <li className="p-2 text-sm">Loading...</li>
+          ) : (
+            suggestions.map((product) => (
               <li
-                key={suggestion}
-                onClick={() => handleSelectSuggestion(suggestion)}
-                className={`cursor-pointer px-2 py-2 text-xs text-gray-700 hover:none ${
-                  selectedIndex === index ? 'bg-gray-200' : ''
-                }`}
-                style={{
-                  textDecoration: 'underline', // Apply underline style
-                }}
+                key={product._id}
+                onClick={() =>
+                  (window.location.href = `/product/${product.slug}`)
+                }
+                className="flex items-center p-2 hover:bg-gray-100 cursor-pointer"
               >
-                {suggestion}
+                {product.image && (
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-10 h-10 object-cover mr-3"
+                  />
+                )}
+                {noResults && !loading && query.trim() && (
+                  <div className="text-sm p-2">
+                    No products found. Try different keywords.
+                  </div>
+                )}
+                <div>
+                  <p className="text-sm font-medium">{product.name}</p>
+                  <p className="text-xs text-gray-500">
+                    ${product.price.toFixed(2)}
+                  </p>
+                </div>
               </li>
-            )
+            ))
           )}
         </ul>
-      ) : null}
+      )}
     </div>
   );
 };

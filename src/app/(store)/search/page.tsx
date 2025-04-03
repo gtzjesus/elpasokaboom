@@ -1,6 +1,7 @@
 import Header from '@/components/common/header';
 import ProductGrid from '@/components/products/ProductGrid';
 import { searchProductsByName } from '@/sanity/lib/products/searchProductsByName';
+import { Product } from 'sanity.types';
 
 const SearchPage = async ({
   searchParams,
@@ -11,8 +12,8 @@ const SearchPage = async ({
 
   console.log('Search Query: ', q); // Log the query parameter
 
-  // Fetch products based on the xquery parameter
-  const products = await searchProductsByName(q);
+  // Fetch products based on the query parameter
+  const products: Product[] = await searchProductsByName(q);
   const resultCount = products.length;
 
   if (resultCount === 0) {
@@ -35,7 +36,7 @@ const SearchPage = async ({
       <h1 className="uppercase text-sm font-light text-center p-5 text-gray-800">
         &ldquo;{q}&rdquo; ({resultCount})
       </h1>
-      <ProductGrid products={products} />
+      <ProductGrid products={products} /> {/* Render the products */}
     </div>
   );
 };
