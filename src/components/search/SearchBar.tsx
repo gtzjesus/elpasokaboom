@@ -70,18 +70,14 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setQuery(value);
-
-    // Call the debounced fetchSuggestions function
     debouncedFetchSuggestions(value);
-
-    setSelectedIndex(-1); // Reset selected index when typing
+    setSelectedIndex(-1);
   };
 
   // Handle search submit
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
-      // Redirect to the search results page or trigger an API search
       window.location.href = `/search?q=${query}`;
     }
   };
@@ -90,11 +86,10 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const handleClear = () => {
     setQuery('');
     setSuggestions([]);
-    setNoResults(false); // Reset noResults state when clearing input
+    setNoResults(false);
   };
 
   // Handle selection of suggestion
-  // Change the parameter type to accept ProductSuggestion
   const handleSelectSuggestion = (suggestion: ProductSuggestion) => {
     setQuery(suggestion.name);
     setSuggestions([]);
@@ -116,7 +111,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
       if (selectedIndex >= 0 && suggestions[selectedIndex]) {
         handleSelectSuggestion(suggestions[selectedIndex]);
       } else if (query.trim()) {
-        // Submit the current query if no suggestion is selected
         window.location.href = `/search?q=${encodeURIComponent(query)}`;
       }
     }
@@ -125,33 +119,33 @@ const SearchBar: React.FC<SearchBarProps> = ({
   // Focus input when search menu opens
   useEffect(() => {
     if (isSearchMenuOpen && inputRef.current) {
-      inputRef.current.focus(); // Automatically focus the input when the search menu opens
+      inputRef.current.focus();
     }
   }, [isSearchMenuOpen]);
 
   return (
-    <div className="w-full max-w-xl mx-auto">
+    <div className="w-full max-w-2xl mx-auto px-4 relative">
       <form onSubmit={handleSearchSubmit} className="flex flex-col w-full">
         <h1
           className={`text-sm font-semibold mb-2 ${scrolled ? 'text-black' : 'text-black'}`}
         >
           what are you looking for?
         </h1>
-        <div className="relative flex items-center w-full bg-white shadow-md">
+        <div className="relative flex items-center w-full bg-white shadow-md rounded-lg">
           <input
             ref={inputRef}
             type="text"
             placeholder=""
             value={query}
             onChange={handleChange}
-            onKeyDown={handleKeyDown} // Listen for key events
-            className="w-full p-4 text-gray-800 border-b-2 border-white focus:border-white focus:outline-none transition-all duration-300 pr-10 text-base"
+            onKeyDown={handleKeyDown}
+            className="w-full p-4 text-gray-800 pr-10 text-base"
           />
           {query && (
             <button
               type="button"
               onClick={handleClear}
-              className="absolute right-2 text-gray-500 hover:text-gray-800 focus:outline-none"
+              className="absolute right-3 text-gray-500 hover:text-gray-800 focus:outline-none"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -165,7 +159,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
                   strokeLinejoin="round"
                   strokeWidth="2"
                   d="M6 18L18 6M6 6l12 12"
-                ></path>
+                />
               </svg>
             </button>
           )}
@@ -173,57 +167,56 @@ const SearchBar: React.FC<SearchBarProps> = ({
       </form>
 
       {/* Loader */}
-      {loading && <Loader />}
-
-      {/* Display No Results Message */}
-      {noResults && !loading && (
-        <div className="uppercase text-xs font-semibold mb-2 mt-4 ${scrolled ? 'text-black' : 'text-black '">
-          sorry, we couldn&lsquo;t find any matching results for your query.
+      {loading && (
+        <div className="absolute top-full left-0 right-0 mt-1 bg-white p-4 rounded-b-lg shadow-lg">
+          <Loader />
         </div>
       )}
 
       {/* Suggestions Dropdown */}
       {(suggestions.length > 0 || loading) && (
-        <ul className="absolute w-full mt-4 z-20 max-h-60 overflow-auto bg-white shadow-lg">
+        <ul className=" mt-4 z-20 overflow-auto shadow-lg  border ">
           {loading ? (
-            <li className="p-2 text-sm">Loading...</li>
+            <li className="p-4 flex justify-center">
+              <Loader />
+            </li>
           ) : (
             suggestions.map((product, index) => (
               <li
                 key={product._id}
                 onClick={() => handleSelectSuggestion(product)}
-                className={`flex items-center p-2 hover:bg-gray-100 cursor-pointer ${
-                  selectedIndex === index ? 'bg-gray-200' : ''
+                className={`flex items-center p-3 hover:bg-gray-50 cursor-pointer gap-3 ${
+                  selectedIndex === index ? 'bg-gray-100' : ''
                 }`}
               >
                 {product.image && (
-                  <Image
-                    className="object-cover"
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    sizes="(max-width: 728px) 90vw, (max-width: 1200px) 40vw, 23vw"
-                    onError={(e) => {
-                      console.error('Image load error:', e);
-                      // Consider adding a fallback image here
-                    }}
-                  />
-                )}
-                {noResults && !loading && query.trim() && (
-                  <div className="text-sm p-2">
-                    No products found. Try different keywords.
+                  <div className="relative h-10 w-10">
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      className="object-cover"
+                      quality={85}
+                    />
                   </div>
                 )}
-                <div>
-                  <p className="text-md font-light uppercase">{product.name}</p>
-                  {/* <p className="text-xs text-gray-500">
-                    ${product.price.toFixed(2)}
-                  </p> */}
+                <div className="flex-1 min-w-0 ">
+                  <p className="text-sm font-medium truncate">{product.name}</p>
+                  <p className="text-xs text-gray-300">
+                    ${product.price.toFixed(0)}
+                  </p>
                 </div>
               </li>
             ))
           )}
         </ul>
+      )}
+
+      {/* No Results Message */}
+      {noResults && !loading && (
+        <div className="absolute top-full left-0 right-0 mt-1 p-4 bg-white rounded-b-lg shadow-lg text-sm">
+          No products found. Try different keywords.
+        </div>
       )}
     </div>
   );
