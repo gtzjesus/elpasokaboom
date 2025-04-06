@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { debounce } from 'lodash';
 import Loader from '../common/Loader';
+import Image from 'next/image';
 
 interface ProductSuggestion {
   _id: string;
@@ -93,24 +94,30 @@ const SearchBar: React.FC<SearchBarProps> = ({
   };
 
   // Handle selection of suggestion
-  const handleSelectSuggestion = (suggestion: string) => {
-    setQuery(suggestion);
-    setSuggestions([]); // Clear suggestions when a suggestion is selected
-    // Manually redirect to the search page with the selected suggestion
-    window.location.href = `/search?q=${suggestion}`;
+  // Change the parameter type to accept ProductSuggestion
+  const handleSelectSuggestion = (suggestion: ProductSuggestion) => {
+    setQuery(suggestion.name);
+    setSuggestions([]);
+    window.location.href = `/product/${suggestion.slug}`;
   };
 
   // Handle key navigation through suggestions
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'ArrowDown') {
+      e.preventDefault();
       setSelectedIndex((prevIndex) =>
         Math.min(suggestions.length - 1, prevIndex + 1)
       );
     } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
       setSelectedIndex((prevIndex) => Math.max(0, prevIndex - 1));
     } else if (e.key === 'Enter') {
-      if (selectedIndex >= 0) {
+      e.preventDefault();
+      if (selectedIndex >= 0 && suggestions[selectedIndex]) {
         handleSelectSuggestion(suggestions[selectedIndex]);
+      } else if (query.trim()) {
+        // Submit the current query if no suggestion is selected
+        window.location.href = `/search?q=${encodeURIComponent(query)}`;
       }
     }
   };
@@ -181,19 +188,25 @@ const SearchBar: React.FC<SearchBarProps> = ({
           {loading ? (
             <li className="p-2 text-sm">Loading...</li>
           ) : (
-            suggestions.map((product) => (
+            suggestions.map((product, index) => (
               <li
                 key={product._id}
-                onClick={() =>
-                  (window.location.href = `/product/${product.slug}`)
-                }
-                className="flex items-center p-2 hover:bg-gray-100 cursor-pointer"
+                onClick={() => handleSelectSuggestion(product)}
+                className={`flex items-center p-2 hover:bg-gray-100 cursor-pointer ${
+                  selectedIndex === index ? 'bg-gray-200' : ''
+                }`}
               >
                 {product.image && (
-                  <img
+                  <Image
+                    className="object-cover"
                     src={product.image}
                     alt={product.name}
-                    className="w-10 h-10 object-cover mr-3"
+                    fill
+                    sizes="(max-width: 728px) 90vw, (max-width: 1200px) 40vw, 23vw"
+                    onError={(e) => {
+                      console.error('Image load error:', e);
+                      // Consider adding a fallback image here
+                    }}
                   />
                 )}
                 {noResults && !loading && query.trim() && (
@@ -202,10 +215,10 @@ const SearchBar: React.FC<SearchBarProps> = ({
                   </div>
                 )}
                 <div>
-                  <p className="text-sm font-medium">{product.name}</p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-md font-light uppercase">{product.name}</p>
+                  {/* <p className="text-xs text-gray-500">
                     ${product.price.toFixed(2)}
-                  </p>
+                  </p> */}
                 </div>
               </li>
             ))
