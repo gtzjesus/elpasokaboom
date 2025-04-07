@@ -16,7 +16,11 @@ export async function GET(request: Request) {
           name,
           "slug": slug.current,
           price,
-          "image": image.asset->url
+          "image": image.asset->url,
+          "categories": categories[]->{
+            _id,
+            title
+          }
         }[0..5]`,
         { searchQuery: `${query}*` } as { searchQuery: string } // Different param name
       );

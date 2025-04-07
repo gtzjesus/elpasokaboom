@@ -10,6 +10,10 @@ interface ProductSuggestion {
   slug: string;
   price: number;
   image?: string;
+  categories?: {
+    _id: string;
+    title: string;
+  }[];
 }
 
 interface SearchBarProps {
@@ -175,7 +179,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
 
       {/* Suggestions Dropdown */}
       {(suggestions.length > 0 || loading) && (
-        <ul className=" mt-4 z-20 overflow-auto shadow-lg  border ">
+        <ul className="mt-4 z-20 overflow-auto shadow-lg border">
           {loading ? (
             <li className="p-4 flex justify-center">
               <Loader />
@@ -185,26 +189,31 @@ const SearchBar: React.FC<SearchBarProps> = ({
               <li
                 key={product._id}
                 onClick={() => handleSelectSuggestion(product)}
-                className={`flex items-center p-3 hover:bg-gray-50 cursor-pointer gap-3 ${
+                className={`flex items-center p-2 hover:bg-gray-50 cursor-pointer gap-3 ${
                   selectedIndex === index ? 'bg-gray-100' : ''
                 }`}
               >
-                {product.image && (
-                  <div className="relative h-10 w-10">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      className="object-cover"
-                      quality={85}
-                    />
+                <div className="flex items-center justify-between">
+                  {product.image && (
+                    <div className="relative h-20 w-20">
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        layout="fill" // Ensure the image fills the parent container
+                        className="object-contain"
+                      />
+                    </div>
+                  )}
+                  <div className="flex ml-4">
+                    <p className="uppercase text-xs font-semibold ">
+                      {product.name}
+                    </p>
+                    {product.categories && product.categories.length > 0 && (
+                      <p className="text-xs text-gray-300 ml-10 ">
+                        {product.categories.map((c) => c.title).join(', ')}
+                      </p>
+                    )}
                   </div>
-                )}
-                <div className="flex-1 min-w-0 ">
-                  <p className="text-sm font-medium truncate">{product.name}</p>
-                  <p className="text-xs text-gray-300">
-                    ${product.price.toFixed(0)}
-                  </p>
                 </div>
               </li>
             ))
