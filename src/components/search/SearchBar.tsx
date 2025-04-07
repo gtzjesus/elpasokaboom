@@ -189,7 +189,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
               <li
                 key={product._id}
                 onClick={() => handleSelectSuggestion(product)}
-                className={`flex items-center p-2 hover:bg-gray-50 cursor-pointer gap-3 ${
+                className={`flex items-center px-3 hover:bg-gray-50 cursor-pointer ${
                   selectedIndex === index ? 'bg-gray-100' : ''
                 }`}
               >
@@ -204,12 +204,12 @@ const SearchBar: React.FC<SearchBarProps> = ({
                       />
                     </div>
                   )}
-                  <div className="flex ml-4">
-                    <p className="uppercase text-xs font-semibold ">
+                  <div className="flex ml-2">
+                    <p className="uppercase text-sm font-light ">
                       {product.name}
                     </p>
                     {product.categories && product.categories.length > 0 && (
-                      <p className="text-xs text-gray-300 ml-10 ">
+                      <p className="text-xs text-gray-300 ml-1 mt-1 ">
                         {product.categories.map((c) => c.title).join(', ')}
                       </p>
                     )}
