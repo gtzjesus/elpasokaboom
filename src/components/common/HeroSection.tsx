@@ -21,12 +21,12 @@ const HeroSection: FC = () => {
       {/* Wrapper for text content: Max width of 3xl ensures it doesn't stretch too wide on large screens */}
       <div className="max-w-3xl">
         {/* Headline: Large, bold, and prominent */}
-        <h1 className="uppercase text-3xl tracking-wide font-semibold text-white ">
+        <h1 className="uppercase text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-wide font-semibold text-white ">
           3D Prints
         </h1>
 
         {/* Subheading: Smaller font for technology stack or description */}
-        <p className="barlow-condensed-regular tracking-very-wide text-lg font-semibold text-center text-white">
+        <p className="barlow-condensed-regular tracking-very-wide text-lg sm:text-xl md:text-2xl font-semibold text-center text-white">
           Built with precision.
         </p>
 
