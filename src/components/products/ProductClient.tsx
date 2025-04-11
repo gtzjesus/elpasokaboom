@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import AddToBasketButton from '@/components/cart/AddToBasketButton';
-import { Product } from 'sanity.types';
+
 import CartPopup from '../cart/CartPopUp';
+import { Product } from '@/types';
 
 interface ProductClientProps {
   product: Product;

@@ -1,8 +1,8 @@
 'use client';
 
-import { Product } from '../../../sanity.types';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProductThumb from './ProductThumb';
+import { Product } from '@/types';
 
 /**
  * ProductGrid Component

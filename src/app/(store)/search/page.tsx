@@ -1,7 +1,7 @@
 import Header from '@/components/common/header';
 import ProductGrid from '@/components/products/ProductGrid';
 import { searchProductsByName } from '@/sanity/lib/products/searchProductsByName';
-import { Product } from 'sanity.types';
+import { Product } from '@/types';
 
 const SearchPage = async ({
   searchParams,

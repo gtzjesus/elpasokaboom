@@ -1,4 +1,4 @@
-import { Product } from 'sanity.types';
+import { Product } from '@/types';
 import { client } from '../client';
 
 export const searchProductsByName = async (
