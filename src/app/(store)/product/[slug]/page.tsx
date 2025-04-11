@@ -1,10 +1,10 @@
 import Header from '@/components/common/header';
 import InfoDropdown from '@/components/common/InfoDropdown';
 import ProductClient from '@/components/products/ProductClient';
-import { imageUrl } from '@/lib/imageUrl';
+import ProductImages from '@/components/products/ProductImages';
+import ProductSummary from '@/components/products/ProductSummary';
 import { getProductBySlug } from '@/sanity/lib/products/getProductBySlug';
 import { Product } from '@/types';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
 // Force static rendering and set revalidation interval
@@ -42,30 +42,15 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
         {/* Left section: Product images and information */}
         <div className="flex-grow overflow-y-auto pb-40 ">
           {/* Display extra images if available */}
-          {product.extraImages?.map((image, index) => (
-            <div
-              key={index}
-              className={`relative aspect-square overflow-hidden rounded-lg shadow-lg ${isOutOfStock ? 'opacity-50' : ''}`}
-            >
-              <Image
-                src={imageUrl(image).url()}
-                alt={`${product.name} extra image ${index + 1}`}
-                fill
-                className="object-contain transition-transform duration-300 hover:scale-105"
-              />
-            </div>
-          ))}
+          <ProductImages
+            product={product as Product}
+            isOutOfStock={isOutOfStock}
+          />
 
-          {/* Description dropdown */}
+          {/* InfoDropdown Components */}
           <InfoDropdown title="Details" info={product.description ?? ''} />
-
-          {/* Care instructions dropdown */}
           {product.care && <InfoDropdown title="Care" info={product.care} />}
-
-          {/* Size information dropdown */}
           {product.size && <InfoDropdown title="Size" info={product.size} />}
-
-          {/* Shipping information dropdown */}
           {product.shipping && (
             <InfoDropdown title="Shipping" info={product.shipping} />
           )}
@@ -78,23 +63,14 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
           )}
         </div>
 
-        {/* Right section: Product summary (price, name, and add-to-cart) */}
-        <div className="w-full lg:w-50 lg:fixed h-fit bg-white p-6 lg:p-12 order-first lg:order-last fixed bottom-0 left-0 lg:bottom-0 lg:left-auto">
-          <div className="flex justify-center items-center gap-1">
-            <h1 className="uppercase text-md font-semibold text-center text-gray-800">
-              {product.name}
-            </h1>
-            <h1 className="uppercase text-xs font-light text-center text-gray-800">
-              |
-            </h1>
-            <h1 className="uppercase text-md font-light text-center text-gray-800">
-              ${product.price?.toFixed(0)}
-            </h1>
-          </div>
+        {/* Bottom section: Product summary (price, name, and add-to-cart) */}
+        <ProductSummary
+          product={product as Product}
+          isOutOfStock={isOutOfStock}
+        />
 
-          {/* Product add-to-cart and other actions */}
-          <ProductClient product={product as Product} />
-        </div>
+        {/* Product add-to-cart and other actions */}
+        <ProductClient product={product as Product} />
       </div>
     </div>
   );
