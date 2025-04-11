@@ -45,6 +45,7 @@ const SearchButton: React.FC<SearchButtonProps> = ({ scrolled }) => {
           width={50}
           height={50}
           className="w-5 h-5"
+          priority
         />
       </button>
 

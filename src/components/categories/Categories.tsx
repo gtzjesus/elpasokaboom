@@ -50,7 +50,7 @@ const Categories = ({ categories }: CategoriesProps) => {
                   alt={category.title}
                   layout="fill" // This ensures the image fills the container
                   objectFit="cover" // This ensures the image covers the entire container without distortion
-                  priority={true}
+                  priority
                 />
               </div>
               <h3 className="barlow-condensed-regular text-md tracking-very-wide font-light text-center text-black py-2">

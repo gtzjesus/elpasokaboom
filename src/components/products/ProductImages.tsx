@@ -21,6 +21,7 @@ const ProductImages = ({ product, isOutOfStock }: ProductImagesProps) => {
             alt={`${product.name} extra image ${index + 1}`}
             fill
             className="object-contain transition-transform duration-300 hover:scale-105"
+            priority
           />
         </div>
       ))}

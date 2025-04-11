@@ -58,6 +58,7 @@ function ProductThumb({ product }: { product: Product }) {
             alt={productName}
             fill
             sizes="(max-width: 728px) 90vw, (max-width: 1200px) 40vw, 23vw"
+            priority
             onError={(e) => {
               console.error('Image load error:', e);
               // Consider adding a fallback image here

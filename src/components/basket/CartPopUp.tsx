@@ -79,6 +79,7 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
                       alt={item.product.name || 'Product'}
                       width={110}
                       height={110}
+                      priority
                     />
                   </Link>
                 </div>

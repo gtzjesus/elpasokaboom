@@ -39,6 +39,7 @@ const CartButton: React.FC<CartButtonProps> = ({ itemCount, scrolled }) => {
           width={50}
           height={50}
           className="w-6 h-6" // Set width and height for the icon
+          priority
         />
 
         {/* Display cart item count as a badge on top of the icon */}

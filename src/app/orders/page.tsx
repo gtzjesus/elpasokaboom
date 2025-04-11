@@ -104,6 +104,7 @@ async function Orders() {
                                 alt={product.product?.name ?? ''}
                                 className="object-cover"
                                 fill
+                                priority
                               />
                             </div>
                           )}

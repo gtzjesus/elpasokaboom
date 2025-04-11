@@ -86,6 +86,7 @@ const Header = () => {
               width={50}
               height={50}
               className="w-7 h-7"
+              priority
             />
           </Link>
           <div className="hidden sm:flex items-center space-x-2">
@@ -96,6 +97,7 @@ const Header = () => {
                 width={30}
                 height={30}
                 className=""
+                priority
               />
             </Link>
             <Link

@@ -201,6 +201,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
                         alt={product.name}
                         layout="fill" // Ensure the image fills the parent container
                         className="object-contain"
+                        priority
                       />
                     </div>
                   )}

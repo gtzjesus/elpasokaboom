@@ -12,6 +12,7 @@ const Footer = () => {
             alt="Your Logo"
             width={30} // Customize based on your logo's size
             height={30} // Customize based on your logo's size
+            priority
           />
         </div>
 
