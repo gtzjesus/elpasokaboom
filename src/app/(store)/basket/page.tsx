@@ -12,9 +12,9 @@ import {
   createCheckoutSession,
   Metadata,
 } from '../../../../actions/createCheckoutSession';
-import EmptyBasket from '@/components/cart/EmptyBasket';
-import OrderSummary from '@/components/cart/OrderSummary';
-import BasketItemCard from '@/components/cart/BasketItemCard';
+import EmptyBasket from '@/components/basket/EmptyBasket';
+import OrderSummary from '@/components/basket/OrderSummary';
+import BasketItemCard from '@/components/basket/BasketItemCard';
 
 /**
  * BasketPage Component

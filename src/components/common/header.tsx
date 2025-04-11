@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import AuthButtons from '../auth/AuthButtons'; // Import the AuthButtons component
-import CartButton from '../cart/CartButton'; // Import CartButton
+import CartButton from '../basket/CartButton'; // Import CartButton
 import SearchButton from '../search/SearchButton';
 
 const Header = () => {

@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import AddToBasketButton from '@/components/cart/AddToBasketButton';
+import AddToBasketButton from '@/components/basket/AddToBasketButton';
 
-import CartPopup from '../cart/CartPopUp';
+import CartPopup from '../basket/CartPopUp';
 import { Product } from '@/types';
 
 interface ProductClientProps {
