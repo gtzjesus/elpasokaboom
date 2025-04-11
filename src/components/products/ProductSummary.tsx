@@ -1,5 +1,5 @@
 import { Product } from '@/types';
-import ProductClient from '../products/ProductClient';
+import ProductClient from './ProductClient';
 
 type ProductSummaryProps = {
   product: Product;
