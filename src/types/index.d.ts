@@ -1,7 +1,7 @@
 // types/index.d.ts
 
-// Base Sanity Document Type
-interface SanityDocument {
+// 🧱 Base Sanity Document
+export interface SanityDocument {
   _id: string;
   _type: string;
   _createdAt: string;
@@ -9,23 +9,23 @@ interface SanityDocument {
   _rev: string;
 }
 
-// Sanity Image Type
+// 🖼️ Sanity Image
 export interface SanityImage {
   _type: 'image';
   asset: {
     _ref: string;
     _type: 'reference';
-    url?: string; // Added url for direct access
+    url?: string;
   };
 }
 
-// Slug Type
+// 🔗 Sanity Slug
 export interface SanitySlug {
   _type: 'slug';
   current: string;
 }
 
-// Category Type
+// 🏷️ Category
 export interface Category extends SanityDocument {
   title: string;
   slug: SanitySlug;
@@ -33,32 +33,48 @@ export interface Category extends SanityDocument {
   image?: SanityImage;
 }
 
-// Product Type (for your search functionality)
+// 🛍️ Product
 export interface Product extends SanityDocument {
-  name: string;
+  name: string; // Must be required
   slug: SanitySlug;
   price: number;
   stock?: number;
   image?: SanityImage;
-  // Add other product fields as needed
+  description?: string;
+  care?: string;
+  size?: string;
+  shipping?: string;
+  extraImages?: SanityImage[]; // optional extra product images
 }
 
-// Search Suggestions Response Type
+// 🧠 Basket Item
+export interface BasketItem {
+  product: Product;
+  quantity: number;
+}
+
+// 🔎 Search Suggestions
 export interface SearchSuggestionsResponse {
   suggestions: Product[];
 }
 
-// Query Parameters for Sanity Client
+// 🔍 Query Params
 export interface SanityQueryParams {
   [key: string]: string | number | boolean | string[];
 }
 
-// Product Search Parameters (specific to your search)
 export interface ProductSearchParams extends SanityQueryParams {
   query: string;
 }
 
-// Default Suggestions Parameters
 export interface DefaultSuggestionsParams extends SanityQueryParams {
   default: boolean;
+}
+
+// 💳 Stripe Checkout Metadata
+export interface Metadata {
+  orderNumber: string;
+  customerName: string;
+  customerEmail: string;
+  clerkUserId: string;
 }

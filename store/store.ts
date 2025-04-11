@@ -1,18 +1,15 @@
-import { Product } from '../sanity.types';
+// store/store.ts
+
+import { Product, BasketItem } from '@/types'; // ✅ USE CENTRALIZED TYPES
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-
-export interface BasketItem {
-  product: Product;
-  quantity: number;
-}
 
 interface BasketState {
   items: BasketItem[];
   addItem: (product: Product) => void;
   removeItem: (productId: string) => void;
   clearBasket: () => void;
-  updateItemQuantity: (productId: string, quantity: number) => void; // New method
+  updateItemQuantity: (productId: string, quantity: number) => void;
   getTotalPrice: () => number;
   getItemCount: (productId: string) => number;
   getGroupedItems: () => BasketItem[];
@@ -52,14 +49,11 @@ const useBasketStore = create<BasketState>()(
             return acc;
           }, [] as BasketItem[]),
         })),
-      updateItemQuantity: (
-        productId,
-        quantity // Update quantity
-      ) =>
+      updateItemQuantity: (productId, quantity) =>
         set((state) => ({
           items: state.items.map((item) =>
             item.product._id === productId
-              ? { ...item, quantity: Math.max(1, quantity) } // Ensure quantity is at least 1
+              ? { ...item, quantity: Math.max(1, quantity) }
               : item
           ),
         })),
@@ -76,9 +70,7 @@ const useBasketStore = create<BasketState>()(
       },
       getGroupedItems: () => get().items,
     }),
-    {
-      name: 'basket-store',
-    }
+    { name: 'basket-store' }
   )
 );
 
