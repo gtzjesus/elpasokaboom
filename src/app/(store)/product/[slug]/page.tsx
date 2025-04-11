@@ -3,6 +3,7 @@ import InfoDropdown from '@/components/common/InfoDropdown';
 import ProductClient from '@/components/products/ProductClient';
 import { imageUrl } from '@/lib/imageUrl';
 import { getProductBySlug } from '@/sanity/lib/products/getProductBySlug';
+import { Product } from '@/types';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
@@ -92,7 +93,7 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
           </div>
 
           {/* Product add-to-cart and other actions */}
-          <ProductClient product={product} />
+          <ProductClient product={product as Product} />
         </div>
       </div>
     </div>
