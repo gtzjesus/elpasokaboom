@@ -2,7 +2,7 @@
 
 import { imageUrl } from '@/lib/imageUrl';
 import stripe from '@/lib/stripe';
-import { BasketItem } from '../store/store';
+import { BasketItem } from '@/types';
 
 export type Metadata = {
   orderNumber: string;
