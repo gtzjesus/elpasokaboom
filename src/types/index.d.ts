@@ -58,6 +58,11 @@ export interface SearchSuggestionsResponse {
   suggestions: Product[];
 }
 
+// 🔎 Search Page
+export interface SearchPageProps {
+  searchParams: { q: string };
+}
+
 // 🔍 Query Params
 export interface SanityQueryParams {
   [key: string]: string | number | boolean | string[];
