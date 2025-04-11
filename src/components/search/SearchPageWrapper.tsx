@@ -1,4 +1,4 @@
-import SearchPage from '@/app/(store)/search/page';
+import SearchPage from '@/components/search/SearchPage'; // ✅ not from the route file
 
 const SearchPageWrapper = async ({
   searchParams,
