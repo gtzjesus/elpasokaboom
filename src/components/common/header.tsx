@@ -74,11 +74,13 @@ const Header = () => {
 
   return (
     <header
-      className={`${scrolled ? 'bg-pearl shadow-lg' : 'bg-transparent'} fixed top-0 z-20 flex items-center px-4 py-3 w-full`}
+      className={`${
+        scrolled ? 'bg-pearl shadow-lg' : 'bg-transparent'
+      } fixed top-0 z-20 flex items-center px-4 py-3 w-full transition-all duration-300 ease-in-out`}
     >
       <div className="flex w-full items-center justify-between">
         {/* Left side: Logo and Company Name */}
-        <div className="flex items-center space-x-4 flex-1 ">
+        <div className="flex items-center space-x-4 flex-1">
           <Link href="/" className="font-bold cursor-pointer sm:mx-0 sm:hidden">
             <Image
               src={scrolled ? '/icons/logo.webp' : '/icons/logo.webp'}
@@ -96,28 +98,27 @@ const Header = () => {
                 alt="worldhello"
                 width={30}
                 height={30}
-                className=""
                 priority
               />
             </Link>
             <Link
               href="/"
-              className={`barlow-condensed-regular text-md ${scrolled ? 'text-black' : 'text-black'}`}
+              className={`barlow-condensed-regular text-md ${
+                scrolled ? 'text-black' : 'text-black'
+              }`}
             >
               Worldhello
             </Link>
           </div>
         </div>
 
-        {/* Right side: Search , Cart and Auth Buttons */}
+        {/* Right side: Search, Cart, and Auth Buttons */}
         <div className="flex items-center space-x-5 font-bold px-5">
           <SearchButton scrolled={scrolled} />
-
           {/* Conditionally render CartButton only if the pathname is not '/basket' */}
           {pathname !== '/basket' && (
             <CartButton itemCount={itemCount} scrolled={scrolled} />
           )}
-
           <div
             className={`hidden sm:flex items-center ${scrolled ? 'text-black' : 'text-black'}`}
           >
@@ -132,24 +133,31 @@ const Header = () => {
         >
           {/* Top Bar (first line) */}
           <div
-            className={`w-5 h-0.5 ${scrolled ? 'bg-black' : 'bg-black'} transition-all duration-300 ease-in-out transform ${isMenuOpen ? 'rotate-45 translate-y-0.5' : ''}`}
+            className={`w-5 h-0.5 ${scrolled ? 'bg-black' : 'bg-black'} transition-all duration-300 ease-in-out transform ${
+              isMenuOpen ? 'rotate-45 translate-y-0.5' : ''
+            }`}
           />
-
           {/* Bottom Bar (third line) */}
           <div
-            className={`w-5 h-0.5 ${scrolled ? 'bg-black' : 'bg-black'} transition-all duration-300 ease-in-out transform ${isMenuOpen ? '-rotate-45 -translate-y-0.5' : ''}`}
+            className={`w-5 h-0.5 ${scrolled ? 'bg-black' : 'bg-black'} transition-all duration-300 ease-in-out transform ${
+              isMenuOpen ? '-rotate-45 -translate-y-0.5' : ''
+            }`}
           />
         </button>
       </div>
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 bg-white bg-opacity-100 z-10 transition-opacity duration-300 ${isMenuOpen ? 'opacity-95' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 bg-white bg-opacity-100 z-10 transition-opacity duration-300 ${
+          isMenuOpen ? 'opacity-95' : 'opacity-0 pointer-events-none'
+        }`}
         onClick={() => setIsMenuOpen(false)}
       />
       {/* Mobile Menu */}
       <div
-        className={`fixed right-0 top-0 h-full w-full shadow-xl z-20 transform transition-opacity duration-300 ease-in-out ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed right-0 top-0 h-full w-full shadow-xl z-20 transform transition-opacity duration-300 ease-in-out ${
+          isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
       >
         <button
           onClick={() => setIsMenuOpen(false)}

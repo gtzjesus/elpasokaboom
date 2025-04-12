@@ -58,7 +58,7 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
             {/* Header */}
             <div className="border-b mb-4 relative">
               <button
-                className="absolute top-2 right-6 text-xl hover:text-gray-900 transition"
+                className="text-2xl hover:text-gray-900 transition"
                 onClick={onClose}
                 aria-label="Close cart popup"
               >
@@ -108,7 +108,7 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
         ) : (
           <div className="relative">
             <button
-              className="absolute top-2 right-6 text-xl hover:text-gray-900 transition"
+              className=" text-2xl hover:text-gray-900 transition"
               onClick={onClose}
               aria-label="Close empty cart popup"
             >
