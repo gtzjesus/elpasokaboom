@@ -122,7 +122,7 @@ const Header = () => {
           <div
             className={`hidden sm:flex items-center ${scrolled ? 'text-black' : 'text-black'}`}
           >
-            <AuthButtons user={user} />
+            <AuthButtons user={user ?? null} />
           </div>
         </div>
 
@@ -167,7 +167,7 @@ const Header = () => {
         </button>
         <div className="flex flex-col items-center  h-full p-20 space-y-6">
           <div className="flex flex-col items-center space-y-4 text-black text-2xl">
-            <AuthButtons user={user} />
+            <AuthButtons user={user ?? null} />
           </div>
         </div>
       </div>
