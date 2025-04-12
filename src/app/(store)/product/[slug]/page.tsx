@@ -1,6 +1,6 @@
 import Header from '@/components/common/header';
 import InfoDropdown from '@/components/common/InfoDropdown';
-import ProductClient from '@/components/products/ProductClient';
+// import ProductClient from '@/components/products/ProductClient';
 import ProductImages from '@/components/products/ProductImages';
 import ProductSummary from '@/components/products/ProductSummary';
 import { getProductBySlug } from '@/sanity/lib/products/getProductBySlug';
@@ -70,7 +70,7 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
         />
 
         {/* Product add-to-cart and other actions */}
-        <ProductClient product={product as Product} />
+        {/* <ProductClient product={product as Product} /> */}
       </div>
     </div>
   );

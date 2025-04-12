@@ -3,10 +3,9 @@
 import Loader from '@/components/common/Loader';
 
 /**
- * SearchPage Loading UI
+ *  Loading UI
  *
- * Displays a centered loading spinner while the search results are being fetched.
- * Automatically shown by Next.js App Router when the `SearchPage` is loading asynchronously.
+ * Displays a centered loading spinner
  *
  * This leverages the default loading UI support for server components.
  *

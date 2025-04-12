@@ -1,19 +1,34 @@
 /**
- * This route is responsible for the built-in authoring environment using Sanity Studio.
- * All routes under your studio path is handled by this file using Next.js' catch-all routes:
+ * Studio Catch-All Route Handler
+ *
+ * This file is responsible for rendering the built-in authoring environment (Sanity Studio).
+ * It uses Next.js' **catch-all route** functionality to handle any sub-routes under `/studio`.
+ *
+ * 📚 More on Catch-All Routes:
  * https://nextjs.org/docs/routing/dynamic-routes#catch-all-routes
  *
- * You can learn more about the next-sanity package here:
+ * 📚 More on Sanity + Next.js Integration:
  * https://github.com/sanity-io/next-sanity
  */
 
-import { NextStudio } from 'next-sanity/studio'
-import config from '../../../../sanity.config'
+import { NextStudio } from 'next-sanity/studio';
+import config from '../../../../sanity.config';
 
-export const dynamic = 'force-static'
+// ⏱️ Ensure the Studio route is statically rendered at build-time (no SSR)
+export const dynamic = 'force-static';
 
-export { metadata, viewport } from 'next-sanity/studio'
+// ✅ Re-export default Studio metadata and viewport settings from next-sanity
+export { metadata, viewport } from 'next-sanity/studio';
 
+/**
+ * StudioPage
+ *
+ * This component is responsible for rendering the full Sanity Studio application.
+ * It uses the configuration exported from your `sanity.config.ts` file and leverages
+ * the `NextStudio` wrapper provided by `next-sanity` to embed the Studio in-app.
+ *
+ * @returns {JSX.Element} Rendered Sanity Studio interface
+ */
 export default function StudioPage() {
-  return <NextStudio config={config} />
+  return <NextStudio config={config} />;
 }
