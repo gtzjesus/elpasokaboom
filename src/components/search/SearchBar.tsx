@@ -4,6 +4,9 @@ import { debounce } from 'lodash';
 import Loader from '../common/Loader';
 import Image from 'next/image';
 
+/**
+ * Interface for product suggestions returned from the API.
+ */
 interface ProductSuggestion {
   _id: string;
   name: string;
@@ -16,6 +19,9 @@ interface ProductSuggestion {
   }[];
 }
 
+/**
+ * Props for the SearchBar component.
+ */
 interface SearchBarProps {
   scrolled: boolean;
   isSearchMenuOpen: boolean;
@@ -25,14 +31,17 @@ const SearchBar: React.FC<SearchBarProps> = ({
   scrolled,
   isSearchMenuOpen,
 }) => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState<string>('');
   const [suggestions, setSuggestions] = useState<ProductSuggestion[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [loading, setLoading] = useState<boolean>(false);
   const [noResults, setNoResults] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Update fetchSuggestions
+  /**
+   * Fetch product suggestions based on the user's search query.
+   * @param query The search query entered by the user.
+   */
   const fetchSuggestions = async (query: string) => {
     try {
       if (query.trim()) {
@@ -60,17 +69,18 @@ const SearchBar: React.FC<SearchBarProps> = ({
     }
   };
 
-  // Debounced version of the API call function
+  // Debounced version of the fetchSuggestions function to limit the number of API calls
   const debouncedFetchSuggestions = useMemo(
     () => debounce(fetchSuggestions, 300),
     []
   );
 
+  // Cleanup the debounced function when the component unmounts
   useEffect(() => {
     return () => debouncedFetchSuggestions.cancel();
   }, [debouncedFetchSuggestions]);
 
-  // Handle search input change
+  // Handle input changes and trigger the debounced suggestion fetch
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setQuery(value);
@@ -78,7 +88,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
     setSelectedIndex(-1);
   };
 
-  // Handle search submit
+  // Handle form submission, redirecting to the search results page
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
@@ -86,21 +96,21 @@ const SearchBar: React.FC<SearchBarProps> = ({
     }
   };
 
-  // Clear the input
+  // Clear the search input and reset suggestions
   const handleClear = () => {
     setQuery('');
     setSuggestions([]);
     setNoResults(false);
   };
 
-  // Handle selection of suggestion
+  // Handle suggestion selection
   const handleSelectSuggestion = (suggestion: ProductSuggestion) => {
     setQuery(suggestion.name);
     setSuggestions([]);
     window.location.href = `/product/${suggestion.slug}`;
   };
 
-  // Handle key navigation through suggestions
+  // Handle keyboard navigation through the suggestions
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
@@ -120,7 +130,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
     }
   };
 
-  // Focus input when search menu opens
+  // Focus on the search input when the search menu is opened
   useEffect(() => {
     if (isSearchMenuOpen && inputRef.current) {
       inputRef.current.focus();
@@ -133,13 +143,13 @@ const SearchBar: React.FC<SearchBarProps> = ({
         <h1
           className={`text-sm font-semibold mb-2 ${scrolled ? 'text-black' : 'text-black'}`}
         >
-          what are you looking for?
+          What are you looking for?
         </h1>
         <div className="relative flex items-center w-full bg-white shadow-md rounded-lg">
           <input
             ref={inputRef}
             type="text"
-            placeholder=""
+            placeholder="Search..."
             value={query}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
@@ -170,14 +180,14 @@ const SearchBar: React.FC<SearchBarProps> = ({
         </div>
       </form>
 
-      {/* Loader */}
+      {/* Loader while suggestions are loading */}
       {loading && (
         <div className="absolute top-full left-0 right-0 mt-1 bg-white p-4 rounded-b-lg shadow-lg">
           <Loader />
         </div>
       )}
 
-      {/* Suggestions Dropdown */}
+      {/* Suggestions dropdown */}
       {(suggestions.length > 0 || loading) && (
         <ul className="mt-4 z-20 overflow-auto shadow-lg border">
           {loading ? (
@@ -199,7 +209,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
                       <Image
                         src={product.image}
                         alt={product.name}
-                        layout="fill" // Ensure the image fills the parent container
+                        layout="fill"
                         className="object-contain"
                         priority
                       />
@@ -222,7 +232,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         </ul>
       )}
 
-      {/* No Results Message */}
+      {/* No results message */}
       {noResults && !loading && (
         <div className="absolute top-full left-0 right-0 mt-1 p-4 bg-white rounded-b-lg shadow-lg text-sm">
           No products found. Try different keywords.

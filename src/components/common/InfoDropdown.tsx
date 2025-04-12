@@ -29,7 +29,7 @@ const InfoDropdown: React.FC<InfoDropdownProps> = ({ title, info }) => {
 
         {/* Button to show/hide the dropdown */}
         <button
-          className="flex items-center justify-center text-xs  lg:text-xl font-semibold text-black rounded-full hover:bg-gray-100 transition-all duration-300"
+          className="flex items-center justify-center text-xs lg:text-xl font-semibold text-black rounded-full hover:bg-gray-100 transition-all duration-300 p-2"
           aria-hidden="true" // Hide the button's icon from screen readers (for accessibility)
         >
           {/* Show "-" when the dropdown is open, and "+" when it's closed */}
@@ -43,8 +43,8 @@ const InfoDropdown: React.FC<InfoDropdownProps> = ({ title, info }) => {
 
       {/* Info content with a smooth transition */}
       <div
-        className={`mt-3 overflow-hidden transition-all duration-500 ${
-          isInfoOpen ? 'max-h-screen' : 'max-h-0' // Toggle the height based on visibility
+        className={`mt-3 overflow-hidden transition-all duration-500 ease-in-out ${
+          isInfoOpen ? 'max-h-screen' : 'max-h-0'
         }`}
       >
         {/* Display the product info */}
