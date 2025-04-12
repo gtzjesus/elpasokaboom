@@ -3,19 +3,24 @@
 import Link from 'next/link';
 
 /**
- * EmptyBasket Component
+ * EmptyBasket component displays a message and a call-to-action
+ * when the user's shopping basket is empty.
  *
- * Displays a user-friendly message when the shopping basket is empty.
+ * @component
+ * @example
+ * <EmptyBasket />
  */
-const EmptyBasket = () => {
+const EmptyBasket: React.FC = () => {
   return (
-    <div className="container mx-auto p-6 min-h-[100vh] bg-white">
-      <p className="uppercase text-sm font-light text-center p-5 text-gray-800">
+    <div className="container mx-auto p-6 min-h-[100vh] bg-white flex flex-col items-center justify-center">
+      <p className="uppercase text-sm font-light text-center text-gray-800 mb-4">
         Your basket is empty.
       </p>
+
       <Link
         href="/search?q=*"
-        className="block bg-white border py-3 mt-4 text-xs font-light text-center text-gray-800 uppercase"
+        className="inline-block bg-white border py-3 px-6 text-xs font-light text-center text-gray-800 uppercase hover:bg-gray-50 transition"
+        aria-label="Continue shopping"
       >
         Continue Shopping
       </Link>

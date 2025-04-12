@@ -4,45 +4,68 @@ import { useState, useEffect } from 'react';
 import useBasketStore from '../../../store/store';
 import { Product } from '@/types';
 
+/**
+ * Props for the AddToBasketButton component.
+ */
 interface AddToBasketButtonProps {
+  /**
+   * Product object to be added to the basket.
+   */
   product: Product;
-  onAddedToBag: () => void; // Callback to open the cart
+
+  /**
+   * Callback to open the shopping cart or perform a side effect after item is added.
+   */
+  onAddedToBag: () => void;
 }
 
+/**
+ * AddToBasketButton handles the logic and UI for adding a product to the shopping basket.
+ * It prevents duplicate additions by checking session storage.
+ *
+ * @component
+ * @example
+ * <AddToBasketButton product={product} onAddedToBag={openCart} />
+ */
 const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({
   product,
   onAddedToBag,
 }) => {
-  const { addItem } = useBasketStore(); // Only need addItem now
-  const [isAdded, setIsAdded] = useState(false); // Track if product has been added
+  const { addItem } = useBasketStore();
+  const [isAdded, setIsAdded] = useState(false);
 
-  // Check if the product is already added to the session storage
+  /**
+   * Check if the product was previously added by looking in session storage.
+   */
   useEffect(() => {
-    const addedProduct = sessionStorage.getItem(product._id); // Assuming the product has a unique ID
+    const addedProduct = sessionStorage.getItem(product._id);
     if (addedProduct) {
       setIsAdded(true);
     }
   }, [product._id]);
 
+  /**
+   * Handles adding the product to the basket and updating session state.
+   */
   const handleAddToBasket = () => {
-    addItem(product); // Add exactly one product when clicked
-    setIsAdded(true); // Mark product as added
-    sessionStorage.setItem(product._id, 'added'); // Store in sessionStorage
-    onAddedToBag(); // Open the cart popup
+    addItem(product);
+    setIsAdded(true);
+    sessionStorage.setItem(product._id, 'added');
+    onAddedToBag();
   };
 
   return (
-    <div className="flex items-center justify-center space-x-2 ">
+    <div className="flex items-center justify-center space-x-2">
       <button
         onClick={handleAddToBasket}
-        className={`block  text-center text-xs bg-black border uppercase py-3 mt-2 transition-all w-full lg:w-[50vh] text-white font-light ${
-          isAdded ? 'bg-gray-400 cursor-not-allowed' : 'bg-black hover:bg-black'
+        className={`block text-center text-xs border uppercase py-3 mt-2 transition-all w-full lg:w-[50vh] font-light ${
+          isAdded
+            ? 'bg-gray-400 text-white cursor-not-allowed'
+            : 'bg-black text-white hover:bg-opacity-90'
         }`}
-        disabled={isAdded} // Disable button if item is added
+        disabled={isAdded}
       >
-        <span className="text-white text-xs">
-          {isAdded ? 'Added to Bag' : 'Add to shopping bag'}
-        </span>
+        <span>{isAdded ? 'Added to Bag' : 'Add to shopping bag'}</span>
       </button>
     </div>
   );

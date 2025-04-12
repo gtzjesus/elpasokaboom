@@ -2,10 +2,28 @@
 
 import { ClerkLoaded, SignInButton, UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
+import type { UserResource } from '@clerk/types';
 
-// AuthButtons component handles user authentication states, showing different buttons based on whether the user is signed in or not.
-/* eslint-disable  @typescript-eslint/no-explicit-any */
-const AuthButtons = ({ user }: { user: any }) => (
+/**
+ * Props for the AuthButtons component.
+ */
+interface AuthButtonsProps {
+  /**
+   * The authenticated user object from Clerk. If undefined or null, the user is not signed in.
+   */
+  user: UserResource | null;
+}
+
+/**
+ * AuthButtons component conditionally renders authentication-related UI.
+ * - When the user is signed in, shows the Orders link and UserButton.
+ * - When signed out, displays a SignIn button.
+ *
+ * @component
+ * @example
+ * <AuthButtons user={user} />
+ */
+const AuthButtons = ({ user }: AuthButtonsProps) => (
   <ClerkLoaded>
     {user ? (
       <>
@@ -18,7 +36,8 @@ const AuthButtons = ({ user }: { user: any }) => (
         <div className="flex items-center space-x-2">
           <div className="relative">
             <UserButton />
-            <div className="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-blue-500 border-2 border-white"></div>
+            {/* Optional status indicator */}
+            <div className="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-blue-500 border-2 border-white" />
           </div>
           <div className="hidden sm:block text-xs">
             <p className="text-gray-400 font-bold lowercase">{user.fullName}</p>
