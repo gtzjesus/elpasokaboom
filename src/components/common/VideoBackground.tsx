@@ -6,10 +6,11 @@ const VideoBackground: React.FC = () => (
     <video
       className="absolute inset-0 w-full h-full object-cover md:hidden z-0"
       autoPlay
-      muted
+      muted={true}
       loop
       playsInline
       preload="auto"
+      disableRemotePlayback
     >
       <source src="/videos/background-vertical.mp4" type="video/mp4" />
       <source src="/videos/background-vertical.webm" type="video/webm" />
@@ -20,10 +21,11 @@ const VideoBackground: React.FC = () => (
     <video
       className="absolute inset-0 w-full h-full object-cover hidden md:block z-0"
       autoPlay
-      muted
+      muted={true}
       loop
       playsInline
       preload="auto"
+      disableRemotePlayback
     >
       <source src="/videos/background-horizontal.mp4" type="video/mp4" />
       <source src="/videos/background-horizontal.webm" type="video/webm" />
