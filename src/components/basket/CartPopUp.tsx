@@ -122,7 +122,7 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
         {/* Footer CTA */}
         <Link
           href={hasItems ? '/basket' : '/search?q=*'}
-          className="absolutebottom-0 inline-block border-none bg-black  py-4 px-4 text-xs font-light text-center text-pearl uppercase"
+          className="absolutebottom-0 inline-block border-none bg-black  py-4 px-4 text-xs font-light text-center text-white uppercase"
           onClick={onClose}
         >
           {hasItems ? 'View shopping bag' : 'Start shopping'}

@@ -44,7 +44,7 @@ const CartButton: React.FC<CartButtonProps> = ({ itemCount, scrolled }) => {
 
         {/* Display cart item count as a badge on top of the icon */}
         {itemCount > 0 && (
-          <span className="absolute opacity-75 -top-0.5 bg-pearl text-black rounded-full w-3 h-3 flex items-center justify-center text-[8px] font-bold">
+          <span className="absolute opacity-75 -top-0.5 bg-white text-black rounded-full w-3 h-3 flex items-center justify-center text-[8px] font-bold">
             {itemCount}
           </span>
         )}

@@ -27,7 +27,7 @@ type ProductImagesProps = {
  */
 const ProductImages = ({ product, isOutOfStock }: ProductImagesProps) => {
   return (
-    <div className="flex-grow overflow-y-auto pb-40">
+    <div className="flex-grow overflow-y-auto ">
       {/* Display extra images if available */}
       {product.extraImages?.map((image, index) => (
         <div

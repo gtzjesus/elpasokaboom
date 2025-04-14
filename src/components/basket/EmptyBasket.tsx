@@ -19,7 +19,7 @@ const EmptyBasket: React.FC = () => {
 
       <Link
         href="/search?q=*"
-        className="inline-block border-none bg-black  p-4 text-xs font-light text-center text-pearl uppercase "
+        className="inline-block border-none bg-black  p-4 text-xs font-light text-center text-white uppercase "
         aria-label="Continue shopping"
       >
         Continue Shopping
