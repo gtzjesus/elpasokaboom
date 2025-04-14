@@ -138,22 +138,22 @@ const SearchBar: React.FC<SearchBarProps> = ({
   }, [isSearchMenuOpen]);
 
   return (
-    <div className="w-full max-w-2xl mx-auto px-4 relative">
+    <div className="max-w-2xl mx-auto relative">
       <form onSubmit={handleSearchSubmit} className="flex flex-col w-full">
         <h1
-          className={`text-sm font-semibold mb-2 ${scrolled ? 'text-black' : 'text-black'}`}
+          className={`text-xs font-semibold mb-2 ${scrolled ? 'text-black' : 'text-black'}`}
         >
-          What are you looking for?
+          what are you looking for?
         </h1>
         <div className="relative flex items-center w-full bg-white shadow-md rounded-lg">
           <input
             ref={inputRef}
             type="text"
-            placeholder="Search..."
+            placeholder=""
             value={query}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
-            className="w-full p-4 text-gray-800 pr-10 text-base"
+            className="focus:ring-black focus:border-black focus:outline-none w-full p-4 text-gray-800 pr-10 text-base focus:none"
           />
           {query && (
             <button
