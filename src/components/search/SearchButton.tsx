@@ -67,7 +67,7 @@ const SearchButton: React.FC<SearchButtonProps> = ({ scrolled }) => {
       {/* Search Menu (Popup) */}
       {isSearchMenuOpen && (
         <div
-          className="fixed top-0 right-0 bottom-0 left-0 w-screen h-screen bg-black bg-opacity-50 z-49 transition-opacity duration-500"
+          className="fixed top-0 right-0 bottom-0 left-0 w-screen h-screen bg-black bg-opacity-50 z-50 transition-opacity duration-500"
           onClick={handleSearchMenuToggle}
         >
           {/* Sliding search menu */}

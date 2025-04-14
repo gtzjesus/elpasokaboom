@@ -12,14 +12,14 @@ import Link from 'next/link';
  */
 const EmptyBasket: React.FC = () => {
   return (
-    <div className="container mx-auto p-6 min-h-[100vh] bg-white flex flex-col items-center justify-center">
-      <p className="uppercase text-sm font-light text-center text-gray-800 mb-4">
+    <div className="container mx-auto min-h-[50vh] bg-white flex flex-col items-center justify-center">
+      <p className="uppercase text-xs font-light text-center text-gray-800 mb-4">
         Your basket is empty.
       </p>
 
       <Link
         href="/search?q=*"
-        className="inline-block bg-white border py-3 px-6 text-xs font-light text-center text-gray-800 uppercase hover:bg-gray-50 transition"
+        className="inline-block border-none bg-black  p-4 text-xs font-light text-center text-pearl uppercase "
         aria-label="Continue shopping"
       >
         Continue Shopping

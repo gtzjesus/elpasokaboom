@@ -51,32 +51,31 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
     <div className="fixed top-12 left-0 w-full h-full bg-gray-700 bg-opacity-50 z-[9999]">
       <div
         ref={popupRef}
-        className="bg-white mt-1 p-4 w-full h-[75vh] max-w-[325px] lg:h-[95vh] lg:max-w-[525px] overflow-hidden relative flex flex-col"
+        className="bg-white  p-4 w-full h-[75vh] max-w-[325px] lg:h-[95vh] lg:max-w-[525px] overflow-hidden relative flex flex-col"
       >
         {hasItems ? (
           <div className="flex-1 overflow-y-auto max-h-[calc(100vh-200px)]">
             {/* Header */}
-            <div className="border-b mb-4 relative">
+            <div className="flex items-center justify-between border-b py-2 px-2">
+              <p className="uppercase text-xs font-light text-gray-800">
+                Added to shopping bag
+              </p>
               <button
-                className="text-2xl hover:text-gray-900 transition"
+                className="text-xl hover:text-gray-900 transition"
                 onClick={onClose}
-                aria-label="Close cart popup"
+                aria-label="Close empty cart popup"
               >
                 &times;
               </button>
-              <h2 className="uppercase text-sm font-light text-center text-gray-800 mb-2">
-                Added to shopping bag
-              </h2>
             </div>
-
             {/* Cart Items */}
             {cartItems.map((item) => (
               <div
                 key={item.product._id}
-                className="flex items-center justify-between mb-5 pb-3"
+                className="flex items-center gap-4 py-4 border-b border-gray-200"
               >
                 {/* Product Image */}
-                <div className="mt-2 flex-shrink-0">
+                <div className="w-24 flex-shrink-0">
                   <Link href={`/product/${item.product.slug?.current || ''}`}>
                     <Image
                       src={
@@ -85,20 +84,20 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
                           : '/fallback-image.jpg'
                       }
                       alt={item.product.name || 'Product'}
-                      width={110}
-                      height={110}
-                      className="object-contain"
+                      width={96}
+                      height={96}
+                      className="object-contain rounded"
                       priority
                     />
                   </Link>
                 </div>
 
                 {/* Product Info */}
-                <div className="flex-1 ml-7 space-y-2">
-                  <p className="uppercase text-sm font-semibold text-gray-800">
+                <div className="flex flex-1 items-center">
+                  <p className="uppercase text-xs font-semibold text-gray-800">
                     {item.product.name}
                   </p>
-                  <p className="text-xs font-light text-gray-800">
+                  <p className="text-xs font-light text-gray-700 ml-2 whitespace-nowrap">
                     ${((item.product.price || 0) * item.quantity).toFixed(0)}
                   </p>
                 </div>
@@ -106,24 +105,24 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
             ))}
           </div>
         ) : (
-          <div className="relative">
+          <div className="flex items-center justify-between border-b py-4 px-4">
+            <p className="uppercase text-xs font-light text-gray-800">
+              Shopping bag is empty
+            </p>
             <button
-              className=" text-2xl hover:text-gray-900 transition"
+              className="text-xl hover:text-gray-900 transition"
               onClick={onClose}
               aria-label="Close empty cart popup"
             >
               &times;
             </button>
-            <p className="uppercase text-sm border-b mb-2 pb-2 font-light text-center text-gray-800">
-              Shopping bag is empty
-            </p>
           </div>
         )}
 
         {/* Footer CTA */}
         <Link
           href={hasItems ? '/basket' : '/search?q=*'}
-          className="block bg-white border py-3 mt-4 transition-all uppercase text-xs font-light text-center text-gray-800 hover:bg-gray-50"
+          className="absolutebottom-0 inline-block border-none bg-black  py-4 px-4 text-xs font-light text-center text-pearl uppercase"
           onClick={onClose}
         >
           {hasItems ? 'View shopping bag' : 'Start shopping'}
