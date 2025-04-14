@@ -153,7 +153,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
             value={query}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
-            className="focus:ring-black focus:border-black focus:outline-none w-full p-4 text-gray-800 pr-10 text-base focus:none"
+            className="focus:outline-none focus:ring-0 focus:border-black
+ w-full p-4 text-gray-800 pr-10 text-base focus:none"
           />
           {query && (
             <button

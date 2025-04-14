@@ -48,7 +48,7 @@ interface CategoriesProps {
 const Categories: React.FC<CategoriesProps> = ({ categories }) => {
   return (
     <div className="w-full mx-auto bg-gradient-to-br from-pearl via-white-500 to-blue-100 pb-10">
-      <h2 className="barlow-condensed-regular text-2xl tracking-very-wide font-semibold text-center text-black py-6">
+      <h2 className="uppercase barlow-condensed-regular text-lg tracking-very-wide font-semibold text-center text-black py-6">
         3D Inventory
       </h2>
 
@@ -73,7 +73,7 @@ const Categories: React.FC<CategoriesProps> = ({ categories }) => {
                   priority
                 />
               </div>
-              <h3 className="barlow-condensed-regular text-md tracking-very-wide font-light text-center text-black py-2">
+              <h3 className="barlow-condensed-regular text-sm tracking-very-wide font-light text-center text-black py-2">
                 {capitalizeFirstWord(category.title)}
               </h3>
             </div>
