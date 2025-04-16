@@ -56,15 +56,15 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
           <span>Total items:</span>
           <span>{totalItems}</span>
         </p>
-        <p className="flex justify-between uppercase text-sm font-light text-gray-800">
+        <p className="flex justify-between uppercase text-xs font-light text-gray-800">
           <span>Subtotal:</span>
           <span>${totalPrice.toFixed(2)}</span>
         </p>
-        <p className="flex justify-between uppercase text-sm font-light text-gray-800">
+        <p className="flex justify-between uppercase text-xs font-light text-gray-800">
           <span>Tax (8.25%):</span>
           <span>${taxAmount.toFixed(2)}</span>
         </p>
-        <p className="flex justify-between uppercase text-sm font-semibold text-gray-900 border-t pt-2">
+        <p className="flex justify-between uppercase text-xs font-semibold text-gray-900 border-t pt-2">
           <span>Total:</span>
           <span>${totalWithTax.toFixed(2)}</span>
         </p>

@@ -91,7 +91,7 @@ export default function BasketPage() {
         </h1>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 px-4 lg:px-8 ">
+      <div className="container mx-auto w-full px-2 lg:px-2 grid grid-cols-1 lg:grid-cols-3 ">
         {/* Product Items */}
         <div className="col-span-2 pb-80">
           {groupedItems.map((item) => (
