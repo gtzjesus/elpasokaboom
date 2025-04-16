@@ -54,7 +54,7 @@ const BasketItemCard: React.FC<BasketItemCardProps> = ({
     );
 
   return (
-    <div className="p-4 border-b">
+    <div className="p-2 border-b">
       {/* Product Image + Link */}
       <div
         className="cursor-pointer"
@@ -75,24 +75,26 @@ const BasketItemCard: React.FC<BasketItemCardProps> = ({
       </div>
 
       {/* Product Info */}
-      <div className="flex flex-col items-center text-center p-3 gap-4">
+      <div className="flex  items-center justify-center text-center p-1 gap-2">
         <h2 className="uppercase text-md font-semibold text-gray-800">
           {name}
         </h2>
+        <p className="font-light">|</p>
         <p className="text-sm font-light text-gray-800">
           ${(price! * item.quantity).toFixed(0)}
-        </p>
-        <p className="text-xs font-light text-gray-600 my-2">
-          {getStockStatus(stock)}
         </p>
       </div>
 
       {/* Quantity Selector */}
-      <div className="flex justify-center mb-4">
+      <div className="flex justify-center mb-4 gap-2">
+        <p className="text-xs font-light text-gray-600 my-2">
+          {getStockStatus(stock)}
+        </p>
+
         <select
           value={item.quantity}
           onChange={(e) => onQuantityChange(_id, +e.target.value)}
-          className="border py-1 text-sm rounded-md w-full max-w-[60px] bg-white text-center text-gray-800"
+          className="border text-xs  w-full max-w-[60px] bg-white text-center text-gray-800"
           disabled={stock === 0}
         >
           <option value="" disabled>
@@ -110,9 +112,9 @@ const BasketItemCard: React.FC<BasketItemCardProps> = ({
       <div className="flex justify-center">
         <button
           onClick={() => onRemove(_id)}
-          className="uppercase text-xs underline font-light text-gray-800 hover:text-red-600 transition"
+          className=" text-xs underline font-light text-gray-800 hover:text-red-600 transition"
         >
-          Remove
+          remove
         </button>
       </div>
     </div>

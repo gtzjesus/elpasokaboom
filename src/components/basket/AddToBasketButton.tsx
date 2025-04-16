@@ -61,7 +61,7 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({
         className={`block text-center text-xs border uppercase py-3 mt-2 transition-all w-full lg:w-[50vh] font-light ${
           isAdded
             ? 'bg-gray-400 text-white cursor-not-allowed'
-            : 'bg-black text-white hover:bg-opacity-90'
+            : 'bg-blue-500 text-white hover:bg-opacity-90'
         }`}
         disabled={isAdded}
       >
