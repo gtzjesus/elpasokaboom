@@ -91,9 +91,9 @@ export default function BasketPage() {
         </h1>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 px-4 lg:px-8 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 px-4 lg:px-8 ">
         {/* Product Items */}
-        <div className="col-span-2 pb-40">
+        <div className="col-span-2 pb-80">
           {groupedItems.map((item) => (
             <BasketItemCard
               key={item.product._id}
