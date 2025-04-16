@@ -32,17 +32,7 @@ interface OrderSummaryProps {
 
 /**
  * OrderSummary displays a cart summary with item count, subtotal,
- * and a checkout button. If the user is not signed in, it shows a Sign In CTA.
- *
- * @component
- * @example
- * <OrderSummary
- *   totalItems={3}
- *   totalPrice={59.99}
- *   isSignedIn={true}
- *   isLoading={false}
- *   onCheckout={handleCheckout}
- * />
+ * tax, and a checkout button. If the user is not signed in, it shows a Sign In CTA.
  */
 const OrderSummary: React.FC<OrderSummaryProps> = ({
   totalItems,
@@ -51,20 +41,32 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
   isLoading,
   onCheckout,
 }) => {
+  const TAX_RATE = 0.0825;
+  const taxAmount = totalPrice * TAX_RATE;
+  const totalWithTax = totalPrice + taxAmount;
+
   return (
     <div className="w-full lg:w-auto lg:sticky h-fit bg-white p-6 lg:p-12 fixed bottom-0 left-0 lg:left-auto lg:bottom-0 lg:order-last shadow-md">
       <h3 className="uppercase text-xs font-light text-center text-gray-800 border-b pb-1">
         Order Summary
       </h3>
 
-      <div className="pt-1">
+      <div className="pt-1 space-y-1">
         <p className="flex justify-between uppercase text-xs font-light text-gray-800">
           <span>Total items:</span>
           <span>{totalItems}</span>
         </p>
-        <p className="flex justify-between uppercase text-sm font-light text-gray-800 pt-1">
+        <p className="flex justify-between uppercase text-sm font-light text-gray-800">
           <span>Subtotal:</span>
           <span>${totalPrice.toFixed(2)}</span>
+        </p>
+        <p className="flex justify-between uppercase text-sm font-light text-gray-800">
+          <span>Tax (8.25%):</span>
+          <span>${taxAmount.toFixed(2)}</span>
+        </p>
+        <p className="flex justify-between uppercase text-sm font-semibold text-gray-900 border-t pt-2">
+          <span>Total:</span>
+          <span>${totalWithTax.toFixed(2)}</span>
         </p>
       </div>
 
