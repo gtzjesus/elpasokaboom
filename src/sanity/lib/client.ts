@@ -16,11 +16,11 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: true, // Enables CDN for production builds
+  useCdn: true,
   stega: {
     studioUrl:
       process.env.NODE_ENV === 'production'
-        ? `https://${process.env.VERCEL_URL}/studio`
+        ? 'https://www.worldhello.us/studio' // Use your custom domain for production
         : `${process.env.NEXT_PUBLIC_BASE_URL}/studio`,
   },
 });
