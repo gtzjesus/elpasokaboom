@@ -1,5 +1,5 @@
-import type { NextConfig } from 'next';
-import path from 'path'; // Import path module
+import { NextConfig } from 'next';
+import path from 'path';
 
 const nextConfig: NextConfig = {
   images: {
@@ -7,12 +7,12 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'cdn.sanity.io',
-        pathname: '/**', // Optional: If you need to restrict the path pattern
+        pathname: '/**',
       },
     ],
   },
   webpack(config) {
-    config.resolve.alias['@'] = path.resolve(__dirname, 'src'); // Add alias for @ to resolve to the src directory
+    config.resolve.alias['@'] = path.resolve(__dirname, 'src');
     return config;
   },
 };
