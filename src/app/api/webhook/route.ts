@@ -1,84 +1,61 @@
+import stripe from '@/lib/stripe';
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { backendClient } from '@/sanity/lib/backendClient';
-import stripe from '@/lib/stripe'; // Make sure your stripe instance is correctly imported
 import { Metadata } from '../../../../actions/createCheckoutSession';
 import { headers } from 'next/headers';
+import { backendClient } from '@/sanity/lib/backendClient';
 
-// POST method for webhook handler
 export async function POST(req: NextRequest) {
-  try {
-    // Read the request body and signature from headers
-    const body = await req.text();
-    const headersList = await headers();
-    const signature = headersList.get('stripe-signature');
+  const body = await req.text();
+  const headersList = await headers();
+  const signature = headersList.get('stripe-signature'); // to verify if it came from stripe
 
-    if (!signature) {
-      console.error('❌ No Stripe signature provided');
-      return NextResponse.json(
-        { error: 'No signature provided' },
-        { status: 400 }
-      );
-    }
+  if (!signature) {
+    return NextResponse.json({ error: 'no signature' }, { status: 400 });
+  }
 
-    // Fetch webhook secret from env variables
-    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-    if (!webhookSecret) {
-      console.error('❌ STRIPE_WEBHOOK_SECRET not set');
-      return NextResponse.json(
-        { error: 'Webhook secret missing' },
-        { status: 400 }
-      );
-    }
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-    // Verify the webhook signature
-    let event: Stripe.Event;
-    try {
-      event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
-      console.log('✅ Webhook verified');
-    } catch (err) {
-      console.error('🚫 Webhook signature verification failed:', err);
-      return NextResponse.json(
-        { error: `Webhook verification failed: ${err}` },
-        { status: 400 }
-      );
-    }
-
-    // Process checkout.session.completed events
-    if (event.type === 'checkout.session.completed') {
-      const session = event.data.object as Stripe.Checkout.Session;
-      console.log('💳 Checkout session completed:', session.id);
-
-      try {
-        // Attempt to create an order in Sanity
-        const order = await createOrderInSanity(session);
-        console.log('✅ Order created in Sanity:', order);
-      } catch (err) {
-        console.error('💥 Error creating order in Sanity:', err);
-        return NextResponse.json(
-          { error: 'Error creating order' },
-          { status: 500 }
-        );
-      }
-    } else {
-      console.warn('⚠️ Event type not handled:', event.type);
-    }
-
-    // Return success response
-    return NextResponse.json({ received: true });
-  } catch (err) {
-    console.error('🚨 Error processing the webhook:', err);
+  if (!webhookSecret) {
+    console.error('❌ STRIPE_WEBHOOK_SECRET not set');
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      { error: 'webhook secret missing' },
+      { status: 400 }
     );
   }
+
+  let event: Stripe.Event;
+
+  try {
+    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
+  } catch (err) {
+    console.error('🚫 Webhook signature verification failed:', err);
+    return NextResponse.json(
+      { error: `webhook error: ${err}` },
+      { status: 400 }
+    );
+  }
+
+  if (event.type === 'checkout.session.completed') {
+    const session = event.data.object as Stripe.Checkout.Session;
+
+    try {
+      const order = await createOrderInSanity(session);
+      console.log('✅ Order created in Sanity:', order);
+    } catch (err) {
+      console.error('💥 Error creating order in Sanity:', err);
+      return NextResponse.json(
+        { error: 'error creating order' },
+        { status: 500 }
+      );
+    }
+  }
+
+  return NextResponse.json({ received: true });
 }
 
-// Helper function to create an order in Sanity
 async function createOrderInSanity(session: Stripe.Checkout.Session) {
   try {
-    // Extract relevant session data
     const {
       id,
       amount_total,
@@ -92,14 +69,10 @@ async function createOrderInSanity(session: Stripe.Checkout.Session) {
     const { orderNumber, customerName, customerEmail, clerkUserId } =
       metadata as Metadata;
 
-    // Fetch the line items from the Stripe session
     const lineItems = await stripe.checkout.sessions.listLineItems(id, {
       expand: ['data.price.product'],
     });
 
-    console.log(`🔢 Number of items in checkout: ${lineItems.data.length}`);
-
-    // Map line items to Sanity products
     const sanityProducts = lineItems.data.map((item) => {
       const stripeProduct = item.price?.product as Stripe.Product;
       const sanityId = stripeProduct?.metadata?.id;
@@ -123,7 +96,6 @@ async function createOrderInSanity(session: Stripe.Checkout.Session) {
       };
     });
 
-    // Prepare the payload for Sanity
     const sanityPayload = {
       _type: 'order',
       orderNumber,
@@ -141,19 +113,16 @@ async function createOrderInSanity(session: Stripe.Checkout.Session) {
       orderDate: new Date().toISOString(),
     };
 
-    // Log the payload for debugging
     console.log(
-      '🧾 Payload being sent to Sanity:',
+      '🧾 Payload being sent to Sanity:\n',
       JSON.stringify(sanityPayload, null, 2)
     );
 
-    // Create the order in Sanity
     const order = await backendClient.create(sanityPayload);
-    console.log('✅ Sanity order creation successful:', order);
 
     return order;
   } catch (err) {
-    console.error('💥 Error in creating Sanity order:', err);
-    throw err; // Re-throw the error to be handled by the webhook handler
+    console.error('💥 Real Sanity error:', err);
+    throw err;
   }
 }
