@@ -20,7 +20,7 @@ export const client = createClient({
   stega: {
     studioUrl:
       process.env.NODE_ENV === 'production'
-        ? 'https://www.worldhello.us/studio' // Use your custom domain for production
+        ? `https://${process.env.VERCEL_URL}/studio` // Use your custom domain for production
         : `${process.env.NEXT_PUBLIC_BASE_URL}/studio`,
   },
 });
