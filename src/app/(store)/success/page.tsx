@@ -5,26 +5,39 @@ import useBasketStore from '../../../../store/store';
 import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import confetti from 'canvas-confetti';
+import { motion } from 'framer-motion';
 
 function SuccessPage() {
   const searchParams = useSearchParams();
   const orderNumber = searchParams.get('orderNumber');
   const clearBasket = useBasketStore((state) => state.clearBasket);
-  // const sessionId = searchParams.get('session_id');
 
   useEffect(() => {
     if (orderNumber) {
       clearBasket();
+
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+      });
     }
   }, [orderNumber, clearBasket]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-      <div className="bg-white p-12 rounded-xl shadow-lg max-w-2xl w-full mx-4">
-        <div className="flex justify-center mb-8">
-          <div className="h-16 w-16 bg-green-100 rounded-full flex items-center justify-center">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-black px-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="bg-white dark:bg-gray-900 p-10 sm:p-12 rounded-xl shadow-xl max-w-2xl w-full"
+      >
+        {/* Checkmark Circle */}
+        <div className="flex justify-center mb-6">
+          <div className="h-14 w-14 bg-green-50 dark:bg-green-900 rounded-full flex items-center justify-center">
             <svg
-              className="h-7 w-7 text-green-600"
+              className="h-6 w-6 text-green-600 dark:text-green-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -38,45 +51,57 @@ function SuccessPage() {
             </svg>
           </div>
         </div>
-        <h1 className="text-2xl font-bold mb-6 text-center">
-          thank you for your order!
-        </h1>
 
-        <div className="border-t border-b border-gray-200 py-6 mb-6">
-          <p className="text-lg text-gray-700 mb-4 text-center">
-            your order has been confirmed.
-          </p>
-          <div className="space-y-2">
-            {orderNumber && (
-              <p className="text-gray-600 flex items-center space-x-5">
-                <span>order number:</span>
-                <span className="font-mono text-sm text-green-600">
-                  {orderNumber}
+        {/* Title + Message */}
+        <h1 className="text-lg  text-center mb-2 text-green-700 dark:text-green-400 uppercase  font-light">
+          🎉 Order Confirmed!
+        </h1>
+        <p className="text-xs text-gray-700 dark:text-gray-300 text-center mb-6">
+          thank you for your purchase.
+        </p>
+
+        {/* Optional Summary */}
+        {orderNumber && (
+          <div className="bg-green-50 dark:bg-green-800 p-6 mb-8 text-center">
+            <h3 className="font-light text-sm uppercase text-gray-800 dark:text-gray-200 mb-2">
+              Order Summary
+            </h3>
+            <ul className="text-xs font-mono uppercase text-gray-600 dark:text-gray-400 space-y-1">
+              <li>
+                🧾 <span>Order Number:</span>{' '}
+                <span
+                  className=" text-green-600 dark:text-green-400"
+                  title={orderNumber || ''}
+                >
+                  #{orderNumber?.slice(-6)}
                 </span>
-              </p>
-            )}
-            {/* {sessionId && (
-              <p className="text-gray-600 flex justify-between">
-                <span>transaction id:</span>
-                <span className="font-mono text-sm">{sessionId}</span>
-              </p>
-            )} */}
+              </li>
+            </ul>
           </div>
+        )}
+
+        {/* Email Confirmation */}
+        {/* <p className="text-gray-600 dark:text-gray-400 text-center mb-6">
+          A confirmation email has been sent to your inbox.
+        </p> */}
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button
+            asChild
+            className="uppercase text-xs font-light bg-green-600 hover:bg-green-700 transition-all duration-200 shadow-md "
+          >
+            <Link href="/orders">View Order</Link>
+          </Button>
+          <Button
+            asChild
+            variant="outline"
+            className="transition-all duration-200 uppercase text-xs font-light"
+          >
+            <Link href="/search?q=*">Continue Shopping</Link>
+          </Button>
         </div>
-        <div className="space-y-4">
-          <p className="text-gray-600 text-center">
-            we sent an email confirmation to your email address.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild className="bg-green-600 hover:bg-green-700">
-              <Link href="/orders">view order details</Link>
-            </Button>
-            <Button asChild variant="outline">
-              <Link href="/">continue shopping</Link>
-            </Button>
-          </div>
-        </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
