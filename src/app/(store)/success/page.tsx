@@ -27,12 +27,28 @@ function SuccessPage() {
    * 🎉 useEffect Hook
    * Runs on mount if there's an order number:
    * - Clears the user's basket
+   * - Clears sessionStorage, localStorage, and cookies
    * - Triggers confetti animation
    */
   useEffect(() => {
     if (orderNumber) {
+      // Clear basket from the store
       clearBasket();
 
+      // Clear sessionStorage
+      sessionStorage.clear();
+
+      // Clear localStorage
+      localStorage.clear();
+
+      // Clear cookies (cart-related cookies specifically)
+      document.cookie.split(';').forEach(function (c) {
+        document.cookie =
+          c.trim().split('=')[0] +
+          '=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+      });
+
+      // Trigger confetti animation
       confetti({
         particleCount: 100,
         spread: 70,
@@ -82,7 +98,7 @@ function SuccessPage() {
 
         {/* ✅ Subtitle */}
         <p className="text-xs text-gray-700 dark:text-gray-300 text-center mb-6">
-          thank you for your purchase.
+          Thank you for your purchase.
         </p>
 
         {/* ✅ Order Summary */}
@@ -104,13 +120,6 @@ function SuccessPage() {
             </ul>
           </div>
         )}
-
-        {/* 🔒 Optional: Email Confirmation Note */}
-        {/*
-        <p className="text-gray-600 dark:text-gray-400 text-center mb-6">
-          A confirmation email has been sent to your inbox.
-        </p>
-        */}
 
         {/* ✅ Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">

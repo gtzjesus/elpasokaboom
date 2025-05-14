@@ -38,11 +38,10 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({
    * Check if the product was previously added by looking in session storage.
    */
   useEffect(() => {
+    // Re-check sessionStorage for the product after any update (such as after clearing it)
     const addedProduct = sessionStorage.getItem(product._id);
-    if (addedProduct) {
-      setIsAdded(true);
-    }
-  }, [product._id]);
+    setIsAdded(!!addedProduct); // Set to true if it exists in sessionStorage
+  }, [product._id]); // Trigger effect when the product ID changes (or on first load)
 
   /**
    * Handles adding the product to the basket and updating session state.

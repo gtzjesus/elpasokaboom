@@ -86,7 +86,12 @@ const useBasketStore = create<BasketState>()(
           ),
         })),
 
-      clearBasket: () => set({ items: [] }),
+      clearBasket: () => {
+        set({ items: [] }); // Clear the basket state
+
+        // Manually clear localStorage to ensure the persisted store data is removed
+        localStorage.removeItem('basket-store');
+      },
 
       getTotalPrice: () =>
         get().items.reduce(
