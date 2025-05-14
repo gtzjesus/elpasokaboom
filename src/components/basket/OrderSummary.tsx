@@ -83,7 +83,13 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
       ) : (
         <div className="flex items-center justify-center mt-3">
           <SignInButton mode="modal">
-            <button className="w-full text-sm bg-black border uppercase py-3 text-white font-light hover:bg-opacity-90 transition">
+            <button
+              className="w-full text-sm bg-black border uppercase py-3 text-white font-light hover:bg-opacity-90 transition"
+              onClick={() => {
+                // Set a flag to run checkout after login
+                sessionStorage.setItem('checkoutAfterLogin', 'true');
+              }}
+            >
               Checkout
             </button>
           </SignInButton>

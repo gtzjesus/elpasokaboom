@@ -39,7 +39,17 @@ export default function BasketPage() {
   // Make sure we only render on the client to avoid hydration issues
   useEffect(() => {
     setIsClient(true);
-  }, []);
+
+    if (
+      isSignedIn &&
+      user?.id && // ✅ ensure user is ready
+      sessionStorage.getItem('checkoutAfterLogin') === 'true'
+    ) {
+      sessionStorage.removeItem('checkoutAfterLogin');
+      handleCheckout();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSignedIn, user]);
 
   // Show loader if not yet mounted
   if (!isClient) return <Loader />;
