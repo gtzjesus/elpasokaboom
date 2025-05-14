@@ -46,7 +46,7 @@ export default async function Orders() {
             {orders.map((order) => (
               <div
                 key={order.orderNumber}
-                className="bg-green-50 border border-gray-200 p-3 shadow-sm overflow-hidden"
+                className=" border border-green-600 p-3 shadow-sm overflow-hidden"
               >
                 {/* Order Header */}
                 <div className="p-4 border-b border-green-600">
@@ -113,14 +113,9 @@ export default async function Orders() {
                               />
                             </div>
                           )}
-                          <div>
-                            <p className="font-xs uppercase text-gray-600 font-light mb-1 mt-2">
-                              {product.product?.name}
-                            </p>
-                            <p className="text-xs uppercase font-light text-gray-600">
-                              quantity: {product.quantity ?? 'n/a'}
-                            </p>
-                          </div>
+                          <p className="font-xs uppercase text-gray-600 font-light mb-1 mt-2">
+                            {product.product?.name} {product.quantity ?? 'n/a'}
+                          </p>
                         </div>
                         <div>
                           <p className="text-green-800 mb-1 text-xs text-right">

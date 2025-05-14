@@ -77,7 +77,7 @@ function SuccessPage() {
 
         {/* ✅ Confirmation Title */}
         <h1 className="text-lg text-center mb-2 text-green-700 dark:text-green-400 uppercase font-light">
-          🎉 Order Confirmed!
+          Order Confirmed!
         </h1>
 
         {/* ✅ Subtitle */}
