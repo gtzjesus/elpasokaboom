@@ -75,7 +75,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
         <button
           onClick={onCheckout}
           disabled={isLoading}
-          className="mt-3 w-full text-sm uppercase font-light bg-blue-500 text-white py-3 rounded hover:bg-blue-600 disabled:bg-gray-400 transition"
+          className="mt-3 w-full text-sm uppercase font-light bg-blue-500 text-white py-3 rounded hover:bg-blue-600 disabled:bg-green-600 transition"
           aria-disabled={isLoading}
         >
           {isLoading ? 'Processing...' : 'Checkout'}

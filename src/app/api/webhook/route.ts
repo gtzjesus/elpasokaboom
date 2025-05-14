@@ -65,9 +65,16 @@ async function createOrderInSanity(session: Stripe.Checkout.Session) {
     total_details,
   } = session;
 
-  const { orderNumber, customerName, customerEmail, clerkUserId } =
-    metadata as Metadata;
+  const { orderNumber, clerkUserId } = metadata as Metadata;
 
+  // 👇 Fetch customer info directly from Stripe
+  const stripeCustomer = await stripe.customers.retrieve(customer as string);
+
+  const customerName = (stripeCustomer as Stripe.Customer).name ?? 'Unknown';
+
+  const customerEmail = (stripeCustomer as Stripe.Customer).email ?? 'Unknown';
+
+  // Fetch line items and map to Sanity references
   const lineItems = await stripe.checkout.sessions.listLineItems(id, {
     expand: ['data.price.product'],
   });
@@ -81,14 +88,15 @@ async function createOrderInSanity(session: Stripe.Checkout.Session) {
     quantity: item.quantity || 0,
   }));
 
+  // Create order in Sanity
   const order = await backendClient.create({
     _type: 'order',
     orderNumber,
     stripeCheckoutSessionId: id,
     stripePaymentIntentId: payment_intent,
-    customerName,
     stripeCustomerId: customer,
     clerkUserId,
+    customerName,
     email: customerEmail,
     currency,
     amountDiscount: (total_details?.amount_discount || 0) / 100,

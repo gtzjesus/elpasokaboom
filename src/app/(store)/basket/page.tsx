@@ -36,6 +36,15 @@ export default function BasketPage() {
   const [isClient, setIsClient] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Helper function for better UI order numbers
+  function generateOrderNumber(length = 6): string {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    return Array.from(
+      { length },
+      () => chars[Math.floor(Math.random() * chars.length)]
+    ).join('');
+  }
+
   // Make sure we only render on the client to avoid hydration issues
   useEffect(() => {
     setIsClient(true);
@@ -64,7 +73,7 @@ export default function BasketPage() {
     setIsLoading(true);
     try {
       const metadata: Metadata = {
-        orderNumber: crypto.randomUUID(),
+        orderNumber: generateOrderNumber(), // ✅ short + styled
         customerName: user?.fullName ?? 'Unknown',
         customerEmail: user?.emailAddresses[0].emailAddress ?? 'Unknown',
         clerkUserId: user!.id,

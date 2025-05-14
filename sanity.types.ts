@@ -14,7 +14,7 @@
 
 // Source: schema.json
 export type SanityImagePaletteSwatch = {
-  _type: 'sanity.imagePaletteSwatch';
+  _type: "sanity.imagePaletteSwatch";
   background?: string;
   foreground?: string;
   population?: number;
@@ -22,7 +22,7 @@ export type SanityImagePaletteSwatch = {
 };
 
 export type SanityImagePalette = {
-  _type: 'sanity.imagePalette';
+  _type: "sanity.imagePalette";
   darkMuted?: SanityImagePaletteSwatch;
   lightVibrant?: SanityImagePaletteSwatch;
   darkVibrant?: SanityImagePaletteSwatch;
@@ -33,7 +33,7 @@ export type SanityImagePalette = {
 };
 
 export type SanityImageDimensions = {
-  _type: 'sanity.imageDimensions';
+  _type: "sanity.imageDimensions";
   height?: number;
   width?: number;
   aspectRatio?: number;
@@ -41,7 +41,7 @@ export type SanityImageDimensions = {
 
 export type SanityFileAsset = {
   _id: string;
-  _type: 'sanity.fileAsset';
+  _type: "sanity.fileAsset";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -62,7 +62,7 @@ export type SanityFileAsset = {
 };
 
 export type Geopoint = {
-  _type: 'geopoint';
+  _type: "geopoint";
   lat?: number;
   lng?: number;
   alt?: number;
@@ -70,7 +70,7 @@ export type Geopoint = {
 
 export type Sale = {
   _id: string;
-  _type: 'sale';
+  _type: "sale";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -85,7 +85,7 @@ export type Sale = {
 
 export type Order = {
   _id: string;
-  _type: 'order';
+  _type: "order";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -99,9 +99,9 @@ export type Order = {
   products?: Array<{
     product?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'product';
+      [internalGroqTypeReferenceTo]?: "product";
     };
     quantity?: number;
     _key: string;
@@ -109,13 +109,59 @@ export type Order = {
   totalPrice?: number;
   currency?: string;
   amountDiscount?: number;
-  status?: 'pending' | 'paid' | 'shipped' | 'delivered' | 'cancelled';
+  status?: "pending" | "paid" | "shipped" | "delivered" | "cancelled";
   orderDate?: string;
+};
+
+export type Product = {
+  _id: string;
+  _type: "product";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  slug?: Slug;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  extraImages?: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+    _key: string;
+  }>;
+  description?: string;
+  size?: string;
+  care?: string;
+  shipping?: string;
+  price?: number;
+  categories?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "category";
+  }>;
+  stock?: number;
 };
 
 export type Category = {
   _id: string;
-  _type: 'category';
+  _type: "category";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -125,58 +171,55 @@ export type Category = {
   image?: {
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    _type: 'image';
+    _type: "image";
   };
 };
 
 export type Slug = {
-  _type: 'slug';
+  _type: "slug";
   current?: string;
   source?: string;
 };
 
-export type BlockContent = Array<
-  | {
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: 'span';
-        _key: string;
-      }>;
-      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'blockquote';
-      listItem?: 'bullet';
-      markDefs?: Array<{
-        href?: string;
-        _type: 'link';
-        _key: string;
-      }>;
-      level?: number;
-      _type: 'block';
-      _key: string;
-    }
-  | {
-      asset?: {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: 'image';
-      _key: string;
-    }
->;
+export type BlockContent = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  }>;
+  style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
+  listItem?: "bullet";
+  markDefs?: Array<{
+    href?: string;
+    _type: "link";
+    _key: string;
+  }>;
+  level?: number;
+  _type: "block";
+  _key: string;
+} | {
+  asset?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+  };
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  alt?: string;
+  _type: "image";
+  _key: string;
+}>;
 
 export type SanityImageCrop = {
-  _type: 'sanity.imageCrop';
+  _type: "sanity.imageCrop";
   top?: number;
   bottom?: number;
   left?: number;
@@ -184,7 +227,7 @@ export type SanityImageCrop = {
 };
 
 export type SanityImageHotspot = {
-  _type: 'sanity.imageHotspot';
+  _type: "sanity.imageHotspot";
   x?: number;
   y?: number;
   height?: number;
@@ -193,7 +236,7 @@ export type SanityImageHotspot = {
 
 export type SanityImageAsset = {
   _id: string;
-  _type: 'sanity.imageAsset';
+  _type: "sanity.imageAsset";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -215,14 +258,14 @@ export type SanityImageAsset = {
 };
 
 export type SanityAssetSourceData = {
-  _type: 'sanity.assetSourceData';
+  _type: "sanity.assetSourceData";
   name?: string;
   id?: string;
   url?: string;
 };
 
 export type SanityImageMetadata = {
-  _type: 'sanity.imageMetadata';
+  _type: "sanity.imageMetadata";
   location?: Geopoint;
   dimensions?: SanityImageDimensions;
   palette?: SanityImagePalette;
@@ -232,29 +275,14 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes =
-  | SanityImagePaletteSwatch
-  | SanityImagePalette
-  | SanityImageDimensions
-  | SanityFileAsset
-  | Geopoint
-  | Sale
-  | Order
-  | Category
-  | Slug
-  | BlockContent
-  | SanityImageCrop
-  | SanityImageHotspot
-  | SanityImageAsset
-  | SanityAssetSourceData
-  | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Sale | Order | Product | Category | Slug | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/orders/getMyOrders.tsx
 // Variable: MY_ORDERS_QUERY
 // Query: *[_type == 'order' && clerkUserId == $userId] | order(orderDate desc) {        ...,        products[]{            ...,            product->        }    }
 export type MY_ORDERS_QUERYResult = Array<{
   _id: string;
-  _type: 'order';
+  _type: "order";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -268,7 +296,7 @@ export type MY_ORDERS_QUERYResult = Array<{
   products: Array<{
     product: {
       _id: string;
-      _type: 'product';
+      _type: "product";
       _createdAt: string;
       _updatedAt: string;
       _rev: string;
@@ -277,24 +305,24 @@ export type MY_ORDERS_QUERYResult = Array<{
       image?: {
         asset?: {
           _ref: string;
-          _type: 'reference';
+          _type: "reference";
           _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
         };
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
-        _type: 'image';
+        _type: "image";
       };
       extraImages?: Array<{
         asset?: {
           _ref: string;
-          _type: 'reference';
+          _type: "reference";
           _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
         };
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
-        _type: 'image';
+        _type: "image";
         _key: string;
       }>;
       description?: string;
@@ -304,10 +332,10 @@ export type MY_ORDERS_QUERYResult = Array<{
       price?: number;
       categories?: Array<{
         _ref: string;
-        _type: 'reference';
+        _type: "reference";
         _weak?: boolean;
         _key: string;
-        [internalGroqTypeReferenceTo]?: 'category';
+        [internalGroqTypeReferenceTo]?: "category";
       }>;
       stock?: number;
     } | null;
@@ -317,33 +345,33 @@ export type MY_ORDERS_QUERYResult = Array<{
   totalPrice?: number;
   currency?: string;
   amountDiscount?: number;
-  status?: 'cancelled' | 'delivered' | 'paid' | 'pending' | 'shipped';
+  status?: "cancelled" | "delivered" | "paid" | "pending" | "shipped";
   orderDate?: string;
 }>;
 
 // Source: ./src/sanity/lib/products/getAllCategories.ts
 // Variable: ALL_CATEGORIES_QUERY
-// Query: *[_type == 'category'] | order(name asc)
+// Query: *[_type == 'category'] | order(title asc) {    _id,    _type,    _createdAt,    _updatedAt,    _rev,    title,    slug,    description,    image  }
 export type ALL_CATEGORIES_QUERYResult = Array<{
   _id: string;
-  _type: 'category';
+  _type: "category";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
-  slug?: Slug;
-  description?: string;
-  image?: {
+  title: string | null;
+  slug: Slug | null;
+  description: string | null;
+  image: {
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    _type: 'image';
-  };
+    _type: "image";
+  } | null;
 }>;
 
 // Source: ./src/sanity/lib/products/getAllProducts.ts
@@ -351,7 +379,7 @@ export type ALL_CATEGORIES_QUERYResult = Array<{
 // Query: *[_type == 'product'] | order(name asc)
 export type ALL_PRODUCTS_QUERYResult = Array<{
   _id: string;
-  _type: 'product';
+  _type: "product";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -360,24 +388,24 @@ export type ALL_PRODUCTS_QUERYResult = Array<{
   image?: {
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    _type: 'image';
+    _type: "image";
   };
   extraImages?: Array<{
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    _type: 'image';
+    _type: "image";
     _key: string;
   }>;
   description?: string;
@@ -387,10 +415,10 @@ export type ALL_PRODUCTS_QUERYResult = Array<{
   price?: number;
   categories?: Array<{
     _ref: string;
-    _type: 'reference';
+    _type: "reference";
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: 'category';
+    [internalGroqTypeReferenceTo]?: "category";
   }>;
   stock?: number;
 }>;
@@ -400,7 +428,7 @@ export type ALL_PRODUCTS_QUERYResult = Array<{
 // Query: *[_type == 'product' && slug.current == $slug] | order(name asc)
 export type PRODUCT_BY_ID_QUERYResult = Array<{
   _id: string;
-  _type: 'product';
+  _type: "product";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -409,24 +437,24 @@ export type PRODUCT_BY_ID_QUERYResult = Array<{
   image?: {
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    _type: 'image';
+    _type: "image";
   };
   extraImages?: Array<{
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    _type: 'image';
+    _type: "image";
     _key: string;
   }>;
   description?: string;
@@ -436,10 +464,10 @@ export type PRODUCT_BY_ID_QUERYResult = Array<{
   price?: number;
   categories?: Array<{
     _ref: string;
-    _type: 'reference';
+    _type: "reference";
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: 'category';
+    [internalGroqTypeReferenceTo]?: "category";
   }>;
   stock?: number;
 }>;
@@ -449,7 +477,7 @@ export type PRODUCT_BY_ID_QUERYResult = Array<{
 // Query: *[_type == 'product' && references(*[_type == 'category' && slug.current == $categorySlug]._id)] | order(name asc)
 export type PRODUCTS_BY_CATEGORY_QUERYResult = Array<{
   _id: string;
-  _type: 'product';
+  _type: "product";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -458,24 +486,24 @@ export type PRODUCTS_BY_CATEGORY_QUERYResult = Array<{
   image?: {
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    _type: 'image';
+    _type: "image";
   };
   extraImages?: Array<{
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    _type: 'image';
+    _type: "image";
     _key: string;
   }>;
   description?: string;
@@ -485,10 +513,10 @@ export type PRODUCTS_BY_CATEGORY_QUERYResult = Array<{
   price?: number;
   categories?: Array<{
     _ref: string;
-    _type: 'reference';
+    _type: "reference";
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: 'category';
+    [internalGroqTypeReferenceTo]?: "category";
   }>;
   stock?: number;
 }>;
@@ -498,7 +526,7 @@ export type PRODUCTS_BY_CATEGORY_QUERYResult = Array<{
 // Query: *[        _type == 'sale'        && isActive == true         && couponCode == $couponCode    ] | order(validFfrom desc)[0]
 export type ACTIVE_SALE_BY_COUPON_QUERYResult = {
   _id: string;
-  _type: 'sale';
+  _type: "sale";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -512,11 +540,11 @@ export type ACTIVE_SALE_BY_COUPON_QUERYResult = {
 } | null;
 
 // Query TypeMap
-import '@sanity/client';
-declare module '@sanity/client' {
+import "@sanity/client";
+declare module "@sanity/client" {
   interface SanityQueries {
     "\n    *[_type == 'order' && clerkUserId == $userId] | order(orderDate desc) {\n        ...,\n        products[]{\n            ...,\n            product->\n        }\n    }\n  ": MY_ORDERS_QUERYResult;
-    "\n  *[_type == 'category'] | order(name asc)\n  ": ALL_CATEGORIES_QUERYResult;
+    "\n  *[_type == 'category'] | order(title asc) {\n    _id,\n    _type,\n    _createdAt,\n    _updatedAt,\n    _rev,\n    title,\n    slug,\n    description,\n    image\n  }\n": ALL_CATEGORIES_QUERYResult;
     "\n  *[_type == 'product'] | order(name asc)\n  ": ALL_PRODUCTS_QUERYResult;
     "\n      *[_type == 'product' && slug.current == $slug] | order(name asc)\n    ": PRODUCT_BY_ID_QUERYResult;
     "\n    *[_type == 'product' && references(*[_type == 'category' && slug.current == $categorySlug]._id)] | order(name asc)\n  ": PRODUCTS_BY_CATEGORY_QUERYResult;
