@@ -7,7 +7,7 @@ if (!token) {
   throw new Error('Missing SANITY_API_READ_TOKEN');
 }
 
-// Define live with the client — no generics here!
+// No generics; client is passed directly
 export const { sanityFetch, SanityLive } = defineLive({
   client,
   serverToken: token,

@@ -1,8 +1,8 @@
 import { defineQuery } from 'next-sanity';
 import { sanityFetch } from '../live';
-import { Category } from '@/types'; // Adjust path if needed
+import { Category } from '@/types';
 
-// GROQ Query to fetch all categories
+// GROQ: Fetch all categories ordered by title
 const ALL_CATEGORIES_QUERY = defineQuery(`
   *[_type == 'category'] | order(title asc) {
     _id,
@@ -18,8 +18,9 @@ const ALL_CATEGORIES_QUERY = defineQuery(`
 `);
 
 /**
- * Fetches all categories from Sanity
- * @returns {Promise<Category[]>} List of categories
+ * Fetch all categories from Sanity.
+ *
+ * @returns {Promise<Category[]>} List of category objects
  */
 export const getAllCategories = async (): Promise<Category[]> => {
   try {
@@ -27,20 +28,10 @@ export const getAllCategories = async (): Promise<Category[]> => {
       query: ALL_CATEGORIES_QUERY,
     });
 
-    // Check if the result exists and has the data field
-    if (!result?.data || result.data.length === 0) {
-      console.warn('No categories found or empty response from Sanity.');
-      return []; // Return an empty array if no data is found
-    }
-
-    // Return the categories data
-    if (!Array.isArray(result)) {
-      console.warn('Unexpected response format from Sanity:', result);
-      return [];
-    }
-    return result;
+    // If result is already an array, return it; else fallback to empty
+    return Array.isArray(result) ? result : [];
   } catch (error) {
     console.error('Error fetching all categories:', error);
-    return []; // Fallback to an empty array if an error occurs
+    return [];
   }
 };
