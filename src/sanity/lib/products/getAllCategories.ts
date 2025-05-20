@@ -27,10 +27,20 @@ export const getAllCategories = async (): Promise<Category[]> => {
       query: ALL_CATEGORIES_QUERY,
     });
 
-    // Ensure we're accessing the correct part of the response (the 'data' field)
-    return result?.data ?? []; // Fallback to empty array if no categories found
+    // Check if the result exists and has the data field
+    if (!result?.data || result.data.length === 0) {
+      console.warn('No categories found or empty response from Sanity.');
+      return []; // Return an empty array if no data is found
+    }
+
+    // Return the categories data
+    if (!Array.isArray(result)) {
+      console.warn('Unexpected response format from Sanity:', result);
+      return [];
+    }
+    return result;
   } catch (error) {
     console.error('Error fetching all categories:', error);
-    return [];
+    return []; // Fallback to an empty array if an error occurs
   }
 };
