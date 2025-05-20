@@ -21,13 +21,13 @@ export async function createCheckoutSession(
   metadata: Metadata
 ) {
   try {
-    // Ensure all items have a price
+    // Validate item prices
     const itemsWithoutPrice = items.filter((item) => !item.product.price);
     if (itemsWithoutPrice.length > 0) {
       throw new Error('Some items do not have a price.');
     }
 
-    // Try to find existing Stripe customer
+    // Get or create customer
     const customers = await stripe.customers.list({
       email: metadata.customerEmail,
       limit: 1,
@@ -38,7 +38,12 @@ export async function createCheckoutSession(
       customerId = customers.data[0].id;
     }
 
-    // Build base URL for redirect
+    // Calculate subtotal (in dollars)
+    const subtotal = items.reduce((total, item) => {
+      return total + item.product.price! * item.quantity;
+    }, 0);
+
+    // Build base URL
     const baseUrl =
       process.env.NODE_ENV === 'production'
         ? `https://${process.env.VERCEL_URL}`
@@ -47,22 +52,60 @@ export async function createCheckoutSession(
     const successUrl = `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}&orderNumber=${metadata.orderNumber}`;
     const cancelUrl = `${baseUrl}/basket`;
 
-    // Optional: Create a shipping rate (flat fee)
-    const shippingRate = await stripe.shippingRates.create({
+    // Create dynamic shipping options
+    const shippingOptions = [];
+
+    // Standard shipping ($5)
+    const standardShipping = await stripe.shippingRates.create({
       display_name: 'Standard Shipping',
       type: 'fixed_amount',
       fixed_amount: {
-        amount: 500, // $5.00 shipping fee
+        amount: 500,
         currency: 'usd',
       },
       delivery_estimate: {
         minimum: { unit: 'business_day', value: 3 },
         maximum: { unit: 'business_day', value: 5 },
       },
-      tax_behavior: 'inclusive', // or 'exclusive' depending on how you handle tax on shipping
+      tax_behavior: 'inclusive',
     });
+    shippingOptions.push({ shipping_rate: standardShipping.id });
 
-    // Create the checkout session
+    // Free shipping if subtotal >= $50
+    if (subtotal >= 50) {
+      const freeShipping = await stripe.shippingRates.create({
+        display_name: 'Free Shipping',
+        type: 'fixed_amount',
+        fixed_amount: {
+          amount: 0,
+          currency: 'usd',
+        },
+        delivery_estimate: {
+          minimum: { unit: 'business_day', value: 5 },
+          maximum: { unit: 'business_day', value: 7 },
+        },
+        tax_behavior: 'inclusive',
+      });
+      shippingOptions.push({ shipping_rate: freeShipping.id });
+    }
+
+    // Express shipping ($15)
+    const expressShipping = await stripe.shippingRates.create({
+      display_name: 'Express Shipping',
+      type: 'fixed_amount',
+      fixed_amount: {
+        amount: 1500,
+        currency: 'usd',
+      },
+      delivery_estimate: {
+        minimum: { unit: 'business_day', value: 1 },
+        maximum: { unit: 'business_day', value: 2 },
+      },
+      tax_behavior: 'inclusive',
+    });
+    shippingOptions.push({ shipping_rate: expressShipping.id });
+
+    // Create checkout session
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       customer_creation: customerId ? undefined : 'always',
@@ -74,17 +117,16 @@ export async function createCheckoutSession(
       allow_promotion_codes: true,
       automatic_tax: { enabled: true },
 
-      // Enable address collection for tax & shipping
+      customer_update: {
+        shipping: 'auto',
+      },
+
       shipping_address_collection: {
-        allowed_countries: ['US'], // Add more if you ship internationally
+        allowed_countries: ['US'], // Add more if needed
       },
       billing_address_collection: 'required',
 
-      shipping_options: [
-        {
-          shipping_rate: shippingRate.id,
-        },
-      ],
+      shipping_options: shippingOptions,
 
       line_items: items.map((item) => ({
         price_data: {
@@ -99,7 +141,7 @@ export async function createCheckoutSession(
             images: item.product.image
               ? [imageUrl(item.product.image).url()]
               : undefined,
-            tax_code: 'txcd_99999999', // Use specific tax code if needed
+            tax_code: 'txcd_99999999', // generic goods tax code
           },
         },
         quantity: item.quantity,

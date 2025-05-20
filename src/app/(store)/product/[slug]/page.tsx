@@ -40,7 +40,7 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 ">
         {/* Left section: Product images and information */}
-        <div className="flex-grow overflow-y-auto pb-40 ">
+        <div className="relative flex-grow overflow-y-auto pb-40 ">
           {/* Display extra images if available */}
           <ProductImages
             product={product as Product}
@@ -57,8 +57,10 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
 
           {/* Out of stock overlay */}
           {isOutOfStock && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-              <span className="text-white font-bold text-lg">Out of Stock</span>
+            <div className="fixed  inset-0 z-10 flex items-center justify-center bg-black bg-opacity-40">
+              <span className="text-white font-mono text-sm uppercase">
+                Out of Stock
+              </span>
             </div>
           )}
         </div>

@@ -17,6 +17,11 @@ interface AddToBasketButtonProps {
    * Callback to open the shopping cart or perform a side effect after item is added.
    */
   onAddedToBag: () => void;
+
+  /**
+   * Boolean flag to disable the button if the product is out of stock.
+   */
+  disabled: boolean;
 }
 
 /**
@@ -25,11 +30,12 @@ interface AddToBasketButtonProps {
  *
  * @component
  * @example
- * <AddToBasketButton product={product} onAddedToBag={openCart} />
+ * <AddToBasketButton product={product} onAddedToBag={openCart} disabled={isOutOfStock} />
  */
 const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({
   product,
   onAddedToBag,
+  disabled,
 }) => {
   const { addItem } = useBasketStore();
   const [isAdded, setIsAdded] = useState(false);
@@ -58,13 +64,19 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({
       <button
         onClick={handleAddToBasket}
         className={`block text-center text-xs border uppercase py-3 mt-2 transition-all w-full lg:w-[50vh] font-light ${
-          isAdded
+          disabled || isAdded
             ? 'bg-gray-400 text-white cursor-not-allowed'
             : 'bg-blue-500 text-white hover:bg-opacity-90'
         }`}
-        disabled={isAdded}
+        disabled={disabled || isAdded} // Disable the button if the product is out of stock or already added
       >
-        <span>{isAdded ? 'Added to Bag' : 'Add to shopping bag'}</span>
+        <span>
+          {disabled
+            ? 'Out of Stock'
+            : isAdded
+              ? 'Added to Bag'
+              : 'Add to shopping bag'}
+        </span>
       </button>
     </div>
   );

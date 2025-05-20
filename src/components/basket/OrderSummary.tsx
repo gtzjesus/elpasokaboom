@@ -31,8 +31,10 @@ interface OrderSummaryProps {
 }
 
 /**
- * OrderSummary displays a cart summary with item count, subtotal,
- * tax, and a checkout button. If the user is not signed in, it shows a Sign In CTA.
+ * OrderSummary displays a cart summary with item count,
+ * subtotal, and a checkout button.
+ *
+ * Tax is calculated at checkout via Stripe.
  */
 const OrderSummary: React.FC<OrderSummaryProps> = ({
   totalItems,
@@ -41,10 +43,6 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
   isLoading,
   onCheckout,
 }) => {
-  const TAX_RATE = 0.0825;
-  const taxAmount = totalPrice * TAX_RATE;
-  const totalWithTax = totalPrice + taxAmount;
-
   return (
     <div className="w-full lg:w-auto lg:sticky h-fit bg-white p-6 lg:p-12 fixed bottom-0 left-0 lg:left-auto lg:bottom-0 lg:order-last shadow-md">
       <h3 className="uppercase text-xs font-light text-center text-gray-800 border-b pb-1">
@@ -57,16 +55,8 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
           <span>{totalItems}</span>
         </p>
         <p className="flex justify-between uppercase text-xs font-light text-gray-800">
-          <span>Subtotal:</span>
+          <span>Subtotal (tax & shipping at checkout):</span>
           <span>${totalPrice.toFixed(2)}</span>
-        </p>
-        <p className="flex justify-between uppercase text-xs font-light text-gray-800">
-          <span>Tax (8.25%):</span>
-          <span>${taxAmount.toFixed(2)}</span>
-        </p>
-        <p className="flex justify-between uppercase text-xs font-semibold text-gray-900 border-t pt-2">
-          <span>Total:</span>
-          <span>${totalWithTax.toFixed(2)}</span>
         </p>
       </div>
 

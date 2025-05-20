@@ -9,9 +9,11 @@ import { Product } from '@/types';
  * Props for the ProductClient component.
  *
  * @param product - The product object that is being passed to the component.
+ * @param isOutOfStock - A boolean flag indicating if the product is out of stock.
  */
 interface ProductClientProps {
   product: Product;
+  isOutOfStock: boolean;
 }
 
 /**
@@ -26,9 +28,12 @@ interface ProductClientProps {
  *
  * @component
  * @example
- * <ProductClient product={product} />
+ * <ProductClient product={product} isOutOfStock={false} />
  */
-const ProductClient: React.FC<ProductClientProps> = ({ product }) => {
+const ProductClient: React.FC<ProductClientProps> = ({
+  product,
+  isOutOfStock,
+}) => {
   // State to control the visibility of the cart popup
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -45,7 +50,11 @@ const ProductClient: React.FC<ProductClientProps> = ({ product }) => {
   return (
     <div>
       {/* AddToBasketButton component to add the product to the shopping basket */}
-      <AddToBasketButton product={product} onAddedToBag={openCart} />
+      <AddToBasketButton
+        product={product}
+        onAddedToBag={openCart}
+        disabled={isOutOfStock} // Disable the button if the product is out of stock
+      />
 
       {/* Conditionally render the CartPopup when the cart is open */}
       {isCartOpen && <CartPopup onClose={closeCart} />}
