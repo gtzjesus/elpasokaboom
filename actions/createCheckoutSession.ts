@@ -21,13 +21,13 @@ export async function createCheckoutSession(
   metadata: Metadata
 ) {
   try {
-    // check if grouped items are missing price
+    // Ensure all items have a price
     const itemsWithoutPrice = items.filter((item) => !item.product.price);
     if (itemsWithoutPrice.length > 0) {
-      throw new Error('some items do not have a price');
+      throw new Error('Some items do not have a price.');
     }
 
-    // search for exisiting customer by email (stipe)
+    // Try to find existing Stripe customer
     const customers = await stripe.customers.list({
       email: metadata.customerEmail,
       limit: 1,
@@ -38,26 +38,54 @@ export async function createCheckoutSession(
       customerId = customers.data[0].id;
     }
 
-    // create urls
+    // Build base URL for redirect
     const baseUrl =
       process.env.NODE_ENV === 'production'
         ? `https://${process.env.VERCEL_URL}`
         : `${process.env.NEXT_PUBLIC_BASE_URL}`;
 
     const successUrl = `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}&orderNumber=${metadata.orderNumber}`;
-
     const cancelUrl = `${baseUrl}/basket`;
 
-    // create checkout session
+    // Optional: Create a shipping rate (flat fee)
+    const shippingRate = await stripe.shippingRates.create({
+      display_name: 'Standard Shipping',
+      type: 'fixed_amount',
+      fixed_amount: {
+        amount: 500, // $5.00 shipping fee
+        currency: 'usd',
+      },
+      delivery_estimate: {
+        minimum: { unit: 'business_day', value: 3 },
+        maximum: { unit: 'business_day', value: 5 },
+      },
+      tax_behavior: 'inclusive', // or 'exclusive' depending on how you handle tax on shipping
+    });
+
+    // Create the checkout session
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       customer_creation: customerId ? undefined : 'always',
       customer_email: !customerId ? metadata.customerEmail : undefined,
       metadata,
       mode: 'payment',
-      allow_promotion_codes: true,
       success_url: successUrl,
       cancel_url: cancelUrl,
+      allow_promotion_codes: true,
+      automatic_tax: { enabled: true },
+
+      // Enable address collection for tax & shipping
+      shipping_address_collection: {
+        allowed_countries: ['US'], // Add more if you ship internationally
+      },
+      billing_address_collection: 'required',
+
+      shipping_options: [
+        {
+          shipping_rate: shippingRate.id,
+        },
+      ],
+
       line_items: items.map((item) => ({
         price_data: {
           currency: 'usd',
@@ -71,6 +99,7 @@ export async function createCheckoutSession(
             images: item.product.image
               ? [imageUrl(item.product.image).url()]
               : undefined,
+            tax_code: 'txcd_99999999', // Use specific tax code if needed
           },
         },
         quantity: item.quantity,
@@ -79,7 +108,7 @@ export async function createCheckoutSession(
 
     return session.url;
   } catch (error) {
-    console.error('error creating checkout session:', error);
+    console.error('Error creating checkout session:', error);
     throw error;
   }
 }
