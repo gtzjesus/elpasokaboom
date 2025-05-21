@@ -8,10 +8,10 @@ import { backendClient } from '@/sanity/lib/backendClient';
 export async function POST(req: NextRequest) {
   const body = await req.text();
   const headersList = await headers();
-  const signature = headersList.get('stripe-signature'); // to verify if it came from stripe
+  const signature = headersList.get('stripe-signature');
 
   if (!signature) {
-    return NextResponse.json({ error: 'no signature' }, { status: 400 });
+    return NextResponse.json({ error: 'No signature' }, { status: 400 });
   }
 
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
   if (!webhookSecret) {
     console.error('❌ STRIPE_WEBHOOK_SECRET not set');
     return NextResponse.json(
-      { error: 'webhook secret missing' },
+      { error: 'Webhook secret missing' },
       { status: 400 }
     );
   }
@@ -29,9 +29,9 @@ export async function POST(req: NextRequest) {
   try {
     event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
   } catch (err) {
-    console.error('🚫 Webhook signature verification failed:', err);
+    console.error('🚫 Webhook verification failed:', err);
     return NextResponse.json(
-      { error: `webhook error: ${err}` },
+      { error: `Webhook error: ${err}` },
       { status: 400 }
     );
   }
@@ -42,18 +42,25 @@ export async function POST(req: NextRequest) {
     try {
       const order = await createOrderInSanity(session);
       console.log('✅ Order created in Sanity:', order);
+
+      // 🔥 NEW: Decrease product stock based on metadata.items
+      const items = JSON.parse(session.metadata?.items || '[]');
+
+      for (const item of items) {
+        await decreaseProductStock(item.id, item.quantity);
+      }
     } catch (err) {
-      console.error('💥 Error creating order in Sanity:', err);
-      return NextResponse.json(
-        { error: 'error creating order' },
-        { status: 500 }
-      );
+      console.error('💥 Error processing order/stock:', err);
+      return NextResponse.json({ error: 'Processing error' }, { status: 500 });
     }
   }
 
   return NextResponse.json({ received: true });
 }
 
+/**
+ * Save the order into Sanity.
+ */
 async function createOrderInSanity(session: Stripe.Checkout.Session) {
   const {
     id,
@@ -67,14 +74,11 @@ async function createOrderInSanity(session: Stripe.Checkout.Session) {
 
   const { orderNumber, clerkUserId } = metadata as Metadata;
 
-  // 👇 Fetch customer info directly from Stripe
   const stripeCustomer = await stripe.customers.retrieve(customer as string);
 
   const customerName = (stripeCustomer as Stripe.Customer).name ?? 'Unknown';
-
   const customerEmail = (stripeCustomer as Stripe.Customer).email ?? 'Unknown';
 
-  // Fetch line items and map to Sanity references
   const lineItems = await stripe.checkout.sessions.listLineItems(id, {
     expand: ['data.price.product'],
   });
@@ -88,7 +92,6 @@ async function createOrderInSanity(session: Stripe.Checkout.Session) {
     quantity: item.quantity || 0,
   }));
 
-  // Create order in Sanity
   const order = await backendClient.create({
     _type: 'order',
     orderNumber,
@@ -107,4 +110,34 @@ async function createOrderInSanity(session: Stripe.Checkout.Session) {
   });
 
   return order;
+}
+
+/**
+ * Decrease product stock in Sanity based on item purchased.
+ */
+async function decreaseProductStock(productId: string, quantity: number) {
+  try {
+    // Fetch current stock
+    const product = await backendClient.fetch(
+      `*[_type == "product" && _id == $id][0]{stock}`,
+      { id: productId }
+    );
+
+    if (!product) {
+      console.warn(`⚠️ Product not found: ${productId}`);
+      return;
+    }
+
+    const currentStock = product.stock ?? 0;
+    const newStock = Math.max(currentStock - quantity, 0); // Prevent negative stock
+
+    // Update stock
+    await backendClient.patch(productId).set({ stock: newStock }).commit();
+
+    console.log(
+      `📦 Updated stock for ${productId}: ${currentStock} → ${newStock}`
+    );
+  } catch (err) {
+    console.error(`❌ Error updating stock for product ${productId}:`, err);
+  }
 }
