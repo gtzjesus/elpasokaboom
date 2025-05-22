@@ -7,6 +7,7 @@ export default function AdminDashboardPage() {
   const [data, setData] = useState({
     totalOrders: 0,
     activeProducts: 0,
+    totalRevenue: 0,
   });
 
   useEffect(() => {
@@ -32,6 +33,16 @@ export default function AdminDashboardPage() {
       href: '/admin/products',
       color: 'bg-green-500',
     },
+    {
+      title: 'Total Revenue',
+      value:
+        data.totalRevenue != null
+          ? `$${data.totalRevenue.toFixed(2)}`
+          : '$0.00',
+      href: '/admin/finance',
+      color: 'bg-rose-500',
+    },
+
     {
       title: 'Site Settings',
       value: 'Manage',
