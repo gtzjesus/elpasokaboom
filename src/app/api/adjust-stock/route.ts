@@ -21,7 +21,6 @@ export async function decreaseProductStock(items: GroupedBasketItem[]) {
       .transaction(mutations)
       .commit();
 
-    console.log('✅ Stock updated:', result);
     return result;
   } catch (error) {
     console.error('❌ Failed to decrease stock:', error);

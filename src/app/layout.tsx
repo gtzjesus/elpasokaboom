@@ -2,6 +2,7 @@
 
 import React from 'react';
 import type { Metadata } from 'next';
+import './globals.css'; // ✅ critical for Tailwind to work
 
 /**
  * App Metadata
