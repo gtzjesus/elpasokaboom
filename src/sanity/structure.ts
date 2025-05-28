@@ -5,11 +5,22 @@ export const structure: StructureResolver = (S) =>
     .title('Shop Worldhello')
     .items([
       S.documentTypeListItem('category').title('Categories'),
-      S.documentTypeListItem('customer').title('Customers'), // ✅ Explicitly add customer
+      S.documentTypeListItem('product').title('Products'),
+      S.documentTypeListItem('customer').title('Customers'),
+      S.documentTypeListItem('order').title('Orders'),
+      S.documentTypeListItem('sale').title('Sales'),
+
       S.divider(),
       ...S.documentTypeListItems().filter(
         (item) =>
           item.getId() &&
-          !['post', 'category', 'customer'].includes(item.getId()!) // ✅ Avoid duplicate entry
+          ![
+            'post',
+            'category',
+            'product',
+            'customer',
+            'order',
+            'sale',
+          ].includes(item.getId()!) // ✅ Avoid duplicate entry
       ),
     ]);
