@@ -116,16 +116,18 @@ export async function createCheckoutSession(
       allow_promotion_codes: true,
       automatic_tax: { enabled: true },
 
-      customer_update: {
-        shipping: 'auto',
-      },
+      ...(customerId && {
+        customer_update: {
+          shipping: 'auto',
+        },
+      }),
+
       shipping_address_collection: {
-        allowed_countries: ['US'], // Customize this if needed
+        allowed_countries: ['US'],
       },
       billing_address_collection: 'required',
       shipping_options: shippingOptions,
 
-      // ✅ Line Items
       line_items: items.map((item) => ({
         price_data: {
           currency: 'usd',
@@ -145,7 +147,6 @@ export async function createCheckoutSession(
         quantity: item.quantity,
       })),
 
-      // ✅ Pass full metadata (for use in webhook)
       metadata: {
         ...metadata,
         items: JSON.stringify(
