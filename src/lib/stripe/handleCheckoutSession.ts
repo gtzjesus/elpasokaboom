@@ -1,15 +1,18 @@
+// lib/stripe/handleCheckoutSession.ts
+
 import Stripe from 'stripe';
+import stripe from '@/lib/stripe';
 import { backendClient } from '@/sanity/lib/backendClient';
 import { Metadata } from 'actions/createCheckoutSession';
 import { syncCustomerToSanity } from '@/sanity/lib/customers/syncCustomerToSanity';
 import { decreaseProductStock } from '@/sanity/lib/products/decreaseProductStock';
-import stripe from '@/lib/stripe';
 
 /**
  * Handles a completed Stripe Checkout Session.
  * - Syncs customer to Sanity
- * - Records order in Sanity
- * - Updates product stock levels
+ * - Records the order in Sanity
+ * - Updates customer's order list and total spent
+ * - Decreases product stock
  *
  * @param session Stripe Checkout Session object
  * @returns The created Sanity order document
@@ -27,18 +30,17 @@ export async function handleCheckoutSessionCompleted(
     total_details,
   } = session;
 
-  // Ensure metadata is properly typed
   const { orderNumber, clerkUserId } = metadata as Metadata;
 
-  // Sync or create the customer in Sanity
+  // 🔁 Sync customer to Sanity
   const stripeCustomer = await syncCustomerToSanity(customer as string);
 
-  // Fetch product line items from Stripe
+  // 🛒 Retrieve line items from the session
   const lineItems = await stripe.checkout.sessions.listLineItems(id, {
     expand: ['data.price.product'],
   });
 
-  // Transform line items into Sanity product references
+  // 🧱 Convert Stripe products to Sanity references
   const sanityProducts = lineItems.data.map((item) => ({
     _key: crypto.randomUUID(),
     product: {
@@ -48,7 +50,7 @@ export async function handleCheckoutSessionCompleted(
     quantity: item.quantity || 0,
   }));
 
-  // Create the order document in Sanity
+  // 🧾 Create the order document
   const order = await backendClient.create({
     _type: 'order',
     orderNumber,
@@ -66,7 +68,25 @@ export async function handleCheckoutSessionCompleted(
     orderDate: new Date().toISOString(),
   });
 
-  // Update stock for each product
+  console.log('✅ Order synced to Sanity:', order);
+
+  // 🔁 Patch the customer with the new order and increase totalSpent
+  await backendClient
+    .patch(stripeCustomer._id)
+    .setIfMissing({ orders: [], totalSpent: 0 })
+    .append('orders', [
+      {
+        _key: crypto.randomUUID(),
+        _type: 'reference',
+        _ref: order._id,
+      },
+    ])
+    .inc({ totalSpent: order.totalPrice })
+    .commit();
+
+  console.log(`✅ Customer order list updated for: ${stripeCustomer._id}`);
+
+  // 📉 Decrease product stock
   const items: Array<{ id: string; quantity: number }> = JSON.parse(
     session.metadata?.items || '[]'
   );

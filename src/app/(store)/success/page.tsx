@@ -1,69 +1,67 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import useBasketStore from '../../../../store/store';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import confetti from 'canvas-confetti';
 import { motion } from 'framer-motion';
 
-/**
- * SuccessPage Component
- * Displays a confirmation screen after a successful checkout.
- * Clears the user's basket, shows a confetti animation, and provides navigation options.
- *
- * @returns {JSX.Element} The rendered success page with confirmation and order info.
- */
 function SuccessPage() {
-  // 🔍 Get query parameters from the URL (e.g., orderNumber)
   const searchParams = useSearchParams();
   const orderNumber = searchParams.get('orderNumber');
-
-  // 🛒 Access store action to clear the basket
   const clearBasket = useBasketStore((state) => state.clearBasket);
+  const router = useRouter();
 
-  /**
-   * 🎉 useEffect Hook
-   * Runs on mount if there's an order number:
-   * - Clears the user's basket
-   * - Clears sessionStorage, localStorage, and cookies
-   * - Triggers confetti animation
-   */
+  const [countdown, setCountdown] = useState(10); // ⏳ countdown in seconds
+
+  // 🧹 Cleanup + celebration on mount
   useEffect(() => {
     if (orderNumber) {
-      // Clear basket from the store
       clearBasket();
-
-      // Clear sessionStorage
       sessionStorage.clear();
-
-      // Clear localStorage
       localStorage.clear();
 
-      // Clear cookies (cart-related cookies specifically)
-      document.cookie.split(';').forEach(function (c) {
-        document.cookie =
-          c.trim().split('=')[0] +
-          '=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+      // 🧼 Only remove cart-related cookies
+      document.cookie.split(';').forEach((c) => {
+        const cookieName = c.trim().split('=')[0];
+        if (
+          cookieName.startsWith('cart_') ||
+          cookieName === 'your-cart-cookie-name'
+        ) {
+          document.cookie = `${cookieName}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+        }
       });
 
-      // Trigger confetti animation
       confetti({
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 },
       });
+
+      // ⏳ Countdown interval
+      const interval = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev <= 1) {
+            clearInterval(interval);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+
+      return () => clearInterval(interval); // Cleanup on unmount
     }
   }, [orderNumber, clearBasket]);
 
-  /**
-   * 💡 UI Structure
-   * - Checkmark icon
-   * - Confirmation message
-   * - Truncated order number (last 6 chars)
-   * - Navigation buttons
-   */
+  // 🚀 Safe redirect after countdown finishes
+  useEffect(() => {
+    if (countdown === 0 && orderNumber) {
+      router.push('/orders');
+    }
+  }, [countdown, router, orderNumber]);
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-black px-4">
       <motion.div
@@ -96,7 +94,6 @@ function SuccessPage() {
           Order Confirmed!
         </h1>
 
-        {/* ✅ Subtitle */}
         <p className="text-xs text-gray-700 dark:text-gray-300 text-center mb-6">
           Thank you for your purchase.
         </p>
@@ -120,6 +117,11 @@ function SuccessPage() {
             </ul>
           </div>
         )}
+
+        {/* ⏳ Countdown Message */}
+        <p className="text-xs text-gray-500 dark:text-gray-400 text-center mb-6">
+          Redirecting to your order in <strong>{countdown}</strong> seconds...
+        </p>
 
         {/* ✅ Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
