@@ -8,6 +8,7 @@ export default function AdminDashboardPage() {
     totalOrders: 0,
     activeProducts: 0,
     totalRevenue: 0,
+    activeCustomers: 0,
   });
 
   useEffect(() => {
@@ -22,46 +23,49 @@ export default function AdminDashboardPage() {
 
   const dashboardData = [
     {
-      title: 'Total Orders',
+      title: 'Paid Orders',
       value: data.totalOrders,
       href: '/admin/orders',
-      color: 'bg-blue-500',
+      color: '#F1F0E1', // <-- use raw hex
     },
     {
-      title: 'Active Products',
+      title: ' Products',
       value: data.activeProducts,
       href: '/admin/products',
-      color: 'bg-green-500',
+      color: '#506385', // <-- use raw hex
     },
     {
-      title: 'Total Revenue',
+      title: 'Total',
       value:
         data.totalRevenue != null
-          ? `$${data.totalRevenue.toFixed(2)}`
+          ? `$${data.totalRevenue.toFixed(0)}`
           : '$0.00',
       href: '/admin/finance',
-      color: 'bg-rose-500',
+      color: '#506385', // <-- use raw hex
     },
-
     {
-      title: 'Site Settings',
-      value: 'Manage',
-      href: '/admin/settings',
-      color: 'bg-purple-500',
+      title: ' Customers',
+      value: data.activeCustomers,
+      href: '/admin/customers',
+      color: '#F1F0E1', // <-- use raw hex
     },
   ];
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Welcome, Admin</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div>
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-1">
         {dashboardData.map(({ title, value, href, color }) => (
           <Link key={title} href={href}>
             <div
-              className={`rounded-lg p-6 text-white shadow-md hover:scale-105 transition-transform duration-200 cursor-pointer ${color}`}
+              className=" px-4 py-8 text-black  cursor-pointer"
+              style={{ backgroundColor: color }}
             >
-              <div className="text-sm opacity-80">{title}</div>
-              <div className="text-3xl font-bold mt-2">{value}</div>
+              <div className="uppercase text-xs font-light text-gray-800">
+                {title}
+              </div>
+              <div className="uppercase text-6xl font-light text-gray-800 pt-10">
+                {value}
+              </div>
             </div>
           </Link>
         ))}
