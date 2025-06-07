@@ -2,8 +2,8 @@
 
 import QuickStatsSection from '@/components/dashboard/QuickStatsSection';
 import RecentOrdersTable from '@/components/dashboard/RecentOrdersTable';
-import { useDashboardStats } from '@/hooks/useDashboardStats';
-import { useRecentOrders } from '@/hooks/useRecentOrders';
+import { useDashboardStats } from '@/hooks/dashboard/useDashboardStats';
+import { useRecentOrders } from '@/hooks/dashboard/useRecentOrders';
 
 export default function AdminDashboardPage() {
   const { dashboardData, statsError } = useDashboardStats();

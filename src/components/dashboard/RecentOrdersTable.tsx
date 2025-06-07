@@ -1,6 +1,6 @@
 // components/RecentOrdersTable.tsx
 import React from 'react';
-import { RecentOrder } from '@/hooks/useRecentOrders';
+import { RecentOrder } from '@/hooks/dashboard/useRecentOrders';
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 type RecentOrdersTableProps = {
   recentOrders: RecentOrder[];
@@ -30,7 +30,7 @@ export default function RecentOrdersTable({
           textShadow: '1px 1px 3px rgba(0,0,0,0.2)',
         }}
       >
-        New Orders In
+        Recent Paid orders
       </h2>
 
       <div className="overflow-x-auto">
@@ -38,26 +38,24 @@ export default function RecentOrdersTable({
           className="min-w-full"
           style={{ backgroundColor: '#F1F0E1', color: '#333' }} // base text color
         >
-          <thead style={{ backgroundColor: '#aabee0', color: 'black' }}>
-            <tr className="uppercase text-xs font-bold">
+          <thead className="" style={{ backgroundColor: '#aabee0' }}>
+            <tr className="uppercase text-xs">
+              <th className="text-left p-2">Order #</th>
               <th className="text-left p-2">Customer</th>
               <th className="text-left p-2">Date</th>
               <th className="text-left p-2">Total</th>
-              <th className="text-left p-2">Status</th>
             </tr>
           </thead>
           <tbody>
             {recentOrders.map((order) => (
-              <tr key={order.id} className="text-sm font-light border-t">
+              <tr key={order.id} className="text-xs font-light border-t">
+                <td className="p-2 font-bold">{order.orderNumber}</td>
                 <td className="p-2">{order.customerName}</td>
                 <td className="p-2">
                   {order.date ? new Date(order.date).toLocaleDateString() : '—'}
                 </td>
-                <td className="p-2 font-bold">
+                <td className="p-2 font-bold" style={{ color: '#2E8B57' }}>
                   ${order.totalPrice.toFixed(2)}
-                </td>
-                <td className="p-2 uppercase" style={{ color: '#228B22' }}>
-                  {order.status}
                 </td>
               </tr>
             ))}

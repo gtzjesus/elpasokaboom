@@ -18,19 +18,19 @@ export async function GET() {
     const orders = await client.fetch(`
       *[_type == "order" && status == "paid"] | order(orderDate desc)[0...5] {
         _id,
+        orderNumber, // 👈 make sure this field exists in Sanity
         customerName,
         orderDate,
-        totalPrice,
-        status
+        totalPrice
       }
     `);
     /* eslint-disable  @typescript-eslint/no-explicit-any */
     const formatted = orders.map((order: any) => ({
       id: order._id,
+      orderNumber: order.orderNumber ?? '—',
       customerName: order.customerName ?? 'Unknown',
       date: order.orderDate ?? null,
       totalPrice: order.totalPrice ?? 0,
-      status: order.status ?? 'unknown',
     }));
 
     return NextResponse.json(formatted);

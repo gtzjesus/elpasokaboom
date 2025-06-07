@@ -20,7 +20,7 @@ export default function QuickStatsSection({ data }: { data: StatBlock[] }) {
           textShadow: '1px 1px 3px rgba(0,0,0,0.2)',
         }}
       >
-        insight Data
+        quick glance
       </h2>
       <StatGrid data={data} />
     </section>

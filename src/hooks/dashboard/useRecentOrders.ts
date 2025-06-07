@@ -3,10 +3,10 @@ import useSWR from 'swr';
 
 export type RecentOrder = {
   id: string;
+  orderNumber: string;
   customerName: string;
   date: string | null;
   totalPrice: number;
-  status: string;
 };
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
