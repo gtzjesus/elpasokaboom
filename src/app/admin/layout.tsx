@@ -67,7 +67,7 @@ export default function AdminLayout({
           <div className="flex-1 flex flex-col">
             {/* Mobile header */}
             <header className="md:hidden flex justify-between items-center style={{ backgroundColor: '#101015' }} text-white p-4">
-              <h1 className="text-lg font-bold">Admin Dashboard</h1>
+              <h1 className="uppercase font-light text-md">Admin HQ</h1>
 
               {/* Hamburger Button */}
               <button
