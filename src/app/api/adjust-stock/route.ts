@@ -1,29 +1,23 @@
-// lib/sanity/decreaseStock.ts
-import { client } from '@/sanity/lib/client';
-import { GroupedBasketItem } from 'actions/createCheckoutSession';
+// src/app/api/adjust-stock/route.ts
+import { NextResponse } from 'next/server';
+import { decreaseProductStock } from '@/sanity/lib/products/decreaseProductStock'; // or wherever it's located
 
-export async function decreaseProductStock(items: GroupedBasketItem[]) {
-  const mutations = items.map((item) => {
-    const productId = item.product._id;
-    const quantityToDeduct = item.quantity;
-
-    return {
-      patch: {
-        id: productId,
-        dec: { stock: quantityToDeduct }, // 👈 this subtracts from the stock field
-      },
-    };
-  });
-
+export async function POST(req: Request) {
   try {
-    const result = await client
-      .withConfig({ token: process.env.SANITY_API_WRITE_TOKEN }) // 👈 required for mutations
-      .transaction(mutations)
-      .commit();
+    const body = await req.json();
 
-    return result;
+    const { items } = body as {
+      items: { productId: string; quantity: number }[];
+    };
+
+    // Decrease stock for each item
+    for (const item of items) {
+      await decreaseProductStock(item.productId, item.quantity);
+    }
+
+    return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('❌ Failed to decrease stock:', error);
-    throw error;
+    console.error('❌ API error adjusting stock:', error);
+    return new NextResponse('Server error', { status: 500 });
   }
 }
