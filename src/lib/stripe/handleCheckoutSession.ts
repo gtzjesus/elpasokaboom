@@ -32,6 +32,10 @@ export async function handleCheckoutSessionCompleted(
 
   const { orderNumber, clerkUserId } = metadata as Metadata;
 
+  await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/ping`, {
+    method: 'POST',
+  });
+
   // 🔁 Sync customer to Sanity
   const stripeCustomer = await syncCustomerToSanity(customer as string);
 
