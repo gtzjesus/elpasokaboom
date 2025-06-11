@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import '../globals.css';
 import AdminGuard from '@/components/auth/AdminGuard';
+import { Toaster } from 'sonner';
 
 const navItems = [
   { name: 'Dashboard', href: '/admin/dashboard' },
@@ -91,7 +92,12 @@ export default function AdminLayout({
                 </svg>
               </button>
             </header>
-
+            <Toaster
+              position="top-right"
+              richColors
+              closeButton
+              duration={Infinity} // optional global default
+            />
             <main className="flex-1 overflow-y-auto p-8">{children}</main>
           </div>
         </div>
