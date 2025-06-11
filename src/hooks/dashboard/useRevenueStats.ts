@@ -7,12 +7,14 @@ type RevenuePoint = {
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export function useRevenueStats(interval: 'daily' | 'weekly' = 'daily') {
+export function useRevenueStats(
+  interval: 'daily' | 'weekly' | 'monthly' = 'daily'
+) {
   const { data, error, isLoading } = useSWR<RevenuePoint[]>(
     `/api/revenue?interval=${interval}`,
     fetcher,
     {
-      refreshInterval: 5000, // Still real-time!
+      refreshInterval: 5000,
     }
   );
 

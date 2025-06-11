@@ -34,10 +34,17 @@ export async function GET(req: Request) {
     const revenueMap: Record<string, number> = {};
 
     result.forEach((order: { orderDate: string; totalPrice: number }) => {
-      const key =
-        interval === 'weekly'
-          ? getWeekStart(order.orderDate)
-          : new Date(order.orderDate).toISOString().split('T')[0];
+      let key: string;
+      const orderDate = new Date(order.orderDate);
+
+      if (interval === 'weekly') {
+        key = getWeekStart(order.orderDate); // yyyy-mm-dd of Monday
+      } else if (interval === 'monthly') {
+        key = `${orderDate.getFullYear()}-${String(orderDate.getMonth() + 1).padStart(2, '0')}`; // e.g., "2025-06"
+      } else {
+        key = orderDate.toISOString().split('T')[0]; // Daily
+      }
+
       if (!revenueMap[key]) revenueMap[key] = 0;
       revenueMap[key] += order.totalPrice || 0;
     });

@@ -19,8 +19,19 @@ export default function RevenueBarChart({
   interval,
 }: {
   data: RevenuePoint[];
-  interval: 'daily' | 'weekly';
+  interval: 'daily' | 'weekly' | 'monthly';
 }) {
+  const formatLabel = (label: string) => {
+    if (interval === 'monthly') {
+      const [year, month] = label.split('-');
+      return `${new Date(+year, +month - 1).toLocaleString('default', { month: 'short' })}`;
+    }
+    if (interval === 'weekly') {
+      return `Week of ${label.slice(5)}`; // e.g., "Week of 06-03"
+    }
+    return label.slice(5); // daily – show MM-DD
+  };
+
   return (
     <div className="w-full">
       <h2
@@ -30,19 +41,16 @@ export default function RevenueBarChart({
           textShadow: '1px 1px 3px rgba(0,0,0,0.2)',
         }}
       >
-        {interval === 'weekly' ? 'weekly earnings' : 'daily earnings'}
+        {interval} earnings
       </h2>
       <ResponsiveContainer width="100%" height={250}>
         <BarChart
           data={data}
           margin={{ top: 10, right: 0, left: 0, bottom: 10 }}
         >
-          {/* Remove grid for clean look */}
-          {/* <CartesianGrid strokeDasharray="3 3" /> */}
-
-          {/* X Axis */}
           <XAxis
             dataKey="date"
+            tickFormatter={formatLabel}
             tick={{ fontSize: 10 }}
             tickLine={false}
             axisLine={false}
@@ -51,15 +59,8 @@ export default function RevenueBarChart({
             textAnchor="end"
             height={45}
           />
-
-          {/* Y Axis – hide numbers if minimal */}
           <YAxis tick={false} axisLine={false} tickLine={false} width={0} />
-
-          {/* Optional tooltip (can remove if too cluttered) */}
-          {/* <Tooltip /> */}
-
           <Bar dataKey="revenue" fill="#2E8B57" radius={[4, 4, 0, 0]}>
-            {/* Show value always on top of bars */}
             <LabelList
               dataKey="revenue"
               position="top"
