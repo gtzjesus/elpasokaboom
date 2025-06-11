@@ -17,7 +17,7 @@ export function useRecentOrders() {
     isLoading,
     error,
   } = useSWR('/api/recent-orders', fetcher, {
-    refreshInterval: 10000,
+    refreshInterval: 5000,
   });
 
   return {

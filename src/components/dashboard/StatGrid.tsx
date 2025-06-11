@@ -15,14 +15,11 @@ export default function StatGrid({ data }: { data: StatBlock[] }) {
     <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-1">
       {data.map(({ title, value, href, color, loading }) => (
         <Link key={title} href={href}>
-          <div
-            className="px-4 py-8 text-black cursor-pointer"
-            style={{ backgroundColor: color }}
-          >
+          <div className="px-2 py-4 " style={{ backgroundColor: color }}>
             <div className="uppercase text-xs font-light text-gray-800">
               {title}
             </div>
-            <div className="uppercase text-6xl font-light text-gray-800 pt-10">
+            <div className="uppercase text-4xl font-bold text-gray-800 pt-6">
               {loading ? '—' : value}
             </div>
           </div>

@@ -14,13 +14,14 @@ export default function QuickStatsSection({ data }: { data: StatBlock[] }) {
   return (
     <section>
       <h2
-        className="uppercase text-lg font-extrabold py-3 tracking-widest"
+        className="uppercase text-sm font-extrabold pb-2 tracking-widest"
         style={{
           color: '#F1F0E1',
+
           textShadow: '1px 1px 3px rgba(0,0,0,0.2)',
         }}
       >
-        quick glance
+        quick metrics
       </h2>
       <StatGrid data={data} />
     </section>

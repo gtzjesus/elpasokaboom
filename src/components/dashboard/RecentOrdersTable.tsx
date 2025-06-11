@@ -24,13 +24,13 @@ export default function RecentOrdersTable({
   return (
     <div className="grid grid-cols-1 py-4 ">
       <h2
-        className="uppercase text-lg font-extrabold py-3 tracking-widest"
+        className="uppercase text-sm font-extrabold pb-3 tracking-widest"
         style={{
-          color: '#2E8B57',
+          color: '#F1F0E1',
           textShadow: '1px 1px 3px rgba(0,0,0,0.2)',
         }}
       >
-        Recent Paid orders
+        Latest orders
       </h2>
 
       <div className="overflow-x-auto">
