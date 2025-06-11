@@ -31,13 +31,12 @@ export default function AdminDashboardPage() {
         ordersError={ordersError}
       />
       <div className="flex items-center justify-between mb-2 mt-6">
-        <h2 className="text-sm font-bold uppercase tracking-widest text-white">
-          Revenue
-        </h2>
+        <h2 className="text-sm font-bold uppercase tracking-widest "></h2>
         <div className="space-x-2">
           <button
+            type="button"
             onClick={() => setInterval('daily')}
-            className={`px-2 py-1 text-xs font-medium rounded ${
+            className={`px-2 py-1 uppercase text-xs  font-semibold text-center ${
               interval === 'daily'
                 ? 'bg-green-700 text-white'
                 : 'bg-gray-800 text-gray-300'
@@ -45,9 +44,11 @@ export default function AdminDashboardPage() {
           >
             Daily
           </button>
+
           <button
+            type="button"
             onClick={() => setInterval('weekly')}
-            className={`px-2 py-1 text-xs font-medium rounded ${
+            className={`px-2 py-1 uppercase text-xs  font-semibold text-center  ${
               interval === 'weekly'
                 ? 'bg-green-700 text-white'
                 : 'bg-gray-800 text-gray-300'

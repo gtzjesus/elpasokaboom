@@ -35,7 +35,7 @@ export default function RevenueBarChart({
       <ResponsiveContainer width="100%" height={250}>
         <BarChart
           data={data}
-          margin={{ top: 10, right: 10, left: -10, bottom: 10 }}
+          margin={{ top: 10, right: 0, left: 0, bottom: 10 }}
         >
           {/* Remove grid for clean look */}
           {/* <CartesianGrid strokeDasharray="3 3" /> */}
@@ -49,7 +49,7 @@ export default function RevenueBarChart({
             interval="preserveStartEnd"
             angle={-45}
             textAnchor="end"
-            height={40}
+            height={45}
           />
 
           {/* Y Axis – hide numbers if minimal */}
