@@ -5,9 +5,8 @@ import {
   Bar,
   XAxis,
   YAxis,
-  Tooltip,
-  CartesianGrid,
   ResponsiveContainer,
+  LabelList,
 } from 'recharts';
 
 type RevenuePoint = {
@@ -15,9 +14,15 @@ type RevenuePoint = {
   revenue: number;
 };
 
-export default function RevenueBarChart({ data }: { data: RevenuePoint[] }) {
+export default function RevenueBarChart({
+  data,
+  interval,
+}: {
+  data: RevenuePoint[];
+  interval: 'daily' | 'weekly';
+}) {
   return (
-    <div className="">
+    <div className="w-full">
       <h2
         className="uppercase text-sm font-extrabold py-3 tracking-widest"
         style={{
@@ -25,16 +30,42 @@ export default function RevenueBarChart({ data }: { data: RevenuePoint[] }) {
           textShadow: '1px 1px 3px rgba(0,0,0,0.2)',
         }}
       >
-        daily earnings
+        {interval === 'weekly' ? 'weekly earnings' : 'daily earnings'}
       </h2>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" />
-          <YAxis />
+      <ResponsiveContainer width="100%" height={250}>
+        <BarChart
+          data={data}
+          margin={{ top: 10, right: 10, left: -10, bottom: 10 }}
+        >
+          {/* Remove grid for clean look */}
+          {/* <CartesianGrid strokeDasharray="3 3" /> */}
 
-          <Tooltip />
-          <Bar dataKey="revenue" fill="#2E8B57" />
+          {/* X Axis */}
+          <XAxis
+            dataKey="date"
+            tick={{ fontSize: 10 }}
+            tickLine={false}
+            axisLine={false}
+            interval="preserveStartEnd"
+            angle={-45}
+            textAnchor="end"
+            height={40}
+          />
+
+          {/* Y Axis – hide numbers if minimal */}
+          <YAxis tick={false} axisLine={false} tickLine={false} width={0} />
+
+          {/* Optional tooltip (can remove if too cluttered) */}
+          {/* <Tooltip /> */}
+
+          <Bar dataKey="revenue" fill="#2E8B57" radius={[4, 4, 0, 0]}>
+            {/* Show value always on top of bars */}
+            <LabelList
+              dataKey="revenue"
+              position="top"
+              style={{ fill: '#fff', fontSize: 10, fontWeight: 'bold' }}
+            />
+          </Bar>
         </BarChart>
       </ResponsiveContainer>
     </div>

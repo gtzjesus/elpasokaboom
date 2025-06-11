@@ -21,7 +21,7 @@ export default function QuickStatsSection({ data }: { data: StatBlock[] }) {
           textShadow: '1px 1px 3px rgba(0,0,0,0.2)',
         }}
       >
-        quick metrics
+        store metrics
       </h2>
       <StatGrid data={data} />
     </section>

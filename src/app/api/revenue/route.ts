@@ -4,7 +4,15 @@ import { currentUser } from '@clerk/nextjs/server';
 
 const ADMIN_EMAILS = ['gtz.jesus@outlook.com'];
 
-export async function GET() {
+function getWeekStart(date: string): string {
+  const d = new Date(date);
+  const day = d.getDay(); // Sunday = 0
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Adjust to Monday
+  const weekStart = new Date(d.setDate(diff));
+  return weekStart.toISOString().split('T')[0];
+}
+
+export async function GET(req: Request) {
   try {
     const user = await currentUser();
     const email = user?.emailAddresses?.[0]?.emailAddress;
@@ -13,7 +21,9 @@ export async function GET() {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    // Fetch revenue per day from paid orders
+    const { searchParams } = new URL(req.url);
+    const interval = searchParams.get('interval') || 'daily';
+
     const result = await client.fetch(`
       *[_type == "order" && status == "paid"] {
         orderDate,
@@ -21,16 +31,17 @@ export async function GET() {
       }
     `);
 
-    // Group by day and sum revenue
     const revenueMap: Record<string, number> = {};
 
     result.forEach((order: { orderDate: string; totalPrice: number }) => {
-      const date = new Date(order.orderDate).toISOString().split('T')[0]; // e.g. '2025-06-10'
-      if (!revenueMap[date]) revenueMap[date] = 0;
-      revenueMap[date] += order.totalPrice || 0;
+      const key =
+        interval === 'weekly'
+          ? getWeekStart(order.orderDate)
+          : new Date(order.orderDate).toISOString().split('T')[0];
+      if (!revenueMap[key]) revenueMap[key] = 0;
+      revenueMap[key] += order.totalPrice || 0;
     });
 
-    // Convert map to array sorted by date ascending
     const data = Object.entries(revenueMap)
       .map(([date, revenue]) => ({ date, revenue }))
       .sort((a, b) => a.date.localeCompare(b.date));
