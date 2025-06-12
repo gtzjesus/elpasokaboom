@@ -63,12 +63,6 @@ export const productType = defineType({
       description: 'Enter care instructions for the product.',
     }),
     defineField({
-      name: 'shipping',
-      title: 'Shipping Information',
-      type: 'string',
-      description: 'Enter shipping details for the product.',
-    }),
-    defineField({
       name: 'price',
       title: 'Price',
       type: 'number',

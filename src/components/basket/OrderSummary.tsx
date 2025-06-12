@@ -56,8 +56,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
         </p>
         <p className="flex justify-between uppercase text-xs font-light text-gray-800">
           <span>
-            Subtotal{' '}
-            <span className="lowercase">(tax & shipping at checkout)</span>:
+            Subtotal <span className="lowercase">(tax at checkout)</span>:
           </span>
           <span>${totalPrice.toFixed(0)}</span>
         </p>

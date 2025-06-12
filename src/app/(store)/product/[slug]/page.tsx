@@ -51,9 +51,6 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
           <InfoDropdown title="Details" info={product.description ?? ''} />
           {product.care && <InfoDropdown title="Care" info={product.care} />}
           {product.size && <InfoDropdown title="Size" info={product.size} />}
-          {product.shipping && (
-            <InfoDropdown title="Shipping" info={product.shipping} />
-          )}
 
           {/* Out of stock overlay */}
           {isOutOfStock && (

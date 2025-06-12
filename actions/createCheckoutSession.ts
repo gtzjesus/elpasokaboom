@@ -21,13 +21,11 @@ export async function createCheckoutSession(
   metadata: Metadata
 ) {
   try {
-    // ✅ Ensure all items have a valid price
     const itemsWithoutPrice = items.filter((item) => !item.product.price);
     if (itemsWithoutPrice.length > 0) {
       throw new Error('Some items do not have a price.');
     }
 
-    // ✅ Check for existing Stripe customer by email
     const customers = await stripe.customers.list({
       email: metadata.customerEmail,
       limit: 1,
@@ -38,12 +36,6 @@ export async function createCheckoutSession(
       customerId = customers.data[0].id;
     }
 
-    // ✅ Calculate subtotal
-    const subtotal = items.reduce((total, item) => {
-      return total + item.product.price! * item.quantity;
-    }, 0);
-
-    // ✅ Build base URLs for redirect
     const baseUrl =
       process.env.NODE_ENV === 'production'
         ? `https://${process.env.VERCEL_URL}`
@@ -52,60 +44,6 @@ export async function createCheckoutSession(
     const successUrl = `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}&orderNumber=${metadata.orderNumber}`;
     const cancelUrl = `${baseUrl}/basket`;
 
-    // ✅ Set up dynamic shipping options
-    const shippingOptions = [];
-
-    // Standard Shipping ($5)
-    const standardShipping = await stripe.shippingRates.create({
-      display_name: 'Standard Shipping',
-      type: 'fixed_amount',
-      fixed_amount: {
-        amount: 500,
-        currency: 'usd',
-      },
-      delivery_estimate: {
-        minimum: { unit: 'business_day', value: 3 },
-        maximum: { unit: 'business_day', value: 5 },
-      },
-      tax_behavior: 'inclusive',
-    });
-    shippingOptions.push({ shipping_rate: standardShipping.id });
-
-    // Free Shipping if subtotal >= $50
-    if (subtotal >= 50) {
-      const freeShipping = await stripe.shippingRates.create({
-        display_name: 'Free Shipping',
-        type: 'fixed_amount',
-        fixed_amount: {
-          amount: 0,
-          currency: 'usd',
-        },
-        delivery_estimate: {
-          minimum: { unit: 'business_day', value: 5 },
-          maximum: { unit: 'business_day', value: 7 },
-        },
-        tax_behavior: 'inclusive',
-      });
-      shippingOptions.push({ shipping_rate: freeShipping.id });
-    }
-
-    // Express Shipping ($15)
-    const expressShipping = await stripe.shippingRates.create({
-      display_name: 'Express Shipping',
-      type: 'fixed_amount',
-      fixed_amount: {
-        amount: 1500,
-        currency: 'usd',
-      },
-      delivery_estimate: {
-        minimum: { unit: 'business_day', value: 1 },
-        maximum: { unit: 'business_day', value: 2 },
-      },
-      tax_behavior: 'inclusive',
-    });
-    shippingOptions.push({ shipping_rate: expressShipping.id });
-
-    // ✅ Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       customer_creation: customerId ? undefined : 'always',
@@ -116,17 +54,7 @@ export async function createCheckoutSession(
       allow_promotion_codes: true,
       automatic_tax: { enabled: true },
 
-      ...(customerId && {
-        customer_update: {
-          shipping: 'auto',
-        },
-      }),
-
-      shipping_address_collection: {
-        allowed_countries: ['US'],
-      },
       billing_address_collection: 'required',
-      shipping_options: shippingOptions,
 
       line_items: items.map((item) => ({
         price_data: {

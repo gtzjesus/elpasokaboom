@@ -38,28 +38,28 @@ export function useDashboardStats(): {
   const dashboardData: StatBlock[] = [
     {
       title: 'Total Paid Orders',
-      value: data.totalOrders,
+      value: data.totalOrders ?? 0,
       href: '/admin/orders',
       color: '#F1F0E1',
       loading: isLoading,
     },
     {
       title: 'Total Products',
-      value: data.activeProducts,
+      value: data.activeProducts ?? 0,
       href: '/admin/products',
       color: '#aabee0',
       loading: isLoading,
     },
     {
       title: 'Total Earned',
-      value: `$${data.totalRevenue.toFixed(0)}`,
+      value: `$${(data.totalRevenue ?? 0).toFixed(0)}`,
       href: '/admin/finance',
       color: '#aabee0',
       loading: isLoading,
     },
     {
       title: 'Total Customers',
-      value: data.activeCustomers,
+      value: data.activeCustomers ?? 0,
       href: '/admin/customers',
       color: '#F1F0E1',
       loading: isLoading,

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 interface InfoDropdownProps {
-  title: string; // The title for the dropdown (e.g., "Size", "Care", "Shipping")
+  title: string; // The title for the dropdown (e.g., "Size", "Care", "")
   info: string; // The product info to display within the dropdown
 }
 

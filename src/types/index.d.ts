@@ -43,7 +43,6 @@ export interface Product extends SanityDocument {
   description?: string;
   care?: string;
   size?: string;
-  shipping?: string;
   extraImages?: SanityImage[]; // optional extra product images
 }
 
