@@ -22,6 +22,8 @@ export default function AdminDashboardPage() {
     error: revenueError,
   } = useRevenueStats(interval);
 
+  const chartRef = useRef<HTMLDivElement>(null);
+
   // 🔁 Track last order to detect new ones
   const lastOrderId = useRef<string | null>(null);
 
@@ -73,7 +75,11 @@ export default function AdminDashboardPage() {
       <RevenueIntervalToggle onChangeAction={setInterval} active={interval} />;
       {revenueError && <p className="text-red-500">{revenueError}</p>}
       {!revenueLoading && !revenueError && (
-        <RevenueBarChart data={revenueData} interval={interval} />
+        <div ref={chartRef}>
+          {!revenueLoading && !revenueError && (
+            <RevenueBarChart data={revenueData} interval={interval} />
+          )}
+        </div>
       )}
     </>
   );
