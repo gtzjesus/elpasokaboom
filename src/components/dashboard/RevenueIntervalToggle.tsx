@@ -16,9 +16,7 @@ export default function RevenueIntervalToggle({
 
   return (
     <div className="flex items-center justify-between mb-2 mt-6">
-      <h2 className="text-sm font-bold uppercase tracking-widest text-white">
-        business Revenue
-      </h2>
+      <h2 className="text-sm font-bold uppercase tracking-widest text-white"></h2>
       <div className="space-x-2">
         {intervals.map((interval) => (
           <button

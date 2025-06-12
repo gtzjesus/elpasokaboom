@@ -35,7 +35,7 @@ export default function RevenueBarChart({
   return (
     <div className="w-full">
       <h2
-        className="uppercase text-sm font-extrabold py-3 tracking-widest"
+        className="uppercase text-sm font-extrabold tracking-widest"
         style={{
           color: '#F1F0E1',
           textShadow: '1px 1px 3px rgba(0,0,0,0.2)',
@@ -46,7 +46,7 @@ export default function RevenueBarChart({
       <ResponsiveContainer width="100%" height={250}>
         <BarChart
           data={data}
-          margin={{ top: 10, right: 0, left: 0, bottom: 10 }}
+          margin={{ top: 0, right: 0, left: 0, bottom: 10 }}
         >
           <XAxis
             dataKey="date"

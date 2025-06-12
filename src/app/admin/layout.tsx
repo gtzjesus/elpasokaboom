@@ -27,7 +27,10 @@ export default function AdminLayout({
   return (
     <ClerkProvider>
       <AdminGuard>
-        <div className="flex h-screen" style={{ backgroundColor: '#101015' }}>
+        <div
+          className="flex min-h-screen"
+          style={{ backgroundColor: '#101015' }}
+        >
           {/* Sidebar */}
           <aside
             className={clsx(
@@ -67,7 +70,7 @@ export default function AdminLayout({
           {/* Main content area */}
           <div className="flex-1 flex flex-col">
             {/* Mobile header */}
-            <header className="md:hidden flex justify-between items-center style={{ backgroundColor: '#101015' }} text-white p-4">
+            <header className="md:hidden sticky top-0 z-20 flex justify-between items-center bg-[#101015] text-white p-4 shadow-sm">
               <h1 className="uppercase font-light text-md">Admin HQ</h1>
 
               {/* Hamburger Button */}
@@ -101,7 +104,7 @@ export default function AdminLayout({
                 className: 'mb-3', // 👈 Add spacing between stacked toasts
               }}
             />
-            <main className="flex-1 overflow-y-auto p-8">{children}</main>
+            <main className="flex-1  px-4 ">{children}</main>
           </div>
         </div>
       </AdminGuard>
