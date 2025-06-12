@@ -100,8 +100,9 @@ export default function AdminLayout({
               richColors
               closeButton
               duration={Infinity}
+              offset={64} // this sets starting point below the sticky header
               toastOptions={{
-                className: 'mb-3', // 👈 Add spacing between stacked toasts
+                className: 'mb-4 shadow-lg rounded-lg', // spacing between stacked toasts
               }}
             />
             <main className="flex-1  px-4 ">{children}</main>

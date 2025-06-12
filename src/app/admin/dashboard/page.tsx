@@ -30,27 +30,25 @@ export default function AdminDashboardPage() {
       const latest = recentOrders[0];
 
       if (lastOrderId.current && latest.id !== lastOrderId.current) {
-        toast.custom(
-          (t) => (
-            <div
+        toast.custom((t) => (
+          <div className="bg-green-700 text-white p-4 rounded shadow-lg mb-2 w-72">
+            <div className="text-sm font-light uppercase">
+              New Order from {latest.customerName || 'Customer'}!
+            </div>
+            <div className="text-xs font-medium mt-1">
+              Order #{latest.orderNumber || '—'} • ${latest.totalPrice}
+            </div>
+            <button
               onClick={() => {
                 window.location.href = `/admin/orders/${latest.orderNumber || ''}`;
                 toast.dismiss(t);
               }}
-              className="cursor-pointer bg-green-700 text-white p-4 rounded shadow-lg transition-all"
+              className="mt-3 text-xs uppercase font-semibold bg-white text-green-700 px-3 py-1 rounded"
             >
-              <div className="text-sm font-light uppercase">
-                New Order from {latest.customerName || 'Customer'}!
-              </div>
-              <div className="text-xs font-medium mt-1">
-                Order #{latest.orderNumber || '—'} • ${latest.totalPrice}
-              </div>
-            </div>
-          ),
-          {
-            duration: Infinity,
-          }
-        );
+              View Order
+            </button>
+          </div>
+        ));
       }
 
       // Update last known order ID
