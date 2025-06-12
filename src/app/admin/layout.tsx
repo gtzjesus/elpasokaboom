@@ -96,7 +96,10 @@ export default function AdminLayout({
               position="top-right"
               richColors
               closeButton
-              duration={Infinity} // optional global default
+              duration={Infinity}
+              toastOptions={{
+                className: 'mb-3', // 👈 Add spacing between stacked toasts
+              }}
             />
             <main className="flex-1 overflow-y-auto p-8">{children}</main>
           </div>

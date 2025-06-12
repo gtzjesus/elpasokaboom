@@ -64,7 +64,28 @@ export default function RevenueBarChart({
             <LabelList
               dataKey="revenue"
               position="top"
-              style={{ fill: '#fff', fontSize: 10, fontWeight: 'bold' }}
+              content={({ value, x, y, width }) => {
+                const revenue =
+                  typeof value === 'number' ? Math.round(value) : 0;
+
+                const xPos = typeof x === 'number' ? x : parseFloat(x || '0');
+                const yPos = typeof y === 'number' ? y : parseFloat(y || '0');
+                const w =
+                  typeof width === 'number' ? width : parseFloat(width || '0');
+
+                return (
+                  <text
+                    x={xPos + w / 2}
+                    y={yPos - 5}
+                    fill="#fff"
+                    fontSize={10}
+                    fontWeight="bold"
+                    textAnchor="middle"
+                  >
+                    ${revenue}
+                  </text>
+                );
+              }}
             />
           </Bar>
         </BarChart>
