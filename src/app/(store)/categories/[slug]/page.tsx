@@ -5,7 +5,8 @@ import { getAllCategories } from '@/sanity/lib/products/getAllCategories';
 import ProductsView from '@/components/products/ProductsView';
 import { notFound } from 'next/navigation';
 import Header from '@/components/common/header';
-
+import type { Metadata } from 'next';
+import { getCategoryBySlug } from '@/sanity/lib/products/getCategoryBySlug';
 /**
  * CategoryPage Component
  * Displays products for a specific category based on the 'slug' in the URL.
@@ -14,6 +15,43 @@ import Header from '@/components/common/header';
  * @param {Object} params - The category slug from the URL
  * @returns {JSX.Element} The rendered page showing the category's products.
  */
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  // Await params before destructuring
+  const { slug } = await params;
+
+  // Fetch category data by slug
+  const category = await getCategoryBySlug(slug);
+
+  const categoryTitle =
+    slug
+      .split('-')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ') || 'Fireworks';
+
+  const title = category?.title || categoryTitle;
+  const description =
+    category?.description || 'Fireworks and party supplies category.';
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `https://elpasokaboom.com/categories/${slug}`,
+      siteName: 'ElPasoKaBoom',
+      type: 'website',
+    },
+    alternates: {
+      canonical: `https://elpasokaboom.com/categories/${slug}`,
+    },
+  };
+}
 export default async function CategoryPage({
   params,
 }: {
@@ -35,9 +73,9 @@ export default async function CategoryPage({
 
   // Render the category page with a header, category title, and product grid
   return (
-    <div className="container bg-white">
+    <div className="container bg-flag-red">
       <Header />
-      <h1 className="uppercase text-sm font-light text-center p-5 text-gray-800">
+      <h1 className="uppercase text-sm font-light text-center p-5 text-white">
         {/* Format the category title by capitalizing words in the slug */}
         {slug
           .split('-')

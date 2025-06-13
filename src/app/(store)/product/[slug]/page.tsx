@@ -6,10 +6,64 @@ import ProductSummary from '@/components/products/ProductSummary';
 import { getProductBySlug } from '@/sanity/lib/products/getProductBySlug';
 import { Product } from '@/types';
 import { notFound } from 'next/navigation';
+import { imageUrl } from '@/lib/imageUrl'; // ✅ Make sure this generates URLs from Sanity image objects
+import type { Metadata } from 'next';
 
 // Force static rendering and set revalidation interval
 export const dynamic = 'force-static';
 export const revalidate = 60;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>; // <--- params is a Promise now
+}): Promise<Metadata> {
+  // Await params before accessing slug
+  const { slug } = await params;
+
+  const product = await getProductBySlug(slug);
+
+  if (!product) {
+    return {
+      title: 'Product Not Found | ElPasoKaBoom',
+      description: 'Sorry, this product does not exist.',
+    };
+  }
+
+  const fallbackDescription =
+    product.description?.slice(0, 150) ||
+    'High-quality fireworks available now.';
+
+  const productImageUrl = product.image
+    ? imageUrl(product.image).width(1200).height(630).url()
+    : '/default-og.jpg';
+
+  return {
+    title: `${product.name} | ElPasoKaBoom`,
+    description: fallbackDescription,
+    openGraph: {
+      title: `${product.name} | ElPasoKaBoom`,
+      description: fallbackDescription,
+      images: [
+        {
+          url: productImageUrl,
+          width: 1200,
+          height: 630,
+          alt: product.name || 'Fireworks Product',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${product.name} | ElPasoKaBoom`,
+      description: fallbackDescription,
+      images: [productImageUrl],
+    },
+    alternates: {
+      canonical: `https://elpasokaboom.com/products/${product.slug?.current}`,
+    },
+  };
+}
 
 async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   // Resolve the slug from the URL parameters

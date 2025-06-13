@@ -27,6 +27,7 @@ import BasketItemCard from '@/components/basket/BasketItemCard';
  *
  * @returns {JSX.Element} The rendered basket page.
  */
+
 export default function BasketPage() {
   const { isSignedIn = false } = useAuth();
   const { user } = useUser();
