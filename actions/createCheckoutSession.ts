@@ -26,18 +26,16 @@ export async function createCheckoutSession(
       throw new Error('Some items do not have a price.');
     }
 
-    // 🔍 Look up existing Stripe customer
-    const customers = await stripe.customers.list({
+    // ✅ Always create or retrieve Stripe customer first
+    let customerId: string;
+    const existingCustomers = await stripe.customers.list({
       email: metadata.customerEmail,
       limit: 1,
     });
 
-    let customerId: string;
-
-    if (customers.data.length > 0) {
-      customerId = customers.data[0].id;
+    if (existingCustomers.data.length > 0) {
+      customerId = existingCustomers.data[0].id;
     } else {
-      // ✅ Create Stripe customer if not found
       const newCustomer = await stripe.customers.create({
         email: metadata.customerEmail,
         name: metadata.customerName,
@@ -48,16 +46,16 @@ export async function createCheckoutSession(
       customerId = newCustomer.id;
     }
 
-    // 🌐 Determine URLs
+    // 🌍 Define base URLs
     const baseUrl =
       process.env.NODE_ENV === 'production'
         ? `https://${process.env.VERCEL_URL}`
-        : `${process.env.NEXT_PUBLIC_BASE_URL}`;
+        : process.env.NEXT_PUBLIC_BASE_URL;
 
     const successUrl = `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}&orderNumber=${metadata.orderNumber}`;
     const cancelUrl = `${baseUrl}/basket`;
 
-    // 💳 Create Checkout session
+    // 💳 Create the Checkout Session
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       mode: 'payment',
