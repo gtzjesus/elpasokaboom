@@ -26,25 +26,17 @@ export async function createCheckoutSession(
       throw new Error('Some items do not have a price.');
     }
 
-    // ✅ Always create or retrieve a Stripe customer
+    // 🔍 Try to find an existing Stripe customer
     const customers = await stripe.customers.list({
       email: metadata.customerEmail,
       limit: 1,
     });
 
-    let customerId: string;
+    let customerId: string | undefined;
+    const customerExists = customers.data.length > 0;
 
-    if (customers.data.length > 0) {
+    if (customerExists) {
       customerId = customers.data[0].id;
-    } else {
-      const newCustomer = await stripe.customers.create({
-        email: metadata.customerEmail,
-        name: metadata.customerName,
-        metadata: {
-          clerkUserId: metadata.clerkUserId,
-        },
-      });
-      customerId = newCustomer.id;
     }
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
@@ -52,14 +44,32 @@ export async function createCheckoutSession(
     const successUrl = `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}&orderNumber=${metadata.orderNumber}`;
     const cancelUrl = `${baseUrl}/basket`;
 
+    // 🧾 Create the checkout session
     const session = await stripe.checkout.sessions.create({
-      customer: customerId, // always a real customer ID
       mode: 'payment',
       success_url: successUrl,
       cancel_url: cancelUrl,
       allow_promotion_codes: true,
-      automatic_tax: { enabled: true },
       billing_address_collection: 'required',
+      automatic_tax: { enabled: true },
+
+      ...(customerExists
+        ? {
+            customer: customerId,
+            customer_update: {
+              name: 'auto',
+              address: 'auto',
+            },
+          }
+        : {
+            customer_creation: 'always',
+            customer_email: metadata.customerEmail,
+            customer_update: {
+              name: 'auto',
+              address: 'auto',
+            },
+          }),
+
       line_items: items.map((item) => ({
         price_data: {
           currency: 'usd',
@@ -78,6 +88,7 @@ export async function createCheckoutSession(
         },
         quantity: item.quantity,
       })),
+
       metadata: {
         ...metadata,
         items: JSON.stringify(
