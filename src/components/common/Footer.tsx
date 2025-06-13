@@ -16,17 +16,17 @@ const Footer: React.FC = () => {
         {/* Logo */}
         <div className="flex justify-center mb-3">
           <Image
-            src="/icons/logo.webp"
-            alt="WorldHello logo"
-            width={30}
-            height={30}
+            src="/icons/logo-black.webp"
+            alt="elpasokaboom"
+            width={50}
+            height={50}
             priority
           />
         </div>
 
         {/* Copyright */}
-        <p className="barlow-condensed-regular text-sm tracking-very-wide font-light text-gray-700">
-          &copy; worldhello {new Date().getFullYear()}. all rights reserved.
+        <p className="uppercase barlow-condensed-regular text-xs tracking-very-wide font-light text-flag-blue">
+          &copy; elpasokaboom {new Date().getFullYear()}. all rights reserved.
         </p>
       </div>
     </footer>

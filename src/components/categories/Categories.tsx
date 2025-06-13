@@ -47,9 +47,9 @@ interface CategoriesProps {
  */
 const Categories: React.FC<CategoriesProps> = ({ categories }) => {
   return (
-    <div className="w-full mx-auto bg-gradient-to-br from-pearl via-white-500 to-blue-100 pb-10">
+    <div className="w-full mx-auto bg-gradient-to-br from-white via-white-500 to-flag-blue pb-10">
       <h2 className="uppercase barlow-condensed-regular text-lg tracking-very-wide font-semibold text-center text-black py-6">
-        3D Inventory
+        fire Inventory
       </h2>
 
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4">
