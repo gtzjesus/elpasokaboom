@@ -26,16 +26,29 @@ export async function createCheckoutSession(
       throw new Error('Some items do not have a price.');
     }
 
+    // 🔍 Look up existing Stripe customer
     const customers = await stripe.customers.list({
       email: metadata.customerEmail,
       limit: 1,
     });
 
-    let customerId: string | undefined;
+    let customerId: string;
+
     if (customers.data.length > 0) {
       customerId = customers.data[0].id;
+    } else {
+      // ✅ Create Stripe customer if not found
+      const newCustomer = await stripe.customers.create({
+        email: metadata.customerEmail,
+        name: metadata.customerName,
+        metadata: {
+          clerkUserId: metadata.clerkUserId,
+        },
+      });
+      customerId = newCustomer.id;
     }
 
+    // 🌐 Determine URLs
     const baseUrl =
       process.env.NODE_ENV === 'production'
         ? `https://${process.env.VERCEL_URL}`
@@ -44,18 +57,15 @@ export async function createCheckoutSession(
     const successUrl = `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}&orderNumber=${metadata.orderNumber}`;
     const cancelUrl = `${baseUrl}/basket`;
 
+    // 💳 Create Checkout session
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
-      customer_creation: customerId ? undefined : 'always',
-      customer_email: !customerId ? metadata.customerEmail : undefined,
       mode: 'payment',
       success_url: successUrl,
       cancel_url: cancelUrl,
       allow_promotion_codes: true,
       automatic_tax: { enabled: true },
-
       billing_address_collection: 'required',
-
       line_items: items.map((item) => ({
         price_data: {
           currency: 'usd',
@@ -74,7 +84,6 @@ export async function createCheckoutSession(
         },
         quantity: item.quantity,
       })),
-
       metadata: {
         ...metadata,
         items: JSON.stringify(
