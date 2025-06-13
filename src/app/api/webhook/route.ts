@@ -37,6 +37,15 @@ export async function POST(req: NextRequest) {
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session;
 
+    // Check if session.customer is null
+    if (!session.customer) {
+      console.error('❌ Stripe Checkout session has no associated customer');
+      return NextResponse.json(
+        { error: 'No associated customer found' },
+        { status: 400 }
+      );
+    }
+
     try {
       const order = await handleCheckoutSessionCompleted(session);
       console.log('✅ Order synced to Sanity:', order);
