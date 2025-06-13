@@ -75,7 +75,7 @@ const Header = () => {
   return (
     <header
       className={`${
-        scrolled ? 'bg-pearl shadow-lg' : 'bg-transparent'
+        scrolled ? 'bg-flag-red shadow-lg' : 'bg-transparent'
       } fixed top-0 z-20 flex items-center px-4 py-3 w-full transition-all duration-300 ease-in-out`}
     >
       <div className="flex w-full items-center justify-between">
@@ -103,11 +103,11 @@ const Header = () => {
             </Link>
             <Link
               href="/"
-              className={`barlow-condensed-regular text-md ${
-                scrolled ? 'text-black' : 'text-black'
+              className={`uppercase barlow-condensed-regular text-sm ${
+                scrolled ? 'text-white' : 'text-white'
               }`}
             >
-              Worldhello
+              elpasokaboom
             </Link>
           </div>
         </div>
@@ -120,7 +120,7 @@ const Header = () => {
             <CartButton itemCount={itemCount} scrolled={scrolled} />
           )}
           <div
-            className={`hidden sm:flex items-center ${scrolled ? 'text-black' : 'text-black'}`}
+            className={`hidden sm:flex items-center ${scrolled ? 'text-white' : 'text-white'}`}
           >
             <AuthButtons user={user ?? null} />
           </div>
@@ -133,13 +133,13 @@ const Header = () => {
         >
           {/* Top Bar (first line) */}
           <div
-            className={`w-5 h-0.5 ${scrolled ? 'bg-black' : 'bg-black'} transition-all duration-300 ease-in-out transform ${
+            className={`w-5 h-0.5 ${scrolled ? 'bg-white' : 'bg-white'} transition-all duration-300 ease-in-out transform ${
               isMenuOpen ? 'rotate-45 translate-y-0.5' : ''
             }`}
           />
           {/* Bottom Bar (third line) */}
           <div
-            className={`w-5 h-0.5 ${scrolled ? 'bg-black' : 'bg-black'} transition-all duration-300 ease-in-out transform ${
+            className={`w-5 h-0.5 ${scrolled ? 'bg-white' : 'bg-white'} transition-all duration-300 ease-in-out transform ${
               isMenuOpen ? '-rotate-45 -translate-y-0.5' : ''
             }`}
           />
@@ -148,7 +148,7 @@ const Header = () => {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 bg-white bg-opacity-100 z-10 transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-flag-red bg-opacity-100 z-10 transition-opacity duration-300 ${
           isMenuOpen ? 'opacity-95' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => setIsMenuOpen(false)}
@@ -166,7 +166,7 @@ const Header = () => {
           {isMenuOpen ? '' : <span className="text-white"></span>}
         </button>
         <div className="flex flex-col items-center  h-full p-20 space-y-6">
-          <div className="flex flex-col items-center space-y-4 text-black text-2xl">
+          <div className="flex flex-col items-center space-y-4 text-white text-2xl">
             <AuthButtons user={user ?? null} />
           </div>
         </div>

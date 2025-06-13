@@ -32,8 +32,8 @@ const HeroSection: FC = () => {
       {/* Wrapper for text content: Max width ensures it doesn't stretch too wide on large screens */}
       <div className="max-w-3xl">
         {/* Subheading: A brief description below the headline */}
-        <p className="barlow-condensed-regular tracking-very-wide text-xl sm:text-xl md:text-2xl font-semibold text-center text-white mb-6">
-          3D-Printed Crafts.
+        <p className="uppercase barlow-condensed-regular tracking-very-wide text-xl sm:text-xl md:text-2xl font-semibold text-center text-white mb-6">
+          light up the sky!
         </p>
         {/* Call to Action Button: 
             - Fixed at the bottom center of the screen
@@ -42,12 +42,12 @@ const HeroSection: FC = () => {
           href="/search?q=*"
           className={`fixed bottom-10 border-none left-1/2 transform -translate-x-1/2 p-4 block border transition-all uppercase text-xs  font-light text-center  ${
             scrolled
-              ? 'bg-blue-500 text-white hover:bg-blue-600'
+              ? 'bg-flag-blue text-white hover:bg-blue-600'
               : 'bg-white text-gray-800 hover:bg-gray-200'
           }`}
-          aria-label="Start shopping 3D prints"
+          aria-label="Start shopping"
         >
-          {scrolled ? 'Start shopping 3D' : 'Start shopping 3D'}
+          {scrolled ? 'Start shopping' : 'Start shopping'}
         </Link>
       </div>
     </section>

@@ -30,8 +30,41 @@ import { SanityLive } from '@/sanity/lib/live';
  */
 
 export const metadata: Metadata = {
-  title: 'basket',
-  description: 'basket page layout',
+  title: 'ElPasoKaBoom | Buy Fireworks Online in El Paso, TX',
+  description:
+    'ElPasoKaBoom is your go-to online fireworks store in El Paso, Texas. Shop safe, legal fireworks with fast pickup and unforgettable celebrations.',
+  keywords: [
+    'ElPasoKaBoom',
+    'El Paso fireworks',
+    'buy fireworks online',
+    'Texas fireworks store',
+    'Fourth of July El Paso',
+    'El Paso party supplies',
+    'legal fireworks El Paso',
+  ],
+  openGraph: {
+    title: 'ElPasoKaBoom | Buy Fireworks Online in El Paso',
+    description:
+      'Shop fireworks in El Paso, TX from ElPasoKaBoom. Get ready for your next big celebration with top-tier pyrotechnics!',
+    url: 'https://elpasokaboom.com',
+    siteName: 'ElPasoKaBoom',
+    images: [
+      {
+        url: '/images/elpaso.webp', // Use a real OG image here!
+        width: 1200,
+        height: 630,
+        alt: 'ElPasoKaBoom Fireworks Store',
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ElPasoKaBoom | Buy Fireworks Online in El Paso',
+    description:
+      'Shop fireworks online in El Paso, TX. Safe, legal, and ready to party — only at ElPasoKaBoom!',
+    images: ['/images/elpaso.webp'], // Same OG image
+  },
 };
 
 export default async function StoreLayout({

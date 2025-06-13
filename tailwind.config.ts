@@ -33,6 +33,8 @@ const config: Config = {
         // Static custom colors
         'custom-gray': '#D5D5D5',
         pearl: '#F5F5F5',
+        'flag-red': '#B22234',
+        'flag-blue': '#0A3161',
 
         // Dynamic theme colors using CSS variables (used with CSS theming systems)
         background: 'hsl(var(--background))',
