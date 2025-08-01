@@ -10,13 +10,13 @@ export async function getAllOrders() {
       email,
       products[] {
         quantity,
-        itemNumber,
         product->{
           _id,
           name,
           slug,
           image,
-          price
+          price,
+          itemNumber  // ✅ <--- moved here
         }
       },
       totalPrice,
@@ -26,10 +26,7 @@ export async function getAllOrders() {
       paymentStatus,
       pickupStatus,
       orderDate,
-          paymentMethod,
-
-      // ✅ Campos de pago agregados
-   
+      paymentMethod,
     }
   `;
 

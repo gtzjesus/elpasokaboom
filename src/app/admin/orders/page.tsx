@@ -1,37 +1,60 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import { getAllOrders } from '@/sanity/lib/orders/getAllOrders';
 import OrderCard from '@/components/orders/OrderCard';
 import { formatCurrency } from '@/lib/formatCurrency';
-import { format } from 'date-fns';
 
-export const dynamic = 'force-dynamic'; // For real-time updates
+export const dynamic = 'force-dynamic';
 
 interface Order {
   _id: string;
   totalPrice: number;
   currency?: string;
   orderDate?: string;
-  // ...add any other fields your OrderCard expects
+  products?: {
+    quantity: number;
+    product?: {
+      itemNumber?: number | string;
+    };
+  }[];
 }
 
-export default async function AdminOrdersPage() {
-  const orders: Order[] = await getAllOrders();
+export default function AdminOrdersPage() {
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [searchItemNumber, setSearchItemNumber] = useState('');
+  const [filteredOrders, setFilteredOrders] = useState<Order[]>([]);
 
-  // ✅ Remove duplicate orders by _id
-  const uniqueOrders = Array.from(
-    new Map(orders.map((order) => [order._id, order])).values()
-  );
+  useEffect(() => {
+    async function fetchOrders() {
+      const allOrders: Order[] = await getAllOrders(); // ✅ Tell TS what this is
 
-  // Group by date
-  const dailySalesMap: Record<string, number> = {};
+      const unique: Order[] = Array.from(
+        new Map(allOrders.map((o) => [o._id, o])).values()
+      );
 
-  uniqueOrders.forEach((order) => {
-    if (order.orderDate && typeof order.totalPrice === 'number') {
-      const dateStr = format(new Date(order.orderDate), 'yyyy-MM-dd');
-      dailySalesMap[dateStr] = (dailySalesMap[dateStr] || 0) + order.totalPrice;
+      setOrders(unique); // ✅ Now TS knows this is Order[]
     }
-  });
 
-  const totalSales = uniqueOrders.reduce((acc, order) => {
+    fetchOrders();
+  }, []);
+
+  useEffect(() => {
+    if (!searchItemNumber) {
+      setFilteredOrders(orders);
+      return;
+    }
+
+    const filtered = orders.filter((order) =>
+      order.products?.some(
+        (p) => String(p.product?.itemNumber ?? '') === searchItemNumber.trim()
+      )
+    );
+
+    setFilteredOrders(filtered);
+  }, [orders, searchItemNumber]);
+
+  const totalSales = filteredOrders.reduce((acc, order) => {
     return acc + (typeof order.totalPrice === 'number' ? order.totalPrice : 0);
   }, 0);
 
@@ -39,27 +62,44 @@ export default async function AdminOrdersPage() {
 
   return (
     <div className="bg-gray-50 min-h-screen p-6">
-      <h1 className="uppercase text-xl font-semibold mb-2">All Orders</h1>
+      <h1 className="uppercase text-xl font-semibold mb-4">All Orders</h1>
 
+      {/* 🔍 Search input */}
+      <div className="mb-6">
+        <input
+          type="text"
+          placeholder="Search item number for orders..."
+          value={searchItemNumber}
+          onChange={(e) => setSearchItemNumber(e.target.value)}
+          className="uppercase px-4 py-2 border border-gray-300 text-xs w-full max-w-xs"
+        />
+        {searchItemNumber && (
+          <p className="mt-2 text-xs text-black font-light">
+            Showing orders containing item #{searchItemNumber}
+          </p>
+        )}
+      </div>
+
+      {/* Totals */}
       <div className="uppercase mb-4 text-xs font-semibold text-flag-blue">
-        Total Sales:{' '}
+        Filtered Sales:{' '}
         <strong className="text-green">
-          ({formatCurrency(totalSales, uniqueOrders[0]?.currency || 'usd')})
+          {formatCurrency(totalSales, filteredOrders[0]?.currency || 'usd')}
         </strong>
         <br />
         15%:{' '}
         <strong className="text-flag-blue">
-          ({formatCurrency(fifteenPercent, uniqueOrders[0]?.currency || 'usd')})
+          {formatCurrency(fifteenPercent, filteredOrders[0]?.currency || 'usd')}
         </strong>
       </div>
 
-      {uniqueOrders.length === 0 ? (
+      {filteredOrders.length === 0 ? (
         <p className="text-center text-gray-600 uppercase tracking-wide font-light">
-          No orders found.
+          No matching orders found.
         </p>
       ) : (
         <div className="space-y-6 max-w-4xl mx-auto">
-          {uniqueOrders.map((order) => (
+          {filteredOrders.map((order) => (
             <OrderCard key={order._id} order={order} />
           ))}
         </div>
