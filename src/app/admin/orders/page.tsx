@@ -21,6 +21,7 @@ interface Order {
 }
 
 export default function AdminOrdersPage() {
+  const [filteredItemQuantity, setFilteredItemQuantity] = useState(0);
   const [orders, setOrders] = useState<Order[]>([]);
   const [searchItemNumber, setSearchItemNumber] = useState('');
   const [filteredOrders, setFilteredOrders] = useState<Order[]>([]);
@@ -42,6 +43,7 @@ export default function AdminOrdersPage() {
   useEffect(() => {
     if (!searchItemNumber) {
       setFilteredOrders(orders);
+      setFilteredItemQuantity(0);
       return;
     }
 
@@ -52,6 +54,19 @@ export default function AdminOrdersPage() {
     );
 
     setFilteredOrders(filtered);
+
+    const totalQuantity = filtered.reduce((acc, order) => {
+      const quantityInOrder =
+        order.products?.reduce((sum, p) => {
+          return String(p.product?.itemNumber ?? '') === searchItemNumber.trim()
+            ? sum + (p.quantity ?? 0)
+            : sum;
+        }, 0) ?? 0;
+
+      return acc + quantityInOrder;
+    }, 0);
+
+    setFilteredItemQuantity(totalQuantity);
   }, [orders, searchItemNumber]);
 
   const totalSales = filteredOrders.reduce((acc, order) => {
@@ -68,10 +83,10 @@ export default function AdminOrdersPage() {
       <div className="mb-6">
         <input
           type="text"
-          placeholder="Search item number for orders..."
+          placeholder="Search with item number for orders..."
           value={searchItemNumber}
           onChange={(e) => setSearchItemNumber(e.target.value)}
-          className="uppercase px-4 py-2 border border-gray-300 text-xs w-full max-w-xs"
+          className="uppercase px-4 py-2 border border-gray-300 text-xs w-full max-w-md"
         />
         {searchItemNumber && (
           <p className="mt-2 text-xs text-black font-light">
@@ -91,6 +106,13 @@ export default function AdminOrdersPage() {
         <strong className="text-flag-blue">
           {formatCurrency(fifteenPercent, filteredOrders[0]?.currency || 'usd')}
         </strong>
+        {searchItemNumber && (
+          <>
+            <br />
+            Quantity sold:{' '}
+            <strong className="text-flag-red">{filteredItemQuantity}</strong>
+          </>
+        )}
       </div>
 
       {filteredOrders.length === 0 ? (
