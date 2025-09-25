@@ -21,7 +21,7 @@ interface Order {
 }
 
 export default function AdminOrdersPage() {
-  // const [filteredItemQuantity, setFilteredItemQuantity] = useState(0);
+  const [filteredItemQuantity, setFilteredItemQuantity] = useState(0);
   const [orders, setOrders] = useState<Order[]>([]);
   const [searchItemNumber, setSearchItemNumber] = useState('');
   const [filteredOrders, setFilteredOrders] = useState<Order[]>([]);
@@ -43,7 +43,7 @@ export default function AdminOrdersPage() {
   useEffect(() => {
     if (!searchItemNumber) {
       setFilteredOrders(orders);
-      // setFilteredItemQuantity(0);
+      setFilteredItemQuantity(0);
       return;
     }
 
@@ -55,18 +55,18 @@ export default function AdminOrdersPage() {
 
     setFilteredOrders(filtered);
 
-    // const totalQuantity = filtered.reduce((acc, order) => {
-    //   const quantityInOrder =
-    //     order.products?.reduce((sum, p) => {
-    //       return String(p.product?.itemNumber ?? '') === searchItemNumber.trim()
-    //         ? sum + (p.quantity ?? 0)
-    //         : sum;
-    //     }, 0) ?? 0;
+    const totalQuantity = filtered.reduce((acc, order) => {
+      const quantityInOrder =
+        order.products?.reduce((sum, p) => {
+          return String(p.product?.itemNumber ?? '') === searchItemNumber.trim()
+            ? sum + (p.quantity ?? 0)
+            : sum;
+        }, 0) ?? 0;
 
-    //   return acc + quantityInOrder;
-    // }, 0);
+      return acc + quantityInOrder;
+    }, 0);
 
-    // setFilteredItemQuantity(totalQuantity);
+    setFilteredItemQuantity(totalQuantity);
   }, [orders, searchItemNumber]);
 
   // const totalSales = filteredOrders.reduce((acc, order) => {
@@ -96,8 +96,8 @@ export default function AdminOrdersPage() {
       </div>
 
       {/* Totals */}
-      {/* <div className="uppercase mb-4 text-xs font-semibold text-flag-blue">
-        Filtered Sales:{' '}
+      <div className="uppercase mb-2 text-xs font-semibold text-flag-blue">
+        {/* Filtered Sales:{' '}
         <strong className="text-green">
           {formatCurrency(totalSales, filteredOrders[0]?.currency || 'usd')}
         </strong>
@@ -105,7 +105,7 @@ export default function AdminOrdersPage() {
         15%:{' '}
         <strong className="text-flag-blue">
           {formatCurrency(fifteenPercent, filteredOrders[0]?.currency || 'usd')}
-        </strong>
+        </strong> */}
         {searchItemNumber && (
           <>
             <br />
@@ -113,7 +113,7 @@ export default function AdminOrdersPage() {
             <strong className="text-flag-red">{filteredItemQuantity}</strong>
           </>
         )}
-      </div> */}
+      </div>
 
       {filteredOrders.length === 0 ? (
         <p className="text-center text-gray-600 uppercase tracking-wide font-light">
