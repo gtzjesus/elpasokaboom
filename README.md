@@ -1,4 +1,4 @@
-    Fireworks E-Commerce Management System
+    Fireworks E-Commerce Management and Reservation System
 
 A full-stack web commerce platform for managing retail fireworks sales, customer transactions, and complete business operations including inventory, revenue tracking, and administrative analytics.
 
