@@ -135,6 +135,7 @@ Testing
 WEB IS LIVE AT:
 
     https://elpasokaboom.com
+    https://elpasokaboom.com/admin/pos
 
 SCREENSHOTS CUSTOMER POV:
 
