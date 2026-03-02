@@ -48,7 +48,7 @@ This project was designed and built as a production-style commerce system that h
     
     The system emphasizes security, scalability, clean architecture, and database efficiency.
 
-🏗️ Tech Stack
+Tech Stack
 
 Frontend
 
@@ -132,7 +132,7 @@ Testing
     
     API endpoint testing (Postman)
 
-Screenshots for customers app
+SCREENSHOTS CUSTOMER POV:
 
     Home page
 
@@ -154,14 +154,31 @@ Screenshots for customers app
 
 <img width="564" height="1264" alt="search" src="https://github.com/user-attachments/assets/bfd84de0-7f5c-404a-8b19-bc058d81a073" />
 
-Screenshots for workers app
-Admin dashboard
+SCREENSHOTS EMPLOYEE POV:
 
-Sales analytics
+    Point of Sale
 
-Inventory panel
+<img width="564" height="1259" alt="dashy" src="https://github.com/user-attachments/assets/874e6670-4855-4e9e-9837-f35b4f4780ef" />
 
-Screenshots matter a LOT. Government hiring managers often won’t run your code.
+    Inventory Management
+    
+<img width="565" height="1264" alt="inv" src="https://github.com/user-attachments/assets/0236f6f4-089b-4f11-af45-7b04b482adc7" />
+
+    Single Inventory page (can update)
+    
+<img width="561" height="887" alt="editabe" src="https://github.com/user-attachments/assets/5626a544-3979-4a79-b88b-45e3e599c452" />
+
+    Orders page
+    
+<img width="565" height="1259" alt="orders" src="https://github.com/user-attachments/assets/42db67ff-e00f-4c5d-a060-d21f0c88d270" />
+
+    Order page
+
+<img width="564" height="1121" alt="order" src="https://github.com/user-attachments/assets/a88545dc-841b-41ef-a6e7-c99563599d92" />
+
+    QR Code page (creates QR codes for every product to be scanned at POS page
+    
+<img width="562" height="1204" alt="QR" src="https://github.com/user-attachments/assets/455e8f3e-df61-4d84-aa97-65f9a0c1af0d" />
 
 What I Learned
 
