@@ -16,6 +16,11 @@ This system provides:
     
     Secure authentication & authorization
 
+WEB IS LIVE AT:
+
+    elpasokaboom.com
+    elpasokaboom.com/admin/pos
+
 Overview
 
 This project was designed and built as a production-style commerce system that handles:
@@ -132,10 +137,7 @@ Testing
     
     API endpoint testing (Postman)
 
-WEB IS LIVE AT:
 
-    https://elpasokaboom.com
-    https://elpasokaboom.com/admin/pos
 
 SCREENSHOTS CUSTOMER POV:
 
