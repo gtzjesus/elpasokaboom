@@ -132,29 +132,29 @@ Testing
     
     API endpoint testing (Postman)
 
-Installation
+Screenshots for customers app
 
-git clone https://github.com/yourusername/fireworks-ecommerce.git
-cd fireworks-ecommerce
-Backend Setup
-# Install dependencies
-# Configure environment variables
-# Run server
-Frontend Setup
-# Install dependencies
-# Run development server
-
-Screenshots
-
-Home page
+    Home page
 
 <img width="545" height="1253" alt="home" src="https://github.com/user-attachments/assets/ff9a354a-5ea9-47f8-9134-4568706162f6" />
 
+    Shopping cart
 
+<img width="562" height="1261" alt="basker" src="https://github.com/user-attachments/assets/9f966423-8d2b-463b-b681-5595fa30c1fa" />
 
+    Product page
 
-Shopping cart
+<img width="556" height="1261" alt="prod" src="https://github.com/user-attachments/assets/5fbc0f1b-830a-4046-b0be-1612b83ad80f" />
 
+    Categories section
+
+<img width="562" height="1211" alt="cats" src="https://github.com/user-attachments/assets/41589ce4-eb81-4a53-83bd-67d283c51f2f" />
+
+    Search popup
+
+<img width="564" height="1264" alt="search" src="https://github.com/user-attachments/assets/bfd84de0-7f5c-404a-8b19-bc058d81a073" />
+
+Screenshots for workers app
 Admin dashboard
 
 Sales analytics
@@ -188,3 +188,15 @@ Future Improvements
     Docker containerization
     
     CI/CD pipeline
+
+    Installation
+
+git clone https://github.com/yourusername/fireworks-ecommerce.git
+cd fireworks-ecommerce
+Backend Setup
+# Install dependencies
+# Configure environment variables
+# Run server
+Frontend Setup
+# Install dependencies
+# Run development server
