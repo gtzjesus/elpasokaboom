@@ -132,6 +132,10 @@ Testing
     
     API endpoint testing (Postman)
 
+WEB IS LIVE AT:
+
+    https://elpasokaboom.com
+
 SCREENSHOTS CUSTOMER POV:
 
     Home page
