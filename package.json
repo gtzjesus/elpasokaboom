@@ -39,7 +39,7 @@
     "html5-qrcode": "^2.3.8",
     "lucide-react": "^0.462.0",
     "motion": "^11.13.1",
-    "next": "^15.2.0",
+    "next": "15.2.8",
     "next-sanity": "^9.8.19",
     "next-sitemap": "^4.2.3",
     "qrcode.react": "^4.2.0",
