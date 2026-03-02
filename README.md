@@ -1,22 +1,22 @@
-🎆 Fireworks E-Commerce Management System
+    Fireworks E-Commerce Management System
 
 A full-stack web commerce platform for managing retail fireworks sales, customer transactions, and complete business operations including inventory, revenue tracking, and administrative analytics.
 
 This system provides:
 
-🛒 Customer shopping experience
+    Customer shopping experience
+    
+    Inventory management
+    
+    Sales & revenue tracking
+    
+    Role-based access control
+    
+    Administrative dashboard
+    
+    Secure authentication & authorization
 
-📦 Inventory management
-
-💰 Sales & revenue tracking
-
-👤 Role-based access control
-
-📊 Administrative dashboard
-
-🔐 Secure authentication & authorization
-
-📌 Overview
+Overview
 
 This project was designed and built as a production-style commerce system that handles both:
 
