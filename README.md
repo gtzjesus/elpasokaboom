@@ -18,136 +18,122 @@ This system provides:
 
 Overview
 
-This project was designed and built as a production-style commerce system that handles both:
+This project was designed and built as a production-style commerce system that handles:
 
-Client-side operations
+    Client-side operations
+    
+    Account registration & login
+    
+    Secure product browsing
+    
+    Shopping cart functionality
+    
+    Checkout process
+    
+    Order history tracking
+    
+    Owner/Admin operations
+    
+    Inventory management
+    
+    Product CRUD operations
+    
+    Sales reporting & analytics
+    
+    Revenue tracking
+    
+    User management
+    
+    Order processing
+    
+    The system emphasizes security, scalability, clean architecture, and database efficiency.
 
-Account registration & login
-
-Secure product browsing
-
-Shopping cart functionality
-
-Checkout process
-
-Order history tracking
-
-Owner/Admin operations
-
-Inventory management
-
-Product CRUD operations
-
-Sales reporting & analytics
-
-Revenue tracking
-
-User management
-
-Order processing
-
-The system emphasizes security, scalability, clean architecture, and database efficiency.
-
-🏗️ Architecture
+🏗️ Tech Stack
 
 Frontend
 
-JavaScript framework (specify yours: React / Vue / Vanilla JS)
-
-Responsive UI design
-
-REST API integration
+    React (via Next.js App Router)
+    
+    TypeScript
+    
+    Server Components
 
 Backend
 
-(Specify: PHP / Python / Node.js)
+    Next.js API Route Handlers
+    
+    Node.js runtime
+    
+    RESTful API design
 
-RESTful API architecture
+Database & CMS
 
-MVC or layered architecture pattern
+    Sanity (Headless CMS)
+    
+    GROQ query language
+    
+    Asset management for image uploads
 
-Database
+Features
 
-MySQL / PostgreSQL (specify yours)
-
-Normalized relational schema
-
-Indexed queries for performance optimization
-
-🔐 Security Features
-
-Password hashing (bcrypt / Argon2)
-
-Input validation & sanitization
-
-Protection against SQL injection
-
-Role-based access control (Admin vs Client)
-
-Secure session handling
-
-Environment variable configuration for sensitive data
-
-📊 Key Features
-🛒 Customer Portal
-
-Product search and filtering
-
-Real-time cart updates
-
-Secure checkout workflow
-
-Order confirmation & tracking
-
-🧑‍💼 Admin Dashboard
-
-Inventory tracking with stock alerts
-
-Revenue monitoring
-
-Sales analytics
-
-User account management
-
-Order status control
-
-🚀 Technical Highlights
-
-Designed scalable database schema for transactional integrity
-
-Implemented optimized SQL queries for performance
-
-Modular backend structure for maintainability
+    Product search and filtering
+    
+    Real-time cart updates
+    
+    Secure checkout workflow
+    
+    Order confirmation & tracking
+    
+    Admin Dashboard
+    
+    Inventory tracking with stock alerts
+    
+    Revenue monitoring
+    
+    Sales analytics
+    
+    User account management
+    
+    Order status control
+    
+    Technical Highlights
+    
+    Designed scalable database schema for transactional integrity
+    
+    Implemented optimized SQL queries for performance
+    
+    Modular backend structure for maintainability
 
 Code version control using Git
 
-Separation of concerns between frontend and backend
+    Separation of concerns between frontend and backend
+    
+    Follows REST API best practices
 
-Follows REST API best practices
+Scalability Considerations
 
-📈 Scalability Considerations
+    Designed to support high seasonal sales volume
+    
+    Efficient query indexing
+    
+    Pagination for large datasets
+    
+    Stateless API design
+    
+    Modular service structure
 
-Designed to support high seasonal sales volume
+Testing
 
-Efficient query indexing
+    Manual functional testing
+    
+    Edge case validation
+    
+    Input validation testing
+    
+    API endpoint testing (Postman)
 
-Pagination for large datasets
+Installation
 
-Stateless API design
-
-Modular service structure
-
-🧪 Testing
-
-Manual functional testing
-
-Edge case validation
-
-Input validation testing
-
-API endpoint testing (Postman)
-
-🛠️ Installation
 git clone https://github.com/yourusername/fireworks-ecommerce.git
 cd fireworks-ecommerce
 Backend Setup
@@ -157,11 +143,15 @@ Backend Setup
 Frontend Setup
 # Install dependencies
 # Run development server
-📸 Screenshots
 
-(Add screenshots of:)
+Screenshots
 
 Home page
+
+<img width="545" height="1253" alt="home" src="https://github.com/user-attachments/assets/ff9a354a-5ea9-47f8-9134-4568706162f6" />
+
+
+
 
 Shopping cart
 
@@ -173,28 +163,28 @@ Inventory panel
 
 Screenshots matter a LOT. Government hiring managers often won’t run your code.
 
-📚 What I Learned
+What I Learned
 
-Building secure transactional systems
+    Building secure transactional systems
+    
+    Implementing authentication and authorization
+    
+    Designing relational databases
+    
+    Writing scalable backend APIs
+    
+    Debugging production-style edge cases
+    
+    Managing full lifecycle development
 
-Implementing authentication and authorization
+Future Improvements
 
-Designing relational databases
-
-Writing scalable backend APIs
-
-Debugging production-style edge cases
-
-Managing full lifecycle development
-
-🎯 Future Improvements
-
-Payment gateway integration (Stripe / PayPal)
-
-Automated reporting exports (CSV/PDF)
-
-Unit & integration testing suite
-
-Docker containerization
-
-CI/CD pipeline
+    Payment gateway integration (Stripe / PayPal)
+    
+    Automated reporting exports (CSV/PDF)
+    
+    Unit & integration testing suite
+    
+    Docker containerization
+    
+    CI/CD pipeline
